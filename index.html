@@ -27,7 +27,7 @@
             text-align: center;
             vertical-align: middle;
             padding: 0px;
-            font: 300px sans-serif;
+            font-size: 3cm;
             display: table-cell;
         }
         .card svg {
@@ -37,7 +37,13 @@
     </style>
 </head>
 <body>
-<div class="card" style="background: green"><h1>1</h1></div>
+<div class="card" style="background: green">
+    <svg>
+        <text x="3.125%" y="3.125%" transform="scale(16)">
+            <tspan text-anchor="middle" style="vertical-align:bottom">1</tspan>
+        </text>
+    </svg>
+</div>
 <div class="card" style="background: yellowgreen"><h1>2</h1></div>
 <div class="card" style="background: greenyellow"><h1>3</h1></div>
 <div class="card" style="background: yellow"><h1>5</h1></div>
