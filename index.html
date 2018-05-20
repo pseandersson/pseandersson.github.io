@@ -40,43 +40,70 @@
 
 <body>
     <div class="card">
-        <svg width="100" height="100" x="0" y="0">
-            <text text-anchor="middle" transform="translate(50, 50) scale(3)">1</text>
+        <svg xmlns="http://www.w3.org/2000/svg" x="0" y="0" width="230" height="2208" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <rect x="0" y="0" width="230" height="276" fill="green"></rect>
+            <text text-anchor="middle" transform="translate(115, 197.14285714285714) scale(10)">1</text>
+            <rect x="0" y="276" width="230" height="276" fill="yellowgreen"></rect>
+            <text text-anchor="middle" transform="translate(115, 473.1428571428571) scale(10)">2</text>
+            <rect x="0" y="552" width="230" height="276" fill="greenyellow"></rect>
+            <text text-anchor="middle" transform="translate(115, 749.1428571428571) scale(10)">3</text>
+            <rect x="0" y="828" width="230" height="276" fill="yellow"></rect>
+            <text text-anchor="middle" transform="translate(115, 1025.142857142857) scale(10)">5</text>
+            <rect x="0" y="1104" width="230" height="276" fill="orange"></rect>
+            <text text-anchor="middle" transform="translate(115, 1301.142857142857) scale(10)">8</text>
+            <rect x="0" y="1380" width="230" height="276" fill="coral"></rect>
+            <text text-anchor="middle" transform="translate(115, 1577.142857142857) scale(10)">13</text>
+            <rect x="0" y="1656" width="230" height="276" fill="red"></rect>
+            <text text-anchor="middle" transform="translate(115, 1853.142857142857) scale(10)">20</text>
+            <rect x="0" y="1932" width="230" height="276" fill="blue"></rect>
+            <text text-anchor="middle" transform="translate(115, 2129.1428571428573) scale(5)">FIKA</text>
         </svg>
     </div>
-    <script lang="javascript">
+    <!-- <div class="card">
+        <svg width="100" height="100" x="0" y="0">
+        </svg>
+    </div> -->
+    <!-- <script lang="javascript">
         document.writeln(window.innerWidth);
         document.writeln(window.innerHeight);
-        // var width = window.innerWidth;
-        // var height = window.innerHeight;
+        var width = 230;//window.innerWidth;
+        var height = 276;//window.innerHeight;
 
-        // var colors = {
-        //     green: 1,
-        //     yellowgreen: 2,
-        //     greenyellow: 3,
-        //     yellow: 5,
-        //     orange: 8,
-        //     coral: 13,
-        //     red: 20,
-        //     blue: "FIKA"
-        // };
-        // var svg = document.getElementsByTagName("svg")[0];
-        // svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
-        // svg.setAttribute("height", height * Object.keys(colors).length);
-        // var i = 0;
-        // Object.keys(colors).forEach((element) => {
-        //     console.log(element);
-        //     var text = document.createElement("text");
-        //     text.setAttribute("text-anchor", "middle");
-        //     text.setAttribute("transform", "translate(0, " + height + ")  scale(3)");
-        //     // text.setAttribute("transform", "translate(" + width / 2 + ", " + height / 2 + i++ * height + ") scale(3)");
-        //     text.appendChild(document.createTextNode(colors[element]));
-        //     // svg.appendChild(text);
-        //     // card.appendChild(svg);
-        //     svg.appendChild(text);
-        // });
+        var colors = {
+            green: 1,
+            yellowgreen: 2,
+            greenyellow: 3,
+            yellow: 5,
+            orange: 8,
+            coral: 13,
+            red: 20,
+            blue: "FIKA"
+        };
+        var svg = document.getElementsByTagName("svg")[0];
+        svg.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xlink", "http://www.w3.org/1999/xlink");
+        svg.setAttribute("width", width);
+        svg.setAttribute("height", height * Object.keys(colors).length);
+        var i = 0;
+        Object.keys(colors).forEach((element) => {
+            console.log(element);
+            var rect = document.createElement("rect");
+            rect.setAttribute("x", "0");
+            rect.setAttribute("y", i * height);
+            rect.setAttribute("width", width);
+            rect.setAttribute("height", height);
+            rect.setAttribute("fill", element);
+            var text = document.createElement("text");
+            text.setAttribute("text-anchor", "middle");
+            // text.setAttribute("transform", "translate(0, " + height + ")  scale(3)");
+            text.setAttribute("transform", "translate(" + width / 2 + ", " + (5 * height / 7 + i++ * height) + ") scale(10)");
+            text.appendChild(document.createTextNode(colors[element]));
+            // svg.appendChild(text);
+            // card.appendChild(svg);
+            svg.appendChild(rect);
+            svg.appendChild(text);
+        });
 
-    </script>
+    </script> -->
     <!-- <div class="card" style="background: green">
         <h1>1</h1>
     </div>
