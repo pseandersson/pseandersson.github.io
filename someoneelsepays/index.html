@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>QR Scanner Demo</title>
+    <title>Someone else pays</title>
 </head>
 <body>
-<h1>Scan from WebCam:</h1>
+<h1>Someone else pays</h1>
 <div id="video-container">
     <video id="qr-video"></video>
 </div>
-<div>
+<div class="hideme">
     <label>
         Highlight Style
         <select id="scan-region-highlight-style-select">
@@ -23,7 +23,7 @@
         Show scan region canvas
     </label>
 </div>
-<div>
+<div class="hideme">
     <select id="inversion-mode-select">
         <option value="original">Scan original (dark QR code on bright background)</option>
         <option value="invert">Scan with inverted colors (bright QR code on dark background)</option>
@@ -31,8 +31,8 @@
     </select>
     <br>
 </div>
-<b>Device has camera: </b>
-<span id="cam-has-camera"></span>
+<b class="hideme">Device has camera: </b>
+<span class="hideme" id="cam-has-camera"></span>
 <br>
 <div>
     <b>Preferred camera:</b>
@@ -41,26 +41,26 @@
         <option value="user">User Facing</option>
     </select>
 </div>
-<b>Camera has flash: </b>
+<b class="hideme">Camera has flash: </b>
 <span id="cam-has-flash"></span>
 <div>
     <button id="flash-toggle">📸 Flash: <span id="flash-state">off</span></button>
 </div>
 <br>
-<b>Detected QR code: </b>
+<b class="hideme">Detected QR code: </b>
 <span id="cam-qr-result">None</span>
 <br>
-<b>Last detected at: </b>
+<b class="hideme">Last detected at: </b>
 <span id="cam-qr-result-timestamp"></span>
 <br>
 <button id="start-button">Start</button>
 <button id="stop-button">Stop</button>
-<hr>
+<hr class="hideme">
 
-<h1>Scan from File:</h1>
-<input type="file" id="file-selector">
-<b>Detected QR code: </b>
-<span id="file-qr-result">None</span>
+<h1  class="hideme">Scan from File:</h1>
+<!-- <input type="file" id="file-selector"  class="hideme" /> -->
+<b  class="hideme">Detected QR code: </b>
+<span  class="hideme" id="file-qr-result">None</span>
 
 <script type="module">
     import QrScanner from "./qr-scanner.min.js";
@@ -166,6 +166,32 @@
             .then(result => setResult(fileQrResult, result))
             .catch(e => setResult(fileQrResult, { data: e || 'No QR code found.' }));
     });
+
+    /**
+     * Determine the mobile operating system.
+     * This function returns one of 'iOS', 'Android', 'Windows Phone', or 'unknown'.
+     *
+     * @returns {String}
+     */
+    function getMobileOperatingSystem() {
+        var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+        // Windows Phone must come first because its UA also contains "Android"
+        if (/windows phone/i.test(userAgent)) {
+            return "Windows Phone";
+        }
+
+        if (/android/i.test(userAgent)) {
+            return "android";
+        }
+
+        // iOS detection from: http://stackoverflow.com/a/9039885/177710
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+            return "ios";
+        }
+
+        return "unknown";
+    }
 </script>
 
 <style>
@@ -175,6 +201,26 @@
 
     #video-container {
         line-height: 0;
+    }
+
+    #cam-has-flash {
+        display: none;
+    }
+
+    #cam-has-camera {
+        display: none;
+    }
+
+    #cam-qr-result {
+        display: none;
+    }
+
+    #cam-qr-result-timestamp {
+        display: none;
+    }
+
+    .hideme {
+        display: none;
     }
 
     #video-container.example-style-1 .scan-region-highlight-svg,
