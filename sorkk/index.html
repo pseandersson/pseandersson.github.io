@@ -92,6 +92,12 @@
         #toolbox>.container {
             padding: 1em 0;
             display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #newSorkk > h3 {
+            color: antiquewhite;
         }
 
         #footer>.container {
@@ -353,16 +359,19 @@
             }
 
             encode(sorkkObj).then(encodedData => {
-                console.log("URL: ", window.location.href, encodedData, window.location);
                 const url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?d=" + encodeURIComponent(encodedData);
-                console.log("url", url);
-
                 const link = document.getElementById("link");
                 link.value = url;
                 link.select();
                 link.setSelectionRange(0, url.length);
 
                 navigator.clipboard.writeText(link.value);
+                try {
+                    navigator.share({title:"SORKK Link", url:url });
+                } catch (err) {
+                    console.error("Share failed:", err.message);
+                }
+
             })
         }
 
@@ -517,7 +526,8 @@
     <div id="toolbox">
         <div class="container">
             <div id="newSorkk">
-                <input type="text" id="link" readonly="true" /><button onclick="shareSORKK()">Copy Link</button>
+                <h3>Dela din SORKK med någon</h3>
+                <input type="text" id="link" readonly="true" /><button onclick="shareSORKK()">Kopiera Länk</button>
             </div>
             <div id="loadedSork">
                 <button onclick="newSORKK()">Ny SORKK</button>
