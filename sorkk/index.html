@@ -193,15 +193,21 @@
         }
 
         #tableContainer.container {
-            flex-grow: 1;
+            overflow-x: auto;
+            display: flow-root;
+            padding: 1em;
+        }
+
+        #tableContainer.hide {
+            display: none;
         }
 
         table {
             background-color: white;
-            overflow-x: auto;
-            display: block;
-            flex-grow: 1;
+            display: table;
             height: max-content;
+            width: inherit;
+            margin: 0 0.2em;
         }
 
         th {
@@ -223,6 +229,10 @@
 
         tr:hover {
             background-color: beige;
+        }
+
+        tr.selected {
+            background-color: cadetblue;
         }
 
         pre {
@@ -418,10 +428,25 @@
             }
         }
 
-        function newSORKK() {
+        function isEverySORKKFiledPopulated(sorkkObj) {
+            return sorkkObj.ingoingFeeling
+                && sorkkObj.situation
+                && sorkkObj.organism.whatDoIThink
+                && sorkkObj.organism.whatDoIFeel
+                && sorkkObj.organism.bodyReactions
+                && sorkkObj.reaction
+                && sorkkObj.consequences.short
+                && sorkkObj.consequences.long
+        }
+
+        function saveSORKKToList() {
             // window.top.location = window.location.protocol + "//" + window.location.host + window.location.pathname
             const tableBody = document.getElementById("sorkkTableBody");
             sorkkObj = getCurrentSORKK();
+
+            if (!isEverySORKKFiledPopulated(sorkkObj)) {
+                return;
+            }
 
             const tableData = [
                 document.createTextNode(sorkkObj.ingoingFeeling)
@@ -444,7 +469,7 @@
                 row.appendChild(cell);
 
             });
-            row.setAttribute("onclick", "showSORKK(" + JSON.stringify(sorkkObj) + ")");
+            row.setAttribute("onclick", "showSORKK(this, " + JSON.stringify(sorkkObj) + ")");
             tableBody.prepend(row);
             document.getElementById("sorkkCount").innerText++;
             clearSORKK();
@@ -513,13 +538,13 @@
 
         function showAllSORKKs() {
             disableEditing();
-            document.getElementById("tableContainer").classList.toggle("hide");
+            document.getElementById("tableContainer").classList.remove("hide");
             // document.getElementById("cardDeck").classList.replace("container", "hide")
         }
 
         function hideAllSORKKs() {
             enableEditing();
-            document.getElementById("tableContainer").classList.toggle("hide");
+            document.getElementById("tableContainer").classList.add("hide");
         }
 
         function disableEditing() {
@@ -544,7 +569,7 @@
             }
         }
 
-        function showSORKK(sorkkObj) {
+        function showSORKK(row, sorkkObj) {
             document.getElementById("ingoingFeelingP").innerText = sorkkObj.ingoingFeeling;
             document.getElementById("situationP").innerText = sorkkObj.situation;
             document.getElementById("whatDoIThinkP").innerText = sorkkObj.organism.whatDoIThink;
@@ -553,6 +578,14 @@
             document.getElementById("reactionP").innerText = sorkkObj.reaction;
             document.getElementById("shortConsequenceP").innerText = sorkkObj.consequences.short;
             document.getElementById("longConsequenceP").innerText = sorkkObj.consequences.long;
+
+            document.getElementById("sorkkTableBody").childNodes.forEach(node => {
+                if (node === row) {
+                    row.classList.add("selected")
+                } else if (node.classList) {
+                    node.classList.remove("selected")
+                }
+            });
         }
 
         function init() {
@@ -699,16 +732,16 @@
         </div>
         <div class="container" id="toolbar">
             <div id="addRow">
-                <button onclick="">Ladda in en SORKK</button>
-                <button onclick="newSORKK()" class="editModeOnly">Spara Till Lista (<span
+                <!-- <button onclick="">Ladda in en SORKK</button> -->
+                <button onclick="saveSORKKToList()" class="editModeOnly">Spara Till Lista (<span
                         id="sorkkCount">0</span>)</button>
-                <button onclick="enableEditing()" class="viewModeOnly hide">Skapa en ny SORKK</button>
+                <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Skapa en ny SORKK</button>
                 <button onclick="showAllSORKKs()" class="editModeOnly">Visa alla SORKK:ar</button>
                 <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Dölj alla SORKK:ar</button>
                 <a onclick="exportXLSX(this)" class="viewModeOnly hide">Exportera Till Excel</a>
             </div>
         </div>
-        <div class="hide" id="tableContainer">
+        <div class="hide container" id="tableContainer">
             <table id="sorkkTable">
                 <thead>
                     <tr>
