@@ -103,6 +103,7 @@
         #footer>.container {
             padding: 1em 0;
             display: flex;
+            justify-content: center;
         }
 
         #footer {
@@ -145,6 +146,12 @@
 
         .card>h2+h3 {
             margin-top: 0;
+        }
+
+        .card>p {
+            padding: 0.2em;
+            margin-top: 0;
+            background-color: #F8F8F8;
         }
 
         .hide {
@@ -302,18 +309,30 @@
     <script>
         'use strict';
 
-        async function encode(obj) {
-            const str = JSON.stringify(obj);
-            const byte16str = Uint16Array.from(str.split("").map(c => c.charCodeAt()));
-            const result = window.pako.deflate(new Uint8Array(byte16str.buffer, byte16str.byteOffset, byte16str.byteLength));
-            const blob = bytesToBase64(result);
-            return Promise.resolve(blob);
+        function strToBytes(str) {
+            return str.split("").map(c => c.charCodeAt())
         }
 
-        async function decode(data64) {
+        function containsUtf16(bytes) {
+            return !bytes.every(c => c < 0xFF);
+        }
+
+        async function encode(obj) {
+            const str = JSON.stringify(obj);
+            const bytes = strToBytes(str);
+            const isUtf16String = containsUtf16(bytes);
+            const byteArray = (isUtf16String ? Uint16Array.from(bytes) : Uint8Array.from(bytes));
+            const result = window.pako.deflate(new Uint8Array(byteArray.buffer, byteArray.byteOffset, byteArray.byteLength));
+            const blob = bytesToBase64(result);
+            console.log("JSON object:", str);
+            console.log("Blob       :", blob);
+            return Promise.resolve({ encodedData: blob, isUtf16String: isUtf16String });
+        }
+
+        async function decode(data64, isUtf16String) {
             const compressed = base64ToBytes(data64);
             const uncompressed8 = window.pako.inflate(compressed);
-            const uncompressed = new Uint16Array(uncompressed8.buffer, uncompressed8.byteOffset, uncompressed8.byteLength / 2);
+            const uncompressed = (isUtf16String) ? new Uint16Array(uncompressed8.buffer, uncompressed8.byteOffset, uncompressed8.byteLength / 2) : uncompressed8;
             return Promise.resolve(JSON.parse(String.fromCharCode.apply(null, uncompressed)));
         }
 
@@ -335,7 +354,6 @@
                 showMore.classList.remove("hide");
                 hideMore.classList.add("hide");
             }
-
         }
 
         function newSORKK() {
@@ -358,8 +376,8 @@
                 }
             }
 
-            encode(sorkkObj).then(encodedData => {
-                const url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?d=" + encodeURIComponent(encodedData);
+            encode(sorkkObj).then(result => {
+                const url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + (result.isUtf16String ? "d" : "s") + "=" + encodeURIComponent(result.encodedData);
                 const link = document.getElementById("link");
                 link.value = url;
                 link.select();
@@ -376,32 +394,42 @@
 
         function init() {
             const selfUrl = new URL(window.location.href);
-            if (selfUrl.searchParams.has("d")) {
+            const isUtf16String = selfUrl.searchParams.has("d");
 
+            if (isUtf16String || selfUrl.searchParams.has("s")) {
                 try {
-                    const data64 = selfUrl.searchParams.get("d");
-                    decode(data64).then(sorkkObj => {
-                        document.getElementById("ingoingFeeling").value = sorkkObj.ingoingFeeling
-                        document.getElementById("situation").value = sorkkObj.situation
-                        document.getElementById("whatDoIThink").value = sorkkObj.organism.whatDoIThink
-                        document.getElementById("whatDoIFeel").value = sorkkObj.organism.whatDoIFeel
-                        document.getElementById("bodyReactions").value = sorkkObj.organism.bodyReactions
-                        document.getElementById("reaction").value = sorkkObj.reaction
-                        document.getElementById("shortConsequence").value = sorkkObj.consequences.short
-                        document.getElementById("longConsequence").value = sorkkObj.consequences.long
+                    const data64 = (isUtf16String) ? selfUrl.searchParams.get("d") : selfUrl.searchParams.get("s");
+
+                    decode(data64, isUtf16String).then(sorkkObj => {
+                        document.getElementById("ingoingFeelingP").innerText = sorkkObj.ingoingFeeling;
+                        document.getElementById("situationP").innerText = sorkkObj.situation;
+                        document.getElementById("whatDoIThinkP").innerText = sorkkObj.organism.whatDoIThink;
+                        document.getElementById("whatDoIFeelP").innerText = sorkkObj.organism.whatDoIFeel;
+                        document.getElementById("bodyReactionsP").innerText = sorkkObj.organism.bodyReactions;
+                        document.getElementById("reactionP").innerText = sorkkObj.reaction;
+                        document.getElementById("shortConsequenceP").innerText = sorkkObj.consequences.short;
+                        document.getElementById("longConsequenceP").innerText = sorkkObj.consequences.long;
+                        document.getElementById("ingoingFeelingP").classList.remove("hide");
+                        document.getElementById("situationP").classList.remove("hide");
+                        document.getElementById("whatDoIThinkP").classList.remove("hide");
+                        document.getElementById("whatDoIFeelP").classList.remove("hide");
+                        document.getElementById("bodyReactionsP").classList.remove("hide");
+                        document.getElementById("reactionP").classList.remove("hide");
+                        document.getElementById("shortConsequenceP").classList.remove("hide");
+                        document.getElementById("longConsequenceP").classList.remove("hide");
                     })
                 } catch (err) {
                     console.log("error:", err);
                     return;
                 }
-                document.getElementById("newSorkk").style.display = "none";
+                document.getElementById("newSorkk").classList.add("hide");
                 console.log("textarea", document.getElementsByTagName("textarea"));
                 const textareas = document.getElementsByTagName("textarea")
                 for (let i = 0; i < textareas.length; i++) {
-                    textareas.item(i).readOnly = true;
+                    textareas.item(i).classList.add("hide");
                 }
             } else {
-                document.getElementById("loadedSork").style.display = "none";
+                document.getElementById("loadedSork").classList.add("hide");
             }
         }
 
@@ -485,12 +513,14 @@
                     Ingående Känsla
                 </h2>
                 <textarea id="ingoingFeeling"></textarea>
+                <p id="ingoingFeelingP" class="hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Situation
                 </h2>
                 <textarea id="situation"></textarea>
+                <p id="situationP" class="hide"></p>
             </div>
             <div class="card">
                 <h2>
@@ -498,16 +528,20 @@
                 </h2>
                 <h3>Vad tänker jag?</h3>
                 <textarea id="whatDoIThink"></textarea>
+                <p id="whatDoIThinkP" class="hide"></p>
                 <h3>Vad känner jag?</h3>
                 <textarea id="whatDoIFeel"></textarea>
+                <p id="whatDoIFeelP" class="hide"></p>
                 <h3>Vad får jag för fysiska reaktioner?</h3>
                 <textarea id="bodyReactions"></textarea>
+                <p id="bodyReactionsP" class="hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Reaktion
                 </h2>
                 <textarea id="reaction"></textarea>
+                <p id="reactionP" class="hide"></p>
             </div>
             <div class="card">
                 <h2>
@@ -515,8 +549,10 @@
                 </h2>
                 <h3>Kort Konsekvens</h3>
                 <textarea id="shortConsequence"></textarea>
+                <p id="shortConsequenceP" class="hide"></p>
                 <h3>Långsiktig Konsekvens</h3>
                 <textarea id="longConsequence"></textarea>
+                <p id="longConsequenceP" class="hide"></p>
             </div>
         </div>
 
