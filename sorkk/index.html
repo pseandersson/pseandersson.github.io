@@ -164,13 +164,76 @@
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
         }
 
+        #toolbar.container {
+            flex-grow: 0;
+        }
+
+        #addRow {
+            padding: 1em;
+            margin: 1em;
+            justify-content: center;
+            align-items: center;
+            display: flow-root;
+            flex-wrap: wrap;
+            flex-shrink: 1;
+            height: fit-content;
+            background-color: #F8F8F8;
+            border-radius: 0.5em;
+        }
+
+        #addRow>button {
+            margin: 0.25em;
+            height: 3em;
+        }
+
         #spacer {
             flex-grow: 1;
             min-height: 8em;
             width: 100%;
         }
+
+        #tableContainer.container {
+            flex-grow: 1;
+        }
+
+        table {
+            background-color: white;
+            overflow: auto;
+            display: block;
+            flex-grow: 1;
+            height: max-content;
+        }
+
+        th {
+            font-weight: 100;
+            background-color: #3030bb;
+            color: antiquewhite;
+        }
+
+        td {
+            word-wrap: wrap;
+            word-break: normal;
+            white-space: pre-wrap;
+            vertical-align: baseline;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #F8F8F8;
+        }
+
+        tr:hover {
+            background-color: beige;
+        }
+
+        pre {
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/pako/1.0.5/pako.min.js"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/excellentexport@3.8.0/dist/excellentexport.min.js"></script>
     <script>
         /*
     MIT License
@@ -357,11 +420,61 @@
         }
 
         function newSORKK() {
-            window.top.location = window.location.protocol + "//" + window.location.host + window.location.pathname
+            // window.top.location = window.location.protocol + "//" + window.location.host + window.location.pathname
+            const tableBody = document.getElementById("sorkkTableBody");
+            sorkkObj = getCurrentSORKK();
+
+            const tableData = [
+                document.createTextNode(sorkkObj.ingoingFeeling)
+                , document.createTextNode(sorkkObj.situation)
+                , document.createTextNode(sorkkObj.organism.whatDoIThink)
+                , document.createTextNode(sorkkObj.organism.whatDoIFeel)
+                , document.createTextNode(sorkkObj.organism.bodyReactions)
+                , document.createTextNode(sorkkObj.reaction)
+                , document.createTextNode(sorkkObj.consequences.short)
+                , document.createTextNode(sorkkObj.consequences.long)
+            ];
+
+            const row = document.createElement("tr");
+
+            tableData.forEach(value => {
+                const cell = document.createElement("td");
+                const pre = document.createElement("pre");
+                //pre.appendChild(value);
+                cell.appendChild(value);
+                row.appendChild(cell);
+            });
+
+            tableBody.prepend(row);
+            clearSORKK();
         }
 
-        function shareSORKK() {
-            const sorkkObj = {
+        function clearSORKK() {
+            const textareas = document.getElementsByTagName("textarea")
+            for (let i = 0; i < textareas.length; i++) {
+                textareas.item(i).value = ""
+            }
+        }
+
+        function exportXLSX(anchor) {
+            const options = {
+                anchor: anchor,
+                format: 'xlsx',
+                filename: 'sorkk',
+            };
+            const sheets = [
+                {
+                    name: 'SORKK Sheet 1',
+                    from: {
+                        table: "sorkkTable",
+                    },
+                }
+            ]
+            return ExcellentExport.convert(options, sheets);
+        }
+
+        function getCurrentSORKK() {
+            return {
                 ingoingFeeling: document.getElementById("ingoingFeeling").value,
                 situation: document.getElementById("situation").value,
                 organism: {
@@ -375,6 +488,10 @@
                     long: document.getElementById("longConsequence").value
                 }
             }
+        }
+
+        function shareSORKK() {
+            const sorkkObj = getCurrentSORKK();
 
             encode(sorkkObj).then(result => {
                 const url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + (result.isUtf16String ? "d" : "s") + "=" + encodeURIComponent(result.encodedData);
@@ -390,6 +507,15 @@
                     console.error("Share failed:", err.message);
                 }
             })
+        }
+
+        function showAllSORKKs() {
+            document.getElementById("tableContainer").classList.remove("hide");
+            document.getElementById("cardDeck").classList.replace("container", "hide")
+            const controls = document.getElementsByClassName("control");
+            for (let i = 0; i < controls.length; i++) {
+                controls.item(i).classList.remove("hide");
+            }
         }
 
         function init() {
@@ -422,12 +548,13 @@
                     console.log("error:", err);
                     return;
                 }
+
                 document.getElementById("newSorkk").classList.add("hide");
-                console.log("textarea", document.getElementsByTagName("textarea"));
                 const textareas = document.getElementsByTagName("textarea")
                 for (let i = 0; i < textareas.length; i++) {
                     textareas.item(i).classList.add("hide");
                 }
+
             } else {
                 document.getElementById("loadedSork").classList.add("hide");
             }
@@ -507,7 +634,7 @@
         </div>
     </div>
     <div id="section">
-        <div class="container">
+        <div class="container" id="cardDeck">
             <div class="card">
                 <h2>
                     Ingående Känsla
@@ -555,7 +682,40 @@
                 <p id="longConsequenceP" class="hide"></p>
             </div>
         </div>
+        <div class="container" id="toolbar">
+            <div id="addRow">
+                <button onclick="">Ladda in en SORKK</button>
+                <button onclick="newSORKK()">Skapa en ny SORKK</button>
+                <button onclick="showAllSORKKs()">Visa alla SORKK:ar</button>
+                <a onclick="exportXLSX(this)" class="control hide">Exportera Till Excel</a>
+            </div>
+        </div>
+        <div class="hide" id="tableContainer">
+            <table id="sorkkTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Ingående Känsla</th>
+                        <th scope="col">Situation</th>
+                        <th colspan="3" scope="colgroup">Organism</th>
+                        <th scope="col">Reaktion</th>
+                        <th colspan="2" scope="colgroup">Konsekvens</th>
+                    </tr>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col">Vad tänker jag?</th>
+                        <th scope="col">Vad känner jag?</th>
+                        <th scope="col">Vad får jag för fysiska reaktioner?</th>
+                        <th scope="col"></th>
+                        <th scope="col">Kort</th>
+                        <th scope="col">Lång</th>
+                    </tr>
+                </thead>
+                <tbody id="sorkkTableBody">
 
+                </tbody>
+            </table>
+        </div>
         <div id="spacer"></div>
     </div>
     <div id="toolbox">
