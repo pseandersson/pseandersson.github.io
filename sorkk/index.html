@@ -96,7 +96,7 @@
             align-items: center;
         }
 
-        #newSorkk > h3 {
+        #newSorkk>h3 {
             color: antiquewhite;
         }
 
@@ -367,11 +367,10 @@
 
                 navigator.clipboard.writeText(link.value);
                 try {
-                    navigator.share({title:"SORKK Link", url:url });
+                    navigator.share({ title: "SORKK Link", url: url });
                 } catch (err) {
                     console.error("Share failed:", err.message);
                 }
-
             })
         }
 
