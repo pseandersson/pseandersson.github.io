@@ -96,7 +96,7 @@
             align-items: center;
         }
 
-        #newSorkk>h3 {
+        #shareSorkk>h3 {
             color: antiquewhite;
         }
 
@@ -198,7 +198,7 @@
 
         table {
             background-color: white;
-            overflow: auto;
+            overflow-x: auto;
             display: block;
             flex-grow: 1;
             height: max-content;
@@ -407,7 +407,6 @@
             let showMore = document.getElementById("showInformation");
             let hideMore = document.getElementById("hideInformation");
 
-
             if (displayStyle.classList.contains("hide")) {
                 displayStyle.classList.remove("hide");
                 showMore.classList.add("hide");
@@ -443,9 +442,11 @@
                 //pre.appendChild(value);
                 cell.appendChild(value);
                 row.appendChild(cell);
-            });
 
+            });
+            row.setAttribute("onclick", "showSORKK(" + JSON.stringify(sorkkObj) + ")");
             tableBody.prepend(row);
+            document.getElementById("sorkkCount").innerText++;
             clearSORKK();
         }
 
@@ -461,6 +462,7 @@
                 anchor: anchor,
                 format: 'xlsx',
                 filename: 'sorkk',
+                openAsDownload: true,
             };
             const sheets = [
                 {
@@ -510,12 +512,47 @@
         }
 
         function showAllSORKKs() {
-            document.getElementById("tableContainer").classList.remove("hide");
-            document.getElementById("cardDeck").classList.replace("container", "hide")
-            const controls = document.getElementsByClassName("control");
+            disableEditing();
+            document.getElementById("tableContainer").classList.toggle("hide");
+            // document.getElementById("cardDeck").classList.replace("container", "hide")
+        }
+
+        function hideAllSORKKs() {
+            enableEditing();
+            document.getElementById("tableContainer").classList.toggle("hide");
+        }
+
+        function disableEditing() {
+            const controls = document.getElementsByClassName("editModeOnly");
+            for (let i = 0; i < controls.length; i++) {
+                controls.item(i).classList.add("hide");
+            }
+            const readOnlys = document.getElementsByClassName("viewModeOnly");
+            for (let i = 0; i < readOnlys.length; i++) {
+                readOnlys.item(i).classList.remove("hide");
+            }
+        }
+
+        function enableEditing() {
+            const controls = document.getElementsByClassName("editModeOnly");
             for (let i = 0; i < controls.length; i++) {
                 controls.item(i).classList.remove("hide");
             }
+            const readOnlys = document.getElementsByClassName("viewModeOnly");
+            for (let i = 0; i < readOnlys.length; i++) {
+                readOnlys.item(i).classList.add("hide");
+            }
+        }
+
+        function showSORKK(sorkkObj) {
+            document.getElementById("ingoingFeelingP").innerText = sorkkObj.ingoingFeeling;
+            document.getElementById("situationP").innerText = sorkkObj.situation;
+            document.getElementById("whatDoIThinkP").innerText = sorkkObj.organism.whatDoIThink;
+            document.getElementById("whatDoIFeelP").innerText = sorkkObj.organism.whatDoIFeel;
+            document.getElementById("bodyReactionsP").innerText = sorkkObj.organism.bodyReactions;
+            document.getElementById("reactionP").innerText = sorkkObj.reaction;
+            document.getElementById("shortConsequenceP").innerText = sorkkObj.consequences.short;
+            document.getElementById("longConsequenceP").innerText = sorkkObj.consequences.long;
         }
 
         function init() {
@@ -525,41 +562,19 @@
             if (isUtf16String || selfUrl.searchParams.has("s")) {
                 try {
                     const data64 = (isUtf16String) ? selfUrl.searchParams.get("d") : selfUrl.searchParams.get("s");
-
                     decode(data64, isUtf16String).then(sorkkObj => {
-                        document.getElementById("ingoingFeelingP").innerText = sorkkObj.ingoingFeeling;
-                        document.getElementById("situationP").innerText = sorkkObj.situation;
-                        document.getElementById("whatDoIThinkP").innerText = sorkkObj.organism.whatDoIThink;
-                        document.getElementById("whatDoIFeelP").innerText = sorkkObj.organism.whatDoIFeel;
-                        document.getElementById("bodyReactionsP").innerText = sorkkObj.organism.bodyReactions;
-                        document.getElementById("reactionP").innerText = sorkkObj.reaction;
-                        document.getElementById("shortConsequenceP").innerText = sorkkObj.consequences.short;
-                        document.getElementById("longConsequenceP").innerText = sorkkObj.consequences.long;
-                        document.getElementById("ingoingFeelingP").classList.remove("hide");
-                        document.getElementById("situationP").classList.remove("hide");
-                        document.getElementById("whatDoIThinkP").classList.remove("hide");
-                        document.getElementById("whatDoIFeelP").classList.remove("hide");
-                        document.getElementById("bodyReactionsP").classList.remove("hide");
-                        document.getElementById("reactionP").classList.remove("hide");
-                        document.getElementById("shortConsequenceP").classList.remove("hide");
-                        document.getElementById("longConsequenceP").classList.remove("hide");
+                        disableEditing();
+                        showSORKK(sorkkObj);
+                        document.getElementById("shareSorkk").classList.add("hide");
                     })
                 } catch (err) {
                     console.log("error:", err);
                     return;
                 }
-
-                document.getElementById("newSorkk").classList.add("hide");
-                const textareas = document.getElementsByTagName("textarea")
-                for (let i = 0; i < textareas.length; i++) {
-                    textareas.item(i).classList.add("hide");
-                }
-
             } else {
                 document.getElementById("loadedSork").classList.add("hide");
             }
         }
-
     </script>
 </head>
 
@@ -639,55 +654,58 @@
                 <h2>
                     Ingående Känsla
                 </h2>
-                <textarea id="ingoingFeeling"></textarea>
-                <p id="ingoingFeelingP" class="hide"></p>
+                <textarea id="ingoingFeeling" class="editModeOnly"></textarea>
+                <p id="ingoingFeelingP" class="viewModeOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Situation
                 </h2>
-                <textarea id="situation"></textarea>
-                <p id="situationP" class="hide"></p>
+                <textarea id="situation" class="editModeOnly"></textarea>
+                <p id="situationP" class="viewModeOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Organism
                 </h2>
                 <h3>Vad tänker jag?</h3>
-                <textarea id="whatDoIThink"></textarea>
-                <p id="whatDoIThinkP" class="hide"></p>
+                <textarea id="whatDoIThink" class="editModeOnly"></textarea>
+                <p id="whatDoIThinkP" class="viewModeOnly hide"></p>
                 <h3>Vad känner jag?</h3>
-                <textarea id="whatDoIFeel"></textarea>
-                <p id="whatDoIFeelP" class="hide"></p>
+                <textarea id="whatDoIFeel" class="editModeOnly"></textarea>
+                <p id="whatDoIFeelP" class="viewModeOnly hide"></p>
                 <h3>Vad får jag för fysiska reaktioner?</h3>
-                <textarea id="bodyReactions"></textarea>
-                <p id="bodyReactionsP" class="hide"></p>
+                <textarea id="bodyReactions" class="editModeOnly"></textarea>
+                <p id="bodyReactionsP" class="viewModeOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Reaktion
                 </h2>
-                <textarea id="reaction"></textarea>
-                <p id="reactionP" class="hide"></p>
+                <textarea id="reaction" class="editModeOnly"></textarea>
+                <p id="reactionP" class="viewModeOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Konsekvens
                 </h2>
                 <h3>Kort Konsekvens</h3>
-                <textarea id="shortConsequence"></textarea>
-                <p id="shortConsequenceP" class="hide"></p>
+                <textarea id="shortConsequence" class="editModeOnly"></textarea>
+                <p id="shortConsequenceP" class="viewModeOnly hide"></p>
                 <h3>Långsiktig Konsekvens</h3>
-                <textarea id="longConsequence"></textarea>
-                <p id="longConsequenceP" class="hide"></p>
+                <textarea id="longConsequence" class="editModeOnly"></textarea>
+                <p id="longConsequenceP" class="viewModeOnly hide"></p>
             </div>
         </div>
         <div class="container" id="toolbar">
             <div id="addRow">
                 <button onclick="">Ladda in en SORKK</button>
-                <button onclick="newSORKK()">Skapa en ny SORKK</button>
-                <button onclick="showAllSORKKs()">Visa alla SORKK:ar</button>
-                <a onclick="exportXLSX(this)" class="control hide">Exportera Till Excel</a>
+                <button onclick="newSORKK()" class="editModeOnly">Spara Till Lista (<span
+                        id="sorkkCount">0</span>)</button>
+                <button onclick="enableEditing()" class="viewModeOnly hide">Skapa en ny SORKK</button>
+                <button onclick="showAllSORKKs()" class="editModeOnly">Visa alla SORKK:ar</button>
+                <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Dölj alla SORKK:ar</button>
+                <a onclick="exportXLSX(this)" class="viewModeOnly hide">Exportera Till Excel</a>
             </div>
         </div>
         <div class="hide" id="tableContainer">
@@ -720,7 +738,7 @@
     </div>
     <div id="toolbox">
         <div class="container">
-            <div id="newSorkk">
+            <div id="shareSorkk">
                 <h3>Dela din SORKK med någon</h3>
                 <input type="text" id="link" readonly="true" /><button onclick="shareSORKK()">Kopiera Länk</button>
             </div>
