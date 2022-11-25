@@ -323,6 +323,10 @@
 
         }
 
+        function newSORKK() {
+            window.top.location = window.location.protocol + "/" + window.location.host + "/" + window.location.pathname
+        }
+
         function shareSORKK() {
             const sorkkObj = {
                 ingoingFeeling: document.getElementById("ingoingFeeling").value,
@@ -341,7 +345,7 @@
 
             encode(sorkkObj).then(encodedData => {
                 console.log("URL: ", window.location.href, encodedData, window.location);
-                const url = window.location.protocol + "/" + window.location.host + "/" + window.location.pathname + "?d=" + encodeURIComponent(encodedData);
+                const url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?d=" + encodeURIComponent(encodedData);
                 console.log("url", url);
 
                 const link = document.getElementById("link");
@@ -508,8 +512,7 @@
             </div>
             <div id="loadedSork">
                 <button
-                    onclick="window.top.location = window.location.protocol + '/' + window.location.host + '/' + window.location.pathname">Ny
-                    SORKK</button>
+                    onclick="newSORKK()">Ny SORKK</button>
             </div>
         </div>
     </div>
