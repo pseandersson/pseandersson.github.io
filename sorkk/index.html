@@ -403,6 +403,7 @@
     </script>
     <script>
         const XMLHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
+        const xmlns = "http://www.w3.org/2000/xmlns/";
 
         function xlCreateRels() {
             const ns = "http://schemas.openxmlformats.org/package/2006/relationships"
@@ -434,7 +435,7 @@
             const vt = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
             const docRoot = document.implementation.createDocument(ns, "Properties");
             const appRoot = docRoot.documentElement;
-            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:vt", vt);
+            appRoot.setAttributeNS(xmlns, "xmlns:vt", vt);
 
             let node = document.createElementNS(ns, "Application");
             node.appendChild(document.createTextNode("Patrik Excel Exporter"));
@@ -503,11 +504,11 @@
 
             const docRoot = document.implementation.createDocument(cp, "coreProperties");
             const appRoot = docRoot.documentElement;
-            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:cp", cp);
-            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:dc", dc);
-            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:dcterms", dcterms);
-            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:dcmitype", dcmitype);
-            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xsi", xsi);
+            appRoot.setAttributeNS(xmlns, "xmlns:cp", cp);
+            appRoot.setAttributeNS(xmlns, "xmlns:dc", dc);
+            appRoot.setAttributeNS(xmlns, "xmlns:dcterms", dcterms);
+            appRoot.setAttributeNS(xmlns, "xmlns:dcmitype", dcmitype);
+            appRoot.setAttributeNS(xmlns, "xmlns:xsi", xsi);
 
             let node = document.createElementNS(dc, "creator");
             node.appendChild(document.createTextNode("Patrik Andersson"));
@@ -562,10 +563,11 @@
 
         function xlCreateTheme() {
             const a = "http://schemas.openxmlformats.org/drawingml/2006/main";
+            const thm15 = "http://schemas.microsoft.com/office/thememl/2012/main";
             const docRoot = document.implementation.createDocument(a, "theme");
             const themeRoot = docRoot.documentElement;
-            theme.setAttribute("name", "Office Theme");
-            themeRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:a", a);
+            themeRoot.setAttributeNS(xmlns, "xmlns:a", a);
+            themeRoot.setAttribute("name", "Office Theme");
 
             const elements = document.createElementNS(a, "themeElements");
             const clrScheme = document.createElementNS(a, "clrScheme");
@@ -586,61 +588,61 @@
             clrScheme.append(node);
 
             node = document.createElementNS(a, "dk2");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "44546A");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "lt2");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "E7E6E6");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "accent1");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "4472C4");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "accent2");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "ED7D31");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "accent3");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "A5A5A5");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "accent4");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "FFC000");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "accent5");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "5B9BD5");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "accent6");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "70AD47");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "hlink");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "0563C1");
             node.append(clr);
             clrScheme.append(node);
 
             node = document.createElementNS(a, "folHlink");
-            clr = document.createElementNS(a, "srgb");
+            clr = document.createElementNS(a, "srgbClr");
             clr.setAttribute("val", "954F72");
             node.append(clr);
             clrScheme.append(node);
@@ -649,11 +651,13 @@
 
             const fontScheme = document.createElementNS(a, "fontScheme");
             fontScheme.setAttribute("name", "Office");
+            elements.append(fontScheme);
+
             const majorFont = document.createElementNS(a, "majorFont");
             fontScheme.append(majorFont);
 
             let font = document.createElementNS(a, "latin");
-            font.setAttribute("typeface", "Calibri");
+            font.setAttribute("typeface", "Calibri Light");
             font.setAttribute("panose", "020F0302020204030204");
             majorFont.append(font);
 
@@ -718,71 +722,71 @@
 
             font = document.createElementNS(a, "latin");
             font.setAttribute("typeface", "Calibri");
-            font.setAttribute("panose", "020F0302020204030204");
-            majorFont.append(font);
+            font.setAttribute("panose", "020F0502020204030204");
+            minorFont.append(font);
 
             font = document.createElementNS(a, "ea");
             font.setAttribute("typeface", "");
-            majorFont.append(font);
+            minorFont.append(font);
 
             font = document.createElementNS(a, "cs");
             font.setAttribute("typeface", "");
-            majorFont.append(font);
+            minorFont.append(font);
 
-            minorFont.append(newFont("Jpan", "游ゴシック"));
-            minorFont.append(newFont("Hang", "맑은 고딕"));
-            minorFont.append(newFont("Hans", "等线"));
-            minorFont.append(newFont("Hant", "新細明體"));
-            minorFont.append(newFont("Arab", "Arial"));
-            minorFont.append(newFont("Hebr", "Arial"));
-            minorFont.append(newFont("Thai", "Tahoma"));
-            minorFont.append(newFont("Ethi", "Nyala"));
-            minorFont.append(newFont("Beng", "Vrinda"));
-            minorFont.append(newFont("Gujr", "Shruti"));
-            minorFont.append(newFont("Khmr", "DaunPenh"));
-            minorFont.append(newFont("Knda", "Tunga"));
-            minorFont.append(newFont("Guru", "Raavi"));
-            minorFont.append(newFont("Cans", "Euphemia"));
-            minorFont.append(newFont("Cher", "Plantagenet Cherokee"));
-            minorFont.append(newFont("Yiii", "Microsoft Yi Baiti"));
-            minorFont.append(newFont("Tibt", "Microsoft Himalaya"));
-            minorFont.append(newFont("Thaa", "MV Boli"));
-            minorFont.append(newFont("Deva", "Mangal"));
-            minorFont.append(newFont("Telu", "Gautami"));
-            minorFont.append(newFont("Taml", "Latha"));
-            minorFont.append(newFont("Syrc", "Estrangelo Edessa"));
-            minorFont.append(newFont("Orya", "Kalinga"));
-            minorFont.append(newFont("Mlym", "Kartika"));
-            minorFont.append(newFont("Laoo", "DokChampa"));
-            minorFont.append(newFont("Sinh", "Iskoola Pota"));
-            minorFont.append(newFont("Mong", "Mongolian Baiti"));
-            minorFont.append(newFont("Viet", "Arial"));
-            minorFont.append(newFont("Uigh", "Microsoft Uighur"));
-            minorFont.append(newFont("Geor", "Sylfaen"));
-            minorFont.append(newFont("Armn", "Arial"));
-            minorFont.append(newFont("Bugi", "Leelawadee UI"));
-            minorFont.append(newFont("Bopo", "Microsoft JhengHei"));
-            minorFont.append(newFont("Java", "Javanese Text"));
-            minorFont.append(newFont("Lisu", "Segoe UI"));
-            minorFont.append(newFont("Mymr", "Myanmar Text"));
-            minorFont.append(newFont("Nkoo", "Ebrima"));
-            minorFont.append(newFont("Olck", "Nirmala UI"));
-            minorFont.append(newFont("Osma", "Ebrima"));
-            minorFont.append(newFont("Phag", "Phagspa"));
-            minorFont.append(newFont("Syrn", "Estrangelo Edessa"));
-            minorFont.append(newFont("Syrj", "Estrangelo Edessa"));
-            minorFont.append(newFont("Syre", "Estrangelo Edessa"));
-            minorFont.append(newFont("Sora", "Nirmala UI"));
-            minorFont.append(newFont("Tale", "Microsoft Tai Le"));
-            minorFont.append(newFont("Talu", "Microsoft New Tai Lue"));
-            minorFont.append(newFont("Tfng", "Ebrima"));
+            minorFont.append(newFont(a, "Jpan", "游ゴシック"));
+            minorFont.append(newFont(a, "Hang", "맑은 고딕"));
+            minorFont.append(newFont(a, "Hans", "等线"));
+            minorFont.append(newFont(a, "Hant", "新細明體"));
+            minorFont.append(newFont(a, "Arab", "Arial"));
+            minorFont.append(newFont(a, "Hebr", "Arial"));
+            minorFont.append(newFont(a, "Thai", "Tahoma"));
+            minorFont.append(newFont(a, "Ethi", "Nyala"));
+            minorFont.append(newFont(a, "Beng", "Vrinda"));
+            minorFont.append(newFont(a, "Gujr", "Shruti"));
+            minorFont.append(newFont(a, "Khmr", "DaunPenh"));
+            minorFont.append(newFont(a, "Knda", "Tunga"));
+            minorFont.append(newFont(a, "Guru", "Raavi"));
+            minorFont.append(newFont(a, "Cans", "Euphemia"));
+            minorFont.append(newFont(a, "Cher", "Plantagenet Cherokee"));
+            minorFont.append(newFont(a, "Yiii", "Microsoft Yi Baiti"));
+            minorFont.append(newFont(a, "Tibt", "Microsoft Himalaya"));
+            minorFont.append(newFont(a, "Thaa", "MV Boli"));
+            minorFont.append(newFont(a, "Deva", "Mangal"));
+            minorFont.append(newFont(a, "Telu", "Gautami"));
+            minorFont.append(newFont(a, "Taml", "Latha"));
+            minorFont.append(newFont(a, "Syrc", "Estrangelo Edessa"));
+            minorFont.append(newFont(a, "Orya", "Kalinga"));
+            minorFont.append(newFont(a, "Mlym", "Kartika"));
+            minorFont.append(newFont(a, "Laoo", "DokChampa"));
+            minorFont.append(newFont(a, "Sinh", "Iskoola Pota"));
+            minorFont.append(newFont(a, "Mong", "Mongolian Baiti"));
+            minorFont.append(newFont(a, "Viet", "Arial"));
+            minorFont.append(newFont(a, "Uigh", "Microsoft Uighur"));
+            minorFont.append(newFont(a, "Geor", "Sylfaen"));
+            minorFont.append(newFont(a, "Armn", "Arial"));
+            minorFont.append(newFont(a, "Bugi", "Leelawadee UI"));
+            minorFont.append(newFont(a, "Bopo", "Microsoft JhengHei"));
+            minorFont.append(newFont(a, "Java", "Javanese Text"));
+            minorFont.append(newFont(a, "Lisu", "Segoe UI"));
+            minorFont.append(newFont(a, "Mymr", "Myanmar Text"));
+            minorFont.append(newFont(a, "Nkoo", "Ebrima"));
+            minorFont.append(newFont(a, "Olck", "Nirmala UI"));
+            minorFont.append(newFont(a, "Osma", "Ebrima"));
+            minorFont.append(newFont(a, "Phag", "Phagspa"));
+            minorFont.append(newFont(a, "Syrn", "Estrangelo Edessa"));
+            minorFont.append(newFont(a, "Syrj", "Estrangelo Edessa"));
+            minorFont.append(newFont(a, "Syre", "Estrangelo Edessa"));
+            minorFont.append(newFont(a, "Sora", "Nirmala UI"));
+            minorFont.append(newFont(a, "Tale", "Microsoft Tai Le"));
+            minorFont.append(newFont(a, "Talu", "Microsoft New Tai Lue"));
+            minorFont.append(newFont(a, "Tfng", "Ebrima"));
 
             const fmtScheme = document.createElementNS(a, "fmtScheme");
             fmtScheme.setAttribute("name", "Office");
             elements.append(fmtScheme);
             let styleList = document.createElementNS(a, "fillStyleLst");
             let fill = document.createElementNS(a, "solidFill");
-            clr = document.createElement(a, "schemeClr");
+            clr = document.createElementNS(a, "schemeClr");
             clr.setAttribute("val", "phClr");
             fill.append(clr);
             styleList.append(fill);
@@ -818,15 +822,155 @@
             gs = newGSPos(a, 100000);
             gs.append(newSchemeColor(a, { lum: "99000", sat: "120000", shade: "78000" }));
             gsList.append(gs);
-            styleList.append(gsList);
+            fill.append(gsList);
             node = document.createElementNS(a, "lin");
             node.setAttribute("ang", "5400000");
             node.setAttribute("scaled", "0");
-            styleList.append(node);
-
-
-
+            fill.append(node);
             styleList.append(fill);
+
+            fmtScheme.append(styleList);
+
+            styleList = document.createElementNS(a, "lnStyleLst");
+
+            let ln = document.createElementNS(a, "ln");
+            ln.setAttribute("w", "6350");
+            ln.setAttribute("cap", "flat");
+            ln.setAttribute("cmpd", "sng");
+            ln.setAttribute("algn", "ctr");
+            clr = document.createElementNS(a, "schemeClr");
+            clr.setAttribute("val", "phClr");
+            fill = document.createElementNS(a, "solidFill");
+            fill.append(clr);
+            ln.append(fill);
+            let prstDash = document.createElementNS(a, "prstDash");
+            prstDash.setAttribute("val", "solid");
+            ln.append(prstDash);
+            let miter = document.createElementNS(a, "miter");
+            miter.setAttribute("lim", "800000");
+            ln.append(miter);
+            styleList.append(ln);
+
+            ln = document.createElementNS(a, "ln");
+            ln.setAttribute("w", "12700");
+            ln.setAttribute("cap", "flat");
+            ln.setAttribute("cmpd", "sng");
+            ln.setAttribute("algn", "ctr");
+            clr = document.createElementNS(a, "schemeClr");
+            clr.setAttribute("val", "phClr");
+            fill = document.createElementNS(a, "solidFill");
+            fill.append(clr);
+            ln.append(fill);
+            prstDash = document.createElementNS(a, "prstDash");
+            prstDash.setAttribute("val", "solid");
+            ln.append(prstDash);
+            miter = document.createElementNS(a, "miter");
+            miter.setAttribute("lim", "800000");
+            ln.append(miter);
+            styleList.append(ln);
+
+            ln = document.createElementNS(a, "ln");
+            ln.setAttribute("w", "19050");
+            ln.setAttribute("cap", "flat");
+            ln.setAttribute("cmpd", "sng");
+            ln.setAttribute("algn", "ctr");
+            clr = document.createElementNS(a, "schemeClr");
+            clr.setAttribute("val", "phClr");
+            fill = document.createElementNS(a, "solidFill");
+            fill.append(clr);
+            ln.append(fill);
+            prstDash = document.createElementNS(a, "prstDash");
+            prstDash.setAttribute("val", "solid");
+            ln.append(prstDash);
+            miter = document.createElementNS(a, "miter");
+            miter.setAttribute("lim", "800000");
+            ln.append(miter);
+            styleList.append(ln);
+
+            fmtScheme.append(styleList);
+
+            styleList = document.createElementNS(a, "effectStyleLst");
+
+            let effectStyle = document.createElementNS(a, "effectStyle");
+            let effectLst = document.createElementNS(a, "effectLst");
+            effectStyle.append(effectLst);
+            styleList.append(effectStyle);
+            styleList.append(effectStyle.cloneNode(true));
+
+            effectStyle = effectStyle.cloneNode(false);
+            effectLst = effectLst.cloneNode();
+            let outerShdw = document.createElementNS(a, "outerShdw");
+            outerShdw.setAttribute("blurRad", "57150");
+            outerShdw.setAttribute("dist", "19050");
+            outerShdw.setAttribute("dir", "5400000");
+            outerShdw.setAttribute("algn", "ctr");
+            outerShdw.setAttribute("rotWithShape", "0");
+            clr = document.createElementNS(a, "srgbClr");
+            clr.setAttribute("val", "000000");
+            let alpha = document.createElementNS(a, "alpha");
+            alpha.setAttribute("val", "63000");
+            clr.append(alpha);
+            outerShdw.append(clr);
+            effectLst.append(outerShdw);
+            effectStyle.append(effectLst);
+            styleList.append(effectStyle);
+
+            fmtScheme.append(styleList);
+
+            styleList = document.createElementNS(a, "bgFillStyleLst");
+            fill = document.createElementNS(a, "solidFill");
+            clr = document.createElementNS(a, "schemeClr");
+            clr.setAttribute("val", "phClr");
+            fill.append(clr);
+            styleList.append(fill);
+
+            fill = document.createElementNS(a, "solidFill");
+            clr = document.createElementNS(a, "schemeClr");
+            fill.append(newSchemeColor(a, { tint: "95000", sat: "170000" }));
+            styleList.append(fill);
+
+            fill = document.createElementNS(a, "gradFill");
+            fill.setAttribute("rotWithShape", "1");
+            gsList = document.createElementNS(a, "gsLst");
+            gs = newGSPos(a, 0);
+            gs.append(newSchemeColor(a, { tint: "93000", sat: "150000", shade: "98000", lum: "102000" }));
+            gsList.append(gs);
+            gs = newGSPos(a, 50000);
+            gs.append(newSchemeColor(a, { tint: "98000", sat: "130000", shade: "90000", lum: "103000" }));
+            gsList.append(gs);
+            gs = newGSPos(a, 100000);
+            gs.append(newSchemeColor(a, { sat: "120000", shade: "63000" }));
+            gsList.append(gs);
+            fill.append(gsList);
+            node = document.createElementNS(a, "lin");
+            node.setAttribute("ang", "5400000");
+            node.setAttribute("scaled", "0");
+            fill.append(node);
+            styleList.append(fill);
+
+            fmtScheme.append(styleList);
+            themeRoot.append(elements);
+
+            node = document.createElementNS(a, "objectDefaults");
+            themeRoot.append(node);
+
+            node = document.createElementNS(a, "extraClrSchemeLst");
+            themeRoot.append(node);
+
+            const extLst = document.createElementNS(a, "extLst");
+            const ext = document.createElementNS(a, "ext");
+            ext.setAttribute("uri", "{05A4C25C-085E-4340-85A3-A5531E510DB2}");
+
+            const themeFamily = document.createElementNS(thm15, "themeFamily");
+            themeFamily.setAttributeNS(xmlns, "xmlns:thm15", thm15);
+            themeFamily.setAttribute("name", "Office Theme");
+            themeFamily.setAttribute("id", "{62F939B6-93AF-4DB8-9C6B-D6C7DFDC589F}");
+            themeFamily.setAttribute("vid", "{4A3C46E8-61CC-4603-A589-7422A47A8E4A}");
+            ext.append(themeFamily);
+            extLst.append(ext);
+
+            themeRoot.append(extLst);
+            return { "xl/theme/theme1.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
         }
 
         function newFont(ns, script, typeface) {
@@ -857,6 +1001,7 @@
         function newGSPos(ns, pos) {
             const gs = document.createElementNS(ns, "gs");
             gs.setAttribute("pos", pos);
+            return gs;
         }
     </script>
     <script>
@@ -1091,7 +1236,7 @@
         }
 
         function xmlGen() {
-            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels()]
+            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels(), xlCreateTheme()]
         }
     </script>
 </head>
