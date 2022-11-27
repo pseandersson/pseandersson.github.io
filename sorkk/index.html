@@ -1003,6 +1003,70 @@
             gs.setAttribute("pos", pos);
             return gs;
         }
+
+        function xlCreateWorksheets() {
+            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+            const r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+            const mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
+            const x15 = "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main"
+            const xr = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
+            const xr6 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision6"
+            const xr10 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision10"
+            const xr2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
+
+            const docRoot = document.implementation.createDocument(ns, "workbook");
+            const worksheets = docRoot.documentElement;
+            worksheets.setAttributeNS(xmlns, "xmlns:r", r);
+            worksheets.setAttributeNS(xmlns, "xmlns:mc", mc);
+            worksheets.setAttributeNS(xmlns, "Ignorable", "x15 xr xr6 xr10 xr2");
+            worksheets.setAttributeNS(xmlns, "xmlns:x15", x15);
+            worksheets.setAttributeNS(xmlns, "xmlns:xr", xr);
+            worksheets.setAttributeNS(xmlns, "xmlns:xr6", xr6);
+            worksheets.setAttributeNS(xmlns, "xmlns:xr10", xr10);
+            worksheets.setAttributeNS(xmlns, "xmlns:xr2", xr2);
+
+            let node = document.createElementNS(ns, "fileVersion");
+            node.setAttribute("appName","xl");
+            node.setAttribute("lastEdited", "7");
+            node.setAttribute("lowestEdited", "7");
+            node.setAttribute("rupBuild", "25726");
+
+            worksheets.append(node);
+
+            node = document.createElementNS(ns, "workbookPr");
+            node.setAttribute("defaultThemeVersion", "166925");
+            worksheets.append(node);
+
+            node = document.createElementNS(ns, "AlternateContent");
+            node.setAttributeNS(xmlns, "xmlns:mc", mc);
+            worksheets.append(node);
+
+            const choice = document.createElementNS(mc, "Choice");
+            choice.setAttribute("Requires", "x15");
+            const x15ac = "http://schemas.microsoft.com/office/spreadsheetml/2010/11/ac";
+            const absPath = document.createElementNS(x15ac, "absPath");
+            absPath.setAttribute("url", "C:\\Temp\\sorkk\\");
+            absPath.setAttributeNS(xmlns, "xmlns:x15ac", x15ac);
+            choice.append(absPath);
+            node.append(absPath);
+            worksheets.append(node);
+
+            node = document.createElementNS(xr, "revisionPtr");
+            node.setAttribute("revIDLastSave", "0");
+            node.setAttribute("documentId", "8_{" + UUID() + "}");
+            node.setAttributeNS(xr6, "coauthVersionLast", "47");
+            node.setAttributeNS(xr6, "coauthVersionMax", "47");
+            node.setAttributeNS(xr10, "uidLastSave", "{00000000-0000-0000-0000-000000000000}");
+            worksheets.append(node);
+        }
+
+        function UUID() {
+            const a = function () { return Math.round(Math.random()*0xEFFF + 0x1000).toString(16) };
+            const b = function () { return Math.round(Math.random()*0x4f + 0x10).toString(16) };
+            const c = function () { return Math.round(Math.random()*0xEF + 0x10).toString(16) };
+
+            return (a() + a() + "-" + a() + "-" + b() + c() + "-" + b() + c() + "-" + a() + a() + a()).toUpperCase();
+        }
     </script>
     <script>
         'use strict';
