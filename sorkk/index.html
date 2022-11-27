@@ -112,7 +112,7 @@
         }
 
         .card {
-            max-width: 15em;
+            flex-basis: 15em;
             min-height: 15em;
             max-height: 40em;
             border-radius: 0.5em;
@@ -222,6 +222,28 @@
             white-space: pre-wrap;
             vertical-align: baseline;
         }
+
+        /* .transpose > thead {
+            display: block;
+            float: left;
+        }
+
+        .transpose > tbody {
+            display: block;
+            float: right;
+        }
+
+        .transpose > tbody > tr,  .transpose > thead > tr {
+            display: block;
+            float: left;
+
+        }
+
+        .transpose > tbody > tr > td,  .transpose > thead > tr > th {
+            display: block;
+            float: left;
+            clear: right;
+        } */
 
         tr:nth-child(odd) {
             background-color: #F8F8F8;
@@ -377,6 +399,464 @@
 
         function base64decode(str, decoder = new TextDecoder()) {
             return decoder.decode(base64ToBytes(str));
+        }
+    </script>
+    <script>
+        const XMLHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
+
+        function xlCreateRels() {
+            const ns = "http://schemas.openxmlformats.org/package/2006/relationships"
+            const root = document.implementation.createDocument(ns, "Relationships");
+            let rel = root.createElementNS(ns, "RelationShip");
+            rel.setAttribute("Id", "rId1");
+            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument");
+            rel.setAttribute("Target", "xl/workbook.xml");
+
+            root.documentElement.prepend(rel);
+
+            rel = root.createElementNS(ns, "RelationShip");
+            rel.setAttribute("Id", "rId2");
+            rel.setAttribute("Type", "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties");
+            rel.setAttribute("Target", "docProps/core.xml");
+            root.documentElement.prepend(rel);
+
+            rel = root.createElementNS(ns, "RelationShip");
+            rel.setAttribute("Id", "rId3");
+            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties");
+            rel.setAttribute("Target", "docProps/app.xml");
+            root.documentElement.prepend(rel);
+
+            return { "_rels/.rels": XMLHeader + (new XMLSerializer()).serializeToString(root) };
+        }
+
+        function xlCreateAppDocProps() {
+            const ns = "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
+            const vt = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
+            const docRoot = document.implementation.createDocument(ns, "Properties");
+            const appRoot = docRoot.documentElement;
+            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:vt", vt);
+
+            let node = document.createElementNS(ns, "Application");
+            node.appendChild(document.createTextNode("Patrik Excel Exporter"));
+            appRoot.append(node);
+            node = document.createElementNS(ns, "DocSecurity");
+            node.appendChild(document.createTextNode("0"));
+            appRoot.append(node);
+            node = document.createElementNS(ns, "ScaleCrop");
+            node.appendChild(document.createTextNode("false"));
+            appRoot.append(node);
+
+            node = document.createElementNS(ns, "HeadingPairs");
+            let vector = document.createElementNS(vt, "vector");
+            vector.setAttribute("size", "2");
+            vector.setAttribute("baseType", "variant");
+
+            let variant = document.createElementNS(vt, "variant");
+            let lpstr = document.createElementNS(vt, "lpstr");
+            lpstr.append(document.createTextNode("Worksheets"));
+            variant.append(lpstr);
+            vector.append(variant);
+
+            variant = document.createElementNS(vt, "variant");
+            const i4 = document.createElementNS(vt, "i4");
+            i4.append(document.createTextNode("1"));
+            variant.append(i4);
+            vector.append(variant);
+            node.append(vector);
+            appRoot.append(node);
+
+            node = document.createElementNS(ns, "TitlesOfParts");
+            vector = document.createElementNS(vt, "vector");
+            vector.setAttribute("size", "1");
+            vector.setAttribute("baseType", "lpstr");
+            lpstr = document.createElementNS(vt, "lpstr");
+            lpstr.append(document.createTextNode("Sheet1"));
+            vector.append(lpstr);
+            node.append(vector);
+            appRoot.append(node);
+
+            node = document.createElementNS(ns, "Company");
+            node.appendChild(document.createTextNode(""));
+            appRoot.append(node);
+            node = document.createElementNS(ns, "LinksUpToDate");
+            node.appendChild(document.createTextNode("false"));
+            appRoot.append(node);
+            node = document.createElementNS(ns, "SharedDoc");
+            node.appendChild(document.createTextNode("false"));
+            appRoot.append(node);
+            node = document.createElementNS(ns, "HyperlinksChanged");
+            node.appendChild(document.createTextNode("false"));
+            appRoot.append(node);
+            node = document.createElementNS(ns, "AppVersion");
+            node.appendChild(document.createTextNode("16.0300"));
+            appRoot.append(node);
+
+            return { "docProps/app.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
+        }
+
+        function xlCreateCoreDocProps() {
+            const cp = "http://schemas.openxmlformats.org/package/2006/metadata/core-properties";
+            const dc = "http://purl.org/dc/elements/1.1/"
+            const dcterms = "http://purl.org/dc/terms/"
+            const dcmitype = "http://purl.org/dc/dcmitype/"
+            const xsi = "http://www.w3.org/2001/XMLSchema-instance"
+
+            const docRoot = document.implementation.createDocument(cp, "coreProperties");
+            const appRoot = docRoot.documentElement;
+            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:cp", cp);
+            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:dc", dc);
+            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:dcterms", dcterms);
+            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:dcmitype", dcmitype);
+            appRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:xsi", xsi);
+
+            let node = document.createElementNS(dc, "creator");
+            node.appendChild(document.createTextNode("Patrik Andersson"));
+            appRoot.append(node);
+            node = document.createElementNS(cp, "lastModifiedBy");
+            node.appendChild(document.createTextNode("Patrik Andersson"));
+            appRoot.append(node);
+
+            node = document.createElementNS(dcterms, "created");
+            node.setAttributeNS(xsi, "type", "dcterms:W3CDTF");
+            node.appendChild(document.createTextNode((new Date()).toISOString()));
+            appRoot.append(node);
+
+            node = document.createElementNS(dcterms, "modified");
+            node.setAttributeNS(xsi, "type", "dcterms:W3CDTF");
+            node.appendChild(document.createTextNode((new Date()).toISOString()));
+            appRoot.append(node);
+
+            return { "docProps/core.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
+        }
+
+        function xlCreateWorkbookRels() {
+            const ns = "http://schemas.openxmlformats.org/package/2006/relationships"
+            const root = document.implementation.createDocument(ns, "Relationships");
+            let rel = root.createElementNS(ns, "RelationShip");
+            rel.setAttribute("Id", "rId1");
+            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet");
+            rel.setAttribute("Target", "worksheets/sheet1.xml");
+
+            root.documentElement.prepend(rel);
+
+            rel = root.createElementNS(ns, "RelationShip");
+            rel.setAttribute("Id", "rId2");
+            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme");
+            rel.setAttribute("Target", "theme/theme1.xml");
+            root.documentElement.prepend(rel);
+
+            rel = root.createElementNS(ns, "RelationShip");
+            rel.setAttribute("Id", "rId3");
+            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles");
+            rel.setAttribute("Target", "styles.xml");
+            root.documentElement.prepend(rel);
+
+            rel = root.createElementNS(ns, "RelationShip");
+            rel.setAttribute("Id", "rId4");
+            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings");
+            rel.setAttribute("Target", "sharedStrings.xml");
+            root.documentElement.append(rel);
+
+            return { "xl/_rels/workbook.xml.rels": XMLHeader + (new XMLSerializer()).serializeToString(root) };
+        }
+
+        function xlCreateTheme() {
+            const a = "http://schemas.openxmlformats.org/drawingml/2006/main";
+            const docRoot = document.implementation.createDocument(a, "theme");
+            const themeRoot = docRoot.documentElement;
+            theme.setAttribute("name", "Office Theme");
+            themeRoot.setAttributeNS("http://www.w3.org/2000/xmlns/", "xmlns:a", a);
+
+            const elements = document.createElementNS(a, "themeElements");
+            const clrScheme = document.createElementNS(a, "clrScheme");
+            clrScheme.setAttribute("name", "Office");
+
+            let node = document.createElementNS(a, "dk1");
+            let clr = document.createElementNS(a, "sysClr");
+            clr.setAttribute("val", "windowText");
+            clr.setAttribute("lastClr", "000000");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "lt1");
+            clr = document.createElementNS(a, "sysClr");
+            clr.setAttribute("val", "window");
+            clr.setAttribute("lastClr", "FFFFFF");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "dk2");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "44546A");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "lt2");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "E7E6E6");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "accent1");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "4472C4");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "accent2");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "ED7D31");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "accent3");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "A5A5A5");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "accent4");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "FFC000");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "accent5");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "5B9BD5");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "accent6");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "70AD47");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "hlink");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "0563C1");
+            node.append(clr);
+            clrScheme.append(node);
+
+            node = document.createElementNS(a, "folHlink");
+            clr = document.createElementNS(a, "srgb");
+            clr.setAttribute("val", "954F72");
+            node.append(clr);
+            clrScheme.append(node);
+
+            elements.append(clrScheme);
+
+            const fontScheme = document.createElementNS(a, "fontScheme");
+            fontScheme.setAttribute("name", "Office");
+            const majorFont = document.createElementNS(a, "majorFont");
+            fontScheme.append(majorFont);
+
+            let font = document.createElementNS(a, "latin");
+            font.setAttribute("typeface", "Calibri");
+            font.setAttribute("panose", "020F0302020204030204");
+            majorFont.append(font);
+
+            font = document.createElementNS(a, "ea");
+            font.setAttribute("typeface", "");
+            majorFont.append(font);
+
+            font = document.createElementNS(a, "cs");
+            font.setAttribute("typeface", "");
+            majorFont.append(font);
+
+            majorFont.append(newFont(a, "Jpan", "游ゴシック Light"));
+            majorFont.append(newFont(a, "Hang", "맑은 고딕"));
+            majorFont.append(newFont(a, "Hans", "等线 Light"));
+            majorFont.append(newFont(a, "Hant", "新細明體"));
+            majorFont.append(newFont(a, "Arab", "Times New Roman"));
+            majorFont.append(newFont(a, "Hebr", "Times New Roman"));
+            majorFont.append(newFont(a, "Thai", "Tahoma"));
+            majorFont.append(newFont(a, "Ethi", "Nyala"));
+            majorFont.append(newFont(a, "Beng", "Vrinda"));
+            majorFont.append(newFont(a, "Gujr", "Shruti"));
+            majorFont.append(newFont(a, "Khmr", "MoolBoran"));
+            majorFont.append(newFont(a, "Knda", "Tunga"));
+            majorFont.append(newFont(a, "Guru", "Raavi"));
+            majorFont.append(newFont(a, "Cans", "Euphemia"));
+            majorFont.append(newFont(a, "Cher", "Plantagenet Cherokee"));
+            majorFont.append(newFont(a, "Yiii", "Microsoft Yi Baiti"));
+            majorFont.append(newFont(a, "Tibt", "Microsoft Himalaya"));
+            majorFont.append(newFont(a, "Thaa", "MV Boli"));
+            majorFont.append(newFont(a, "Deva", "Mangal"));
+            majorFont.append(newFont(a, "Telu", "Gautami"));
+            majorFont.append(newFont(a, "Taml", "Latha"));
+            majorFont.append(newFont(a, "Syrc", "Estrangelo Edessa"));
+            majorFont.append(newFont(a, "Orya", "Kalinga"));
+            majorFont.append(newFont(a, "Mlym", "Kartika"));
+            majorFont.append(newFont(a, "Laoo", "DokChampa"));
+            majorFont.append(newFont(a, "Sinh", "Iskoola Pota"));
+            majorFont.append(newFont(a, "Mong", "Mongolian Baiti"));
+            majorFont.append(newFont(a, "Viet", "Times New Roman"));
+            majorFont.append(newFont(a, "Uigh", "Microsoft Uighur"));
+            majorFont.append(newFont(a, "Geor", "Sylfaen"));
+            majorFont.append(newFont(a, "Armn", "Arial"));
+            majorFont.append(newFont(a, "Bugi", "Leelawadee UI"));
+            majorFont.append(newFont(a, "Bopo", "Microsoft JhengHei"));
+            majorFont.append(newFont(a, "Java", "Javanese Text"));
+            majorFont.append(newFont(a, "Lisu", "Segoe UI"));
+            majorFont.append(newFont(a, "Mymr", "Myanmar Text"));
+            majorFont.append(newFont(a, "Nkoo", "Ebrima"));
+            majorFont.append(newFont(a, "Olck", "Nirmala UI"));
+            majorFont.append(newFont(a, "Osma", "Ebrima"));
+            majorFont.append(newFont(a, "Phag", "Phagspa"));
+            majorFont.append(newFont(a, "Syrn", "Estrangelo Edessa"));
+            majorFont.append(newFont(a, "Syrj", "Estrangelo Edessa"));
+            majorFont.append(newFont(a, "Syre", "Estrangelo Edessa"));
+            majorFont.append(newFont(a, "Sora", "Nirmala UI"));
+            majorFont.append(newFont(a, "Tale", "Microsoft Tai Le"));
+            majorFont.append(newFont(a, "Talu", "Microsoft New Tai Lue"));
+            majorFont.append(newFont(a, "Tfng", "Ebrima"));
+
+            const minorFont = document.createElementNS(a, "minorFont");
+            fontScheme.append(minorFont);
+
+            font = document.createElementNS(a, "latin");
+            font.setAttribute("typeface", "Calibri");
+            font.setAttribute("panose", "020F0302020204030204");
+            majorFont.append(font);
+
+            font = document.createElementNS(a, "ea");
+            font.setAttribute("typeface", "");
+            majorFont.append(font);
+
+            font = document.createElementNS(a, "cs");
+            font.setAttribute("typeface", "");
+            majorFont.append(font);
+
+            minorFont.append(newFont("Jpan", "游ゴシック"));
+            minorFont.append(newFont("Hang", "맑은 고딕"));
+            minorFont.append(newFont("Hans", "等线"));
+            minorFont.append(newFont("Hant", "新細明體"));
+            minorFont.append(newFont("Arab", "Arial"));
+            minorFont.append(newFont("Hebr", "Arial"));
+            minorFont.append(newFont("Thai", "Tahoma"));
+            minorFont.append(newFont("Ethi", "Nyala"));
+            minorFont.append(newFont("Beng", "Vrinda"));
+            minorFont.append(newFont("Gujr", "Shruti"));
+            minorFont.append(newFont("Khmr", "DaunPenh"));
+            minorFont.append(newFont("Knda", "Tunga"));
+            minorFont.append(newFont("Guru", "Raavi"));
+            minorFont.append(newFont("Cans", "Euphemia"));
+            minorFont.append(newFont("Cher", "Plantagenet Cherokee"));
+            minorFont.append(newFont("Yiii", "Microsoft Yi Baiti"));
+            minorFont.append(newFont("Tibt", "Microsoft Himalaya"));
+            minorFont.append(newFont("Thaa", "MV Boli"));
+            minorFont.append(newFont("Deva", "Mangal"));
+            minorFont.append(newFont("Telu", "Gautami"));
+            minorFont.append(newFont("Taml", "Latha"));
+            minorFont.append(newFont("Syrc", "Estrangelo Edessa"));
+            minorFont.append(newFont("Orya", "Kalinga"));
+            minorFont.append(newFont("Mlym", "Kartika"));
+            minorFont.append(newFont("Laoo", "DokChampa"));
+            minorFont.append(newFont("Sinh", "Iskoola Pota"));
+            minorFont.append(newFont("Mong", "Mongolian Baiti"));
+            minorFont.append(newFont("Viet", "Arial"));
+            minorFont.append(newFont("Uigh", "Microsoft Uighur"));
+            minorFont.append(newFont("Geor", "Sylfaen"));
+            minorFont.append(newFont("Armn", "Arial"));
+            minorFont.append(newFont("Bugi", "Leelawadee UI"));
+            minorFont.append(newFont("Bopo", "Microsoft JhengHei"));
+            minorFont.append(newFont("Java", "Javanese Text"));
+            minorFont.append(newFont("Lisu", "Segoe UI"));
+            minorFont.append(newFont("Mymr", "Myanmar Text"));
+            minorFont.append(newFont("Nkoo", "Ebrima"));
+            minorFont.append(newFont("Olck", "Nirmala UI"));
+            minorFont.append(newFont("Osma", "Ebrima"));
+            minorFont.append(newFont("Phag", "Phagspa"));
+            minorFont.append(newFont("Syrn", "Estrangelo Edessa"));
+            minorFont.append(newFont("Syrj", "Estrangelo Edessa"));
+            minorFont.append(newFont("Syre", "Estrangelo Edessa"));
+            minorFont.append(newFont("Sora", "Nirmala UI"));
+            minorFont.append(newFont("Tale", "Microsoft Tai Le"));
+            minorFont.append(newFont("Talu", "Microsoft New Tai Lue"));
+            minorFont.append(newFont("Tfng", "Ebrima"));
+
+            const fmtScheme = document.createElementNS(a, "fmtScheme");
+            fmtScheme.setAttribute("name", "Office");
+            elements.append(fmtScheme);
+            let styleList = document.createElementNS(a, "fillStyleLst");
+            let fill = document.createElementNS(a, "solidFill");
+            clr = document.createElement(a, "schemeClr");
+            clr.setAttribute("val", "phClr");
+            fill.append(clr);
+            styleList.append(fill);
+
+            fill = document.createElementNS(a, "gradFill");
+            fill.setAttribute("rotWithShape", "1");
+            let gsList = document.createElementNS(a, "gsLst");
+            let gs = newGSPos(a, 0);
+            gs.append(newSchemeColor(a, { lum: "110000", sat: "105000", tint: "67000" }));
+            gsList.append(gs);
+            gs = newGSPos(a, 50000);
+            gs.append(newSchemeColor(a, { lum: "105000", sat: "103000", tint: "73000" }));
+            gsList.append(gs);
+            gs = newGSPos(a, 100000);
+            gs.append(newSchemeColor(a, { lum: "105000", sat: "109000", tint: "81000" }));
+            gsList.append(gs);
+            fill.append(gsList);
+            node = document.createElementNS(a, "lin");
+            node.setAttribute("ang", "5400000");
+            node.setAttribute("scaled", "0");
+            fill.append(node);
+            styleList.append(fill);
+
+            fill = document.createElementNS(a, "gradFill");
+            fill.setAttribute("rotWithShape", "1");
+            gsList = document.createElementNS(a, "gsLst");
+            gs = newGSPos(a, 0);
+            gs.append(newSchemeColor(a, { lum: "102000", sat: "103000", tint: "94000" }));
+            gsList.append(gs);
+            gs = newGSPos(a, 50000);
+            gs.append(newSchemeColor(a, { lum: "100000", sat: "110000", shade: "100000" }));
+            gsList.append(gs);
+            gs = newGSPos(a, 100000);
+            gs.append(newSchemeColor(a, { lum: "99000", sat: "120000", shade: "78000" }));
+            gsList.append(gs);
+            styleList.append(gsList);
+            node = document.createElementNS(a, "lin");
+            node.setAttribute("ang", "5400000");
+            node.setAttribute("scaled", "0");
+            styleList.append(node);
+
+
+
+            styleList.append(fill);
+        }
+
+        function newFont(ns, script, typeface) {
+            const font = document.createElementNS(ns, "font");
+            font.setAttribute("script", script);
+            font.setAttribute("typeface", typeface);
+            return font;
+        }
+
+        function newSchemeColor(ns, options) {
+            const clr = document.createElementNS(ns, "schemeClr");
+            clr.setAttribute("val", "phClr");
+            const lumMod = document.createElementNS(ns, "lumMod");
+            lumMod.setAttribute("val", (options.lum) ? options.lum : "");
+            const satMod = document.createElementNS(ns, "satMod");
+            satMod.setAttribute("val", (options.sat) ? options.sat : "");
+            const tintEl = document.createElementNS(ns, "tint");
+            tintEl.setAttribute("val", (options.tint) ? options.tint : "");
+            const shadeEl = document.createElementNS(ns, "shade");
+            shadeEl.setAttribute("val", (options.shade) ? options.shade : "");
+            if (options.lum) clr.append(lumMod);
+            if (options.sat) clr.append(satMod);
+            if (options.tint) clr.append(tintEl);
+            if (options.shade) clr.append(shadeEl);
+            return clr;
+        }
+
+        function newGSPos(ns, pos) {
+            const gs = document.createElementNS(ns, "gs");
+            gs.setAttribute("pos", pos);
         }
     </script>
     <script>
@@ -609,6 +1089,10 @@
                 document.getElementById("loadedSork").classList.add("hide");
             }
         }
+
+        function xmlGen() {
+            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels()]
+        }
     </script>
 </head>
 
@@ -743,7 +1227,7 @@
             </div>
         </div>
         <div class="hide container" id="tableContainer">
-            <table id="sorkkTable">
+            <table id="sorkkTable" class="transpose">
                 <thead>
                     <tr>
                         <th scope="col">Ingående Känsla</th>
