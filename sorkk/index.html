@@ -1004,7 +1004,7 @@
             return gs;
         }
 
-        function xlCreateWorksheets() {
+        function xlCreateWorkbook() {
             const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
             const r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
             const mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -1018,7 +1018,7 @@
             const worksheets = docRoot.documentElement;
             worksheets.setAttributeNS(xmlns, "xmlns:r", r);
             worksheets.setAttributeNS(xmlns, "xmlns:mc", mc);
-            worksheets.setAttributeNS(xmlns, "Ignorable", "x15 xr xr6 xr10 xr2");
+            worksheets.setAttributeNS(mc, "Ignorable", "x15 xr xr6 xr10 xr2");
             worksheets.setAttributeNS(xmlns, "xmlns:x15", x15);
             worksheets.setAttributeNS(xmlns, "xmlns:xr", xr);
             worksheets.setAttributeNS(xmlns, "xmlns:xr6", xr6);
@@ -1037,7 +1037,7 @@
             node.setAttribute("defaultThemeVersion", "166925");
             worksheets.append(node);
 
-            node = document.createElementNS(ns, "AlternateContent");
+            node = document.createElementNS(mc, "AlternateContent");
             node.setAttributeNS(xmlns, "xmlns:mc", mc);
             worksheets.append(node);
 
@@ -1048,7 +1048,7 @@
             absPath.setAttribute("url", "C:\\Temp\\sorkk\\");
             absPath.setAttributeNS(xmlns, "xmlns:x15ac", x15ac);
             choice.append(absPath);
-            node.append(absPath);
+            node.append(choice);
             worksheets.append(node);
 
             node = document.createElementNS(xr, "revisionPtr");
@@ -1058,6 +1058,68 @@
             node.setAttributeNS(xr6, "coauthVersionMax", "47");
             node.setAttributeNS(xr10, "uidLastSave", "{00000000-0000-0000-0000-000000000000}");
             worksheets.append(node);
+
+            node = document.createElementNS(ns, "bookViews");
+            const workbookView = document.createElementNS(ns, "workbookView");
+            workbookView.setAttribute("xWindow", "390");
+            workbookView.setAttribute("yWindow", "390");
+            workbookView.setAttribute("windowWidth", "38160");
+            workbookView.setAttribute("windowHeight", "20640");
+            workbookView.setAttributeNS(xr2, "uid", "{187A1CB2-544C-4454-8DF2-1F2656C9F38F}");
+            node.append(workbookView);
+            worksheets.append(node);
+
+            node = document.createElementNS(ns, "sheets");
+            const sheet = document.createElementNS(ns, "sheet");
+            sheet.setAttribute("name", "Sheet1");
+            sheet.setAttribute("sheetId", "1");
+            sheet.setAttributeNS(r, "id", "rId1");
+            node.append(sheet);
+            worksheets.append(node);
+
+            node = document.createElementNS(ns, "calcPr");
+            node.setAttribute("calcId", "191029");
+            worksheets.append(node);
+
+            node = document.createElementNS(ns, "extLst");
+            let ext = document.createElementNS(ns, "ext");
+            ext.setAttribute("uri", "{140A7094-0E35-4892-8432-C4D2E57EDEB5}");
+            ext.setAttributeNS(xmlns, "xmlns:x15", x15);
+            let feature = document.createElementNS(x15, "workbookPr");
+            feature.setAttribute("chartTrackingRefBase", "1");
+            ext.append(feature);
+            node.append(ext);
+            ext = document.createElementNS(ns, "ext");
+            ext.setAttribute("uri", "{B58B0392-4F1F-4190-BB64-5DF3571DCE5F}");
+            const xcalcf = "http://schemas.microsoft.com/office/spreadsheetml/2018/calcfeatures";
+            ext.setAttributeNS(xmlns, "xmlns:xcalcf", xcalcf);
+            const features = document.createElementNS(xcalcf, "calcFeatures");
+            feature = document.createElementNS(xcalcf, "feature");
+            feature.setAttribute("name", "microsoft.com:RD");
+            features.append(feature);
+            feature = document.createElementNS(xcalcf, "feature");
+            feature.setAttribute("name", "microsoft.com:Single");
+            features.append(feature);
+            feature = document.createElementNS(xcalcf, "feature");
+            feature.setAttribute("name", "microsoft.com:FV");
+            features.append(feature);
+            feature = document.createElementNS(xcalcf, "feature");
+            feature.setAttribute("name", "microsoft.com:CNMTM");
+            features.append(feature);
+            feature = document.createElementNS(xcalcf, "feature");
+            feature.setAttribute("name", "microsoft.com:LET_WF");
+            features.append(feature);
+            feature = document.createElementNS(xcalcf, "feature");
+            feature.setAttribute("name", "microsoft.com:LAMBDA_WF");
+            features.append(feature);
+            feature = document.createElementNS(xcalcf, "feature");
+            feature.setAttribute("name", "microsoft.com:ARRAYTEXT_WF");
+            features.append(feature);
+            ext.append(features);
+            node.append(ext);
+            worksheets.append(node);
+
+            return { "xl/workbook.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
         }
 
         function UUID() {
@@ -1300,7 +1362,7 @@
         }
 
         function xmlGen() {
-            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels(), xlCreateTheme()]
+            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels(), xlCreateTheme(), xlCreateWorkbook()]
         }
     </script>
 </head>
