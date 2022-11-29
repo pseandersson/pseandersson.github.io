@@ -1026,7 +1026,7 @@
             worksheets.setAttributeNS(xmlns, "xmlns:xr2", xr2);
 
             let node = document.createElementNS(ns, "fileVersion");
-            node.setAttribute("appName","xl");
+            node.setAttribute("appName", "xl");
             node.setAttribute("lastEdited", "7");
             node.setAttribute("lowestEdited", "7");
             node.setAttribute("rupBuild", "25726");
@@ -1122,10 +1122,249 @@
             return { "xl/workbook.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
         }
 
+        function xlCreateStyles() {
+            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+            const r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+            const mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
+            const x14 = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"
+            const x14ac = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
+            const x15 = "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main"
+            const x16r2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/02/main"
+            const xr = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
+            const xr2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
+            const xr3 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
+
+            const docRoot = document.implementation.createDocument(ns, "styleSheet");
+            const styles = docRoot.documentElement;
+            styles.setAttributeNS(xmlns, "xmlns:r", r);
+            styles.setAttributeNS(xmlns, "xmlns:mc", mc);
+            styles.setAttributeNS(mc, "Ignorable", "x14ac x16r2 xr");
+            styles.setAttributeNS(xmlns, "xmlns:x14ac", x15);
+            styles.setAttributeNS(xmlns, "xmlns:x16r2", x16r2);
+            styles.setAttributeNS(xmlns, "xmlns:xr", xr);
+
+            let node = document.createElementNS(ns, "fonts");
+            node.setAttribute("count", 2);
+            node.setAttributeNS(x14ac, "knownFonts", "1");
+            let font = document.createElementNS(ns, "font");
+            let prop = document.createElementNS(ns, "sz");
+            prop.setAttribute("val", "11");
+            font.append(prop);
+            prop = document.createElementNS(ns, "color");
+            prop.setAttribute("theme", "1");
+            font.append(prop);
+            prop = document.createElementNS(ns, "name");
+            prop.setAttribute("val", "Calibri");
+            font.append(prop);
+            prop = document.createElementNS(ns, "family");
+            prop.setAttribute("val", "2");
+            font.append(prop);
+            prop = document.createElementNS(ns, "scheme");
+            prop.setAttribute("val", "minor");
+            font.append(prop);
+            node.append(font);
+            node.append(font.cloneNode(true));
+            styles.append(node);
+
+            node = document.createElementNS(ns, "fills");
+            node.setAttribute("count", "2");
+            let fill = document.createElementNS(ns, "fill");
+            prop = document.createElementNS(ns, "patternFill");
+            prop.setAttribute("patternType", "none");
+            fill.append(prop);
+            node.append(fill);
+
+            fill = document.createElementNS(ns, "fill");
+            prop = document.createElementNS(ns, "patternFill");
+            prop.setAttribute("patternType", "gray125");
+            fill.append(prop);
+            node.append(fill);
+            styles.append(node);
+
+            node = document.createElementNS(ns, "borders");
+            node.setAttribute("count", 1);
+            prop = document.createElementNS(ns, "border");
+            prop.append(document.createElementNS(ns, "left"));
+            prop.append(document.createElementNS(ns, "right"));
+            prop.append(document.createElementNS(ns, "top"));
+            prop.append(document.createElementNS(ns, "bottom"));
+            prop.append(document.createElementNS(ns, "diagonal"));
+            node.append(prop);
+            styles.append(node);
+
+            node = document.createElementNS(ns, "cellStyleXfs");
+            node.setAttribute("count", "1");
+            prop = document.createElementNS(ns, "xf");
+            prop.setAttribute("numFmtId", "0");
+            prop.setAttribute("fontId", "0");
+            prop.setAttribute("fillId", "0");
+            prop.setAttribute("borderId", "0");
+            node.append(prop);
+            styles.append(node);
+
+            node = document.createElementNS(ns, "cellXfs");
+            node.setAttribute("count", 4);
+            prop = document.createElementNS(ns, "xf");
+            prop.setAttribute("numFmtId", "0");
+            prop.setAttribute("fontId", "0");
+            prop.setAttribute("fillId", "0");
+            prop.setAttribute("borderId", "0");
+            node.append(prop);
+            prop = document.createElementNS(ns, "xf");
+            prop.setAttribute("numFmtId", "0");
+            prop.setAttribute("fontId", "1");
+            prop.setAttribute("fillId", "0");
+            prop.setAttribute("borderId", "0");
+            prop.setAttribute("applyFont", "1");
+            prop.setAttribute("applyAlignment", "1");
+            let subprop = document.createElementNS(ns, "alignment");
+            subprop.setAttribute("horizontal", "center");
+            subprop.setAttribute("vertical", "center");
+            subprop.setAttribute("wrapText", "1");
+            prop.append(subprop);
+            node.append(prop);
+            prop = document.createElementNS(ns, "xf");
+            prop.setAttribute("numFmtId", "0");
+            prop.setAttribute("fontId", "0");
+            prop.setAttribute("fillId", "0");
+            prop.setAttribute("borderId", "0");
+            prop.setAttribute("applyAlignment", "1");
+            subprop = document.createElementNS(ns, "alignment");
+            subprop.setAttribute("vertical", "center");
+            subprop.setAttribute("wrapText", "1");
+            prop.append(subprop);
+            node.append(prop);
+            prop = document.createElementNS(ns, "xf");
+            prop.setAttribute("numFmtId", "0");
+            prop.setAttribute("fontId", "1");
+            prop.setAttribute("fillId", "0");
+            prop.setAttribute("borderId", "0");
+            prop.setAttribute("applyFont", "1");
+            prop.setAttribute("applyAlignment", "1");
+            subprop = document.createElementNS(ns, "alignment");
+            subprop.setAttribute("horizontal", "center");
+            subprop.setAttribute("vertical", "center");
+            subprop.setAttribute("wrapText", "1");
+            prop.append(subprop);
+            node.append(prop);
+            styles.append(node);
+
+            node = document.createElementNS(ns, "cellStyles");
+            node.setAttribute("count", "1");
+            prop = document.createElementNS(ns, "cellStyle");
+            prop.setAttribute("name", "Normal");
+            prop.setAttribute("xfId", "0");
+            prop.setAttribute("builtinId", "0");
+            node.append(prop);
+            styles.append(node);
+
+            node = document.createElementNS(ns, "dxfs");
+            node.setAttribute("count", "0");
+            styles.append(node);
+
+            node = document.createElementNS(ns, "tableStyles");
+            node.setAttribute("count", "0");
+            node.setAttribute("defaultTableStyle", "TableStyleMedium2");
+            node.setAttribute("defaultPivotStyle", "PivotStyleLight16");
+            styles.append(node);
+
+            node = document.createElementNS(ns, "extLst");
+            prop = document.createElementNS(ns, "ext");
+            prop.setAttribute("uri", "{EB79DEF2-80B8-43e5-95BD-54CBDDF9020C}");
+            prop.setAttributeNS(xmlns, "xmlns:x14", x14);
+            subprop = document.createElementNS(x14, "slicerStyles");
+            subprop.setAttribute("defaultSlicerStyle", "SlicerStyleLight1");
+            prop.append(subprop);
+            node.append(prop);
+            prop = document.createElementNS(ns, "ext");
+            prop.setAttribute("uri", "{9260A510-F301-46a8-8635-F512D64BE5F5}");
+            prop.setAttributeNS(xmlns, "xmlns:x15", x15);
+            subprop = document.createElementNS(x15, "timlineStyles");
+            subprop.setAttribute("defaultTimelinenStyle", "TimeSlicerStyleLight1");
+            prop.append(subprop);
+            node.append(prop);
+            styles.append(node);
+
+            return { "xl/styles.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
+        }
+
+        function xlCreateSharedStrings() {
+            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+            const docRoot = document.implementation.createDocument(ns, "sst");
+            const sst = docRoot.documentElement;
+            sst.setAttribute("count", "");
+            sst.setAttribute("uniqueCount", "");
+
+            const textNode = function (str) {
+                const si = document.createElementNS(ns, "si");
+                const t = document.createElementNS(ns, "t");
+                t.append(document.createTextNode(str));
+                si.append(t);
+                return si;
+            }
+
+            sst.append(textNode("test"));
+
+            return { "xl/sharedStrings.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
+        }
+
+        function xlCreateContentTypes() {
+            const ns = "http://schemas.openxmlformats.org/package/2006/content-types";
+            const docRoot = document.implementation.createDocument(ns, "Types");
+            const types = docRoot.documentElement;
+            let node = document.createElementNS(ns, "Default");
+            node.setAttribute("Extension", "rels");
+            node.setAttribute("ContentType", "application/vnd.openxmlformats-package.relationships+xml");
+            types.append(node);
+
+            node = document.createElementNS(ns, "Default");
+            node.setAttribute("Extension", "xml");
+            node.setAttribute("ContentType", "application/xml");
+            types.append(node);
+
+            const override = function (partName, contentType) {
+                const n = document.createElementNS(ns, "Override");
+                n.setAttribute("PartName", partName);
+                n.setAttribute("ContentType", contentType);
+                return n;
+            }
+
+            types.append(override("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"));
+            types.append(override("/xl/worksheets/sheet1.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"));
+            types.append(override("/xl/theme/theme1.xml", "application/vnd.openxmlformats-officedocument.theme+xml"));
+            types.append(override("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"));
+            types.append(override("/xl/sharedStrings.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"));
+            types.append(override("/docProps/core.xml", "application/vnd.openxmlformats-package.core-properties+xml"));
+            types.append(override("/docProps/app.xml", "application/vnd.openxmlformats-officedocument.extended-properties+xml"));
+
+            return { "[Content_Types].xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
+        }
+
+        function xlCreateWorksheet() {
+            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
+            const r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+            const mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
+            const x14ac = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
+            const xr = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
+            const xr2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
+            const xr3 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
+
+            const docRoot = document.implementation.createDocument(ns, "work");
+            const sheet = docRoot.documentElement;
+            sheet.setAttributeNS(xmlns, "xmlns:r", r);
+            sheet.setAttributeNS(xmlns, "xmlns:mc", mc);
+            sheet.setAttributeNS(mc, "Ignorable", "x14ac xr xr2 xr3");
+            sheet.setAttributeNS(xmlns, "xmlns:x14ac", x15);
+            sheet.setAttributeNS(xmlns, "xmlns:xr", xr);
+            sheet.setAttributeNS(xmlns, "xmlns:xr2", x2);
+            sheet.setAttributeNS(xmlns, "xmlns:xr3", xr3);
+            sheet.setAttributeNS(xr, "uid", "{03A428F4-4357-45F3-A061-8AD5C5DD8E68}");
+        }
+
         function UUID() {
-            const a = function () { return Math.round(Math.random()*0xEFFF + 0x1000).toString(16) };
-            const b = function () { return Math.round(Math.random()*0x4f + 0x10).toString(16) };
-            const c = function () { return Math.round(Math.random()*0xEF + 0x10).toString(16) };
+            const a = function () { return Math.round(Math.random() * 0xEFFF + 0x1000).toString(16) };
+            const b = function () { return Math.round(Math.random() * 0x4f + 0x10).toString(16) };
+            const c = function () { return Math.round(Math.random() * 0xEF + 0x10).toString(16) };
 
             return (a() + a() + "-" + a() + "-" + b() + c() + "-" + b() + c() + "-" + a() + a() + a()).toUpperCase();
         }
@@ -1362,7 +1601,7 @@
         }
 
         function xmlGen() {
-            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels(), xlCreateTheme(), xlCreateWorkbook()]
+            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels(), xlCreateTheme(), xlCreateWorkbook(), xlCreateSharedStrings()]
         }
     </script>
 </head>
