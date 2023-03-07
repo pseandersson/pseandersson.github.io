@@ -262,6 +262,47 @@
             word-wrap: break-word;
             white-space: pre-wrap;
         }
+
+        @media print {
+            #sorkkTable { display: none; }
+            table { display: none;}
+            #footer { display: none;}
+
+            #toolbox { display: none; }
+            #addRow { display: none; }
+            h1 { font-size: small;}
+            #header .container p { display: none;}
+            /* #section > .container {
+                display: none;
+            } */
+            #toolbar.container { display: none; }
+            #tableContainer.container { display: none; }
+            #cardDeck.container {
+                flex-wrap: nowrap;
+                flex-grow: 1;
+            }
+            #section {
+                flex-grow: 1;
+            }
+
+            .card {
+                border: #0c0c0c solid 1pt;
+                flex-grow: 1;
+                min-height: auto;
+
+                max-height: none;
+            }
+            #cardDeck {
+                height: 100%;
+                display: flex;
+            }
+            #spacer {
+                /* border: 1pt solid cyan */
+                display: none;
+            }
+            .card > h2 { font-size: medium;}
+            .card > h3 { font-size: small;}
+        }
     </style>
     <script src="https://cdn.jsdelivr.net/pako/1.0.5/pako.min.js"></script>
     <script type="text/javascript"
@@ -1429,10 +1470,10 @@
                 && sorkkObj.consequences.long
         }
 
-        function saveSORKKToList() {
+        function saveSORKKToList(loadedSork) {
             // window.top.location = window.location.protocol + "//" + window.location.host + window.location.pathname
             const tableBody = document.getElementById("sorkkTableBody");
-            sorkkObj = getCurrentSORKK();
+            sorkkObj = loadedSork || getCurrentSORKK();
 
             if (!isEverySORKKFiledPopulated(sorkkObj)) {
                 return;
@@ -1587,9 +1628,18 @@
                 try {
                     const data64 = (isUtf16String) ? selfUrl.searchParams.get("d") : selfUrl.searchParams.get("s");
                     decode(data64, isUtf16String).then(sorkkObj => {
-                        disableEditing();
-                        showSORKK(sorkkObj);
-                        document.getElementById("shareSorkk").classList.add("hide");
+                        if (sorkkObj !== undefined) {
+                            if (sorkkObj instanceof Array) {
+                                sorkkObj.forEach( sorkk => {
+                                    saveSORKKToList(sorkk);
+                                })
+                            } else {
+                                saveSORKKToList(sorkkObj)
+                            }
+                            showAllSORKKs();
+                            disableEditing();
+                            document.getElementById("shareSorkk").classList.add("hide");
+                        }
                     })
                 } catch (err) {
                     console.log("error:", err);
