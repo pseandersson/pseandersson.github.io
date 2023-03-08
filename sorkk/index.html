@@ -223,10 +223,6 @@
             vertical-align: baseline;
         }
 
-        a#export:hover {
-            text-decoration: underline;
-        }
-
         /* .transpose > thead {
             display: block;
             float: left;
@@ -1640,11 +1636,14 @@
             for (let i = 0; i < controls.length; i++) {
                 controls.item(i).classList.add("hide");
             }
-            const readOnlys = document.getElementsByClassName("viewModeOnly");
-            for (let i = 0; i < readOnlys.length; i++) {
-                readOnlys.item(i).classList.add("hide");
+            const viewModeOnlys = document.getElementsByClassName("viewModeOnly");
+            for (let i = 0; i < viewModeOnlys.length; i++) {
+                viewModeOnlys.item(i).classList.add("hide");
             }
-            document.getElementById("export").classList.remove("hide");
+            const readOnlys = document.getElementsByClassName("readOnly");
+            for (let i = 0; i < readOnlys.length; i++) {
+                readOnlys.item(i).classList.remove("hide");
+            }
         }
 
         function showSORKK(row, sorkkObj) {
@@ -1787,14 +1786,14 @@
                     Ingående Känsla
                 </h2>
                 <textarea id="ingoingFeeling" class="editModeOnly"></textarea>
-                <p id="ingoingFeelingP" class="viewModeOnly hide"></p>
+                <p id="ingoingFeelingP" class="viewModeOnly readOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Situation
                 </h2>
                 <textarea id="situation" class="editModeOnly"></textarea>
-                <p id="situationP" class="viewModeOnly hide"></p>
+                <p id="situationP" class="viewModeOnly readOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
@@ -1802,20 +1801,20 @@
                 </h2>
                 <h3>Vad tänker jag?</h3>
                 <textarea id="whatDoIThink" class="editModeOnly"></textarea>
-                <p id="whatDoIThinkP" class="viewModeOnly hide"></p>
+                <p id="whatDoIThinkP" class="viewModeOnly readOnly hide"></p>
                 <h3>Vad känner jag?</h3>
                 <textarea id="whatDoIFeel" class="editModeOnly"></textarea>
-                <p id="whatDoIFeelP" class="viewModeOnly hide"></p>
+                <p id="whatDoIFeelP" class="viewModeOnly readOnly hide"></p>
                 <h3>Vad får jag för fysiska reaktioner?</h3>
                 <textarea id="bodyReactions" class="editModeOnly"></textarea>
-                <p id="bodyReactionsP" class="viewModeOnly hide"></p>
+                <p id="bodyReactionsP" class="viewModeOnly readOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
                     Reaktion
                 </h2>
                 <textarea id="reaction" class="editModeOnly"></textarea>
-                <p id="reactionP" class="viewModeOnly hide"></p>
+                <p id="reactionP" class="viewModeOnly readOnly hide"></p>
             </div>
             <div class="card">
                 <h2>
@@ -1823,10 +1822,10 @@
                 </h2>
                 <h3>Kort Konsekvens</h3>
                 <textarea id="shortConsequence" class="editModeOnly"></textarea>
-                <p id="shortConsequenceP" class="viewModeOnly hide"></p>
+                <p id="shortConsequenceP" class="viewModeOnly readOnly hide"></p>
                 <h3>Långsiktig Konsekvens</h3>
                 <textarea id="longConsequence" class="editModeOnly"></textarea>
-                <p id="longConsequenceP" class="viewModeOnly hide"></p>
+                <p id="longConsequenceP" class="viewModeOnly readOnly hide"></p>
             </div>
         </div>
         <div class="container" id="toolbar">
@@ -1837,7 +1836,7 @@
                 <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Skapa en ny SORKK</button>
                 <button onclick="showAllSORKKs()" class="editModeOnly">Visa alla SORKK:ar</button>
                 <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Dölj alla SORKK:ar</button>
-                <a href="#" onclick="exportXLSX(this)" id="export" class="viewModeOnly hide">Exportera Till Excel</a>
+                <a href="#" onclick="exportXLSX(this)" class="viewModeOnly readOnly hide">Exportera Till Excel</a>
             </div>
         </div>
         <div class="hide container" id="tableContainer">
