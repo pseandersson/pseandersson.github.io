@@ -223,6 +223,10 @@
             vertical-align: baseline;
         }
 
+        a#export:hover {
+            text-decoration: underline;
+        }
+
         /* .transpose > thead {
             display: block;
             float: left;
@@ -1548,9 +1552,38 @@
                 }
             }
         }
+        function getAllSORKKs() {
+            const tableBody = document.getElementById("sorkkTableBody");
+            var sorkks = new Array();
+
+            tableBody.childNodes.forEach(row => {
+                if (!(row instanceof Text)) {
+                    jsonString = row.getAttribute("onclick").substring("showSORKK(this, ".length);
+                    jsonString = jsonString.substring(0, jsonString.length - 1);
+                    sorkks.push(JSON.parse(jsonString));
+                }
+            });
+            if (sorkks.length === 0) {
+                return undefined;
+            }
+            else if (sorkks.length === 1) {
+                return sorkks[0];
+            } else {
+                return sorkks;
+            }
+        }
 
         function shareSORKK() {
-            const sorkkObj = getCurrentSORKK();
+            const currentSorkk = getCurrentSORKK();
+            let sorkkObj = getAllSORKKs() || currentSorkk
+
+            if (currentSorkk !== currentSorkk && isEverySORKKFiledPopulated(currentSorkk)) {
+                if (sorkkObj instanceof Array) {
+                    sorkkObj.push(currentSorkk);
+                } else {
+                    sorkkObj = [sorkkObj, currentSorkk];
+                }
+            }
 
             encode(sorkkObj).then(result => {
                 const url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + (result.isUtf16String ? "d" : "s") + "=" + encodeURIComponent(result.encodedData);
@@ -1582,6 +1615,7 @@
         function disableEditing() {
             const controls = document.getElementsByClassName("editModeOnly");
             for (let i = 0; i < controls.length; i++) {
+                console.log("Disable item", controls.item(i));
                 controls.item(i).classList.add("hide");
             }
             const readOnlys = document.getElementsByClassName("viewModeOnly");
@@ -1599,6 +1633,18 @@
             for (let i = 0; i < readOnlys.length; i++) {
                 readOnlys.item(i).classList.add("hide");
             }
+        }
+
+        function enableReadOnly() {
+            const controls = document.getElementsByClassName("editModeOnly");
+            for (let i = 0; i < controls.length; i++) {
+                controls.item(i).classList.add("hide");
+            }
+            const readOnlys = document.getElementsByClassName("viewModeOnly");
+            for (let i = 0; i < readOnlys.length; i++) {
+                readOnlys.item(i).classList.add("hide");
+            }
+            document.getElementById("export").classList.remove("hide");
         }
 
         function showSORKK(row, sorkkObj) {
@@ -1637,7 +1683,7 @@
                                 saveSORKKToList(sorkkObj)
                             }
                             showAllSORKKs();
-                            disableEditing();
+                            enableReadOnly();
                             document.getElementById("shareSorkk").classList.add("hide");
                         }
                     })
@@ -1652,6 +1698,14 @@
 
         function xmlGen() {
             return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels(), xlCreateTheme(), xlCreateWorkbook(), xlCreateSharedStrings()]
+        }
+
+        function newSORKK() {
+            const selfUrl = new URL(window.location.href);
+            console.log("selfURL", selfUrl)
+            selfUrl.search =""
+            console.log("newURL", selfUrl)
+            window.location.assign(selfUrl);
         }
     </script>
 </head>
@@ -1783,7 +1837,7 @@
                 <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Skapa en ny SORKK</button>
                 <button onclick="showAllSORKKs()" class="editModeOnly">Visa alla SORKK:ar</button>
                 <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Dölj alla SORKK:ar</button>
-                <a onclick="exportXLSX(this)" class="viewModeOnly hide">Exportera Till Excel</a>
+                <a href="#" onclick="exportXLSX(this)" id="export" class="viewModeOnly hide">Exportera Till Excel</a>
             </div>
         </div>
         <div class="hide container" id="tableContainer">
@@ -1827,7 +1881,7 @@
     </div>
     <div id="footer">
         <div class="container">
-            <p>Skapad av: Patrik Andersson 2022</p>
+            <p>Skapad av: Patrik Andersson 2023</p>
         </div>
     </div>
 </body>
