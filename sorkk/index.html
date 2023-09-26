@@ -1443,6 +1443,50 @@
     </script>
 
     <script>
+        function loadSORKK() {
+            const result = prompt("Paste an SORKK-string or URL", "");
+            let data64 = ""
+            let isUtf16String = false
+            
+            if (result != null) {   
+                try {
+                    const url = new URL(result)
+                    isUtf16String = url.searchParams.has("d");
+
+                    if (isUtf16String || url.searchParams.has("s")) {
+                            data64 = (isUtf16String) ? url.searchParams.get("d") : url.searchParams.get("s");
+                    }
+                } catch (typeError) {
+                }
+            } else {
+                return
+            }
+
+            if (data64.length == 0) {
+                isUtf16String = result.trim().charAt(0) == "d"
+                data64 = result.trim().substring(2)
+            }
+            
+            if (data64 == "") {
+                alert("Couldn't load SORKK. Invalid text or URL.")
+            }
+
+            decode(data64, isUtf16String).then(sorkkObj => {
+                if (sorkkObj !== undefined) {
+                    if (sorkkObj instanceof Array) {
+                        sorkkObj.forEach( sorkk => {
+                            saveSORKKToList(sorkk);
+                        })
+                    } else {
+                        saveSORKKToList(sorkkObj)
+                    }
+                    showAllSORKKs();
+                } else {
+                    alert("Couldn't load SORKK. Invalid text.")
+                }
+            })
+        }
+
         function readMoreSORKK(obj) {
             let displayStyle = document.getElementById("readMoreSORKK");
             let showMore = document.getElementById("showInformation");
@@ -1830,7 +1874,7 @@
         </div>
         <div class="container" id="toolbar">
             <div id="addRow">
-                <!-- <button onclick="">Ladda in en SORKK</button> -->
+                <button onclick="loadSORKK()">Ladda in en SORKK</button>
                 <button onclick="saveSORKKToList()" class="editModeOnly">Spara Till Lista (<span
                         id="sorkkCount">0</span>)</button>
                 <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Skapa en ny SORKK</button>
