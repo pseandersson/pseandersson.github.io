@@ -1,229 +1,231 @@
 <!DOCTYPE html>
 <html>
-<meta charset="UTF-8">
+  <meta charset="UTF-8" />
 
-<head>
+  <head>
     <title>SORKK</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style type="text/css">
-        * {
-            box-sizing: border-box;
-        }
+      * {
+        box-sizing: border-box;
+      }
 
-        html,
-        body,
-        div {
-            padding: 0;
-            margin: 0;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
+      html,
+      body,
+      div {
+        padding: 0;
+        margin: 0;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
 
-        html,
-        body {
-            min-height: 100%;
-        }
+      html,
+      body {
+        min-height: 100%;
+      }
 
-        html,
-        body {
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
+      html,
+      body {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
 
-        h1 {
-            text-align: center;
-        }
+      h1 {
+        text-align: center;
+      }
 
-        h1,
-        h2,
-        h3,
-        p {
-            word-wrap: break-word;
-            hyphens: auto;
-        }
+      h1,
+      h2,
+      h3,
+      p {
+        word-wrap: break-word;
+        hyphens: auto;
+      }
 
-        #header {
-            background-color: #3030bb;
-            color: antiquewhite;
-            justify-content: center;
-            display: flex;
-            width: 100%;
-        }
+      #header {
+        background-color: #3030bb;
+        color: antiquewhite;
+        justify-content: center;
+        display: flex;
+        width: 100%;
+      }
 
-        a {
-            color: chocolate;
-        }
+      a {
+        color: chocolate;
+      }
 
-        .container {
-            width: 100%;
-            max-width: 80em;
-            padding: 0.5em;
-        }
+      .container {
+        width: 100%;
+        max-width: 80em;
+        padding: 0.5em;
+      }
 
-        #section,
-        #toolbox,
-        #footer {
-            background-color: lightgray;
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-        }
+      #section,
+      #toolbox,
+      #footer {
+        background-color: lightgray;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+      }
 
-        #toolbox {
-            background-color: #3030bb;
-        }
+      #toolbox {
+        background-color: #3030bb;
+      }
 
-        #section>.container {
-            padding: 1em 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-around;
-            align-items: space-around;
-            flex-grow: 1;
-        }
+      #section > .container {
+        padding: 1em 0;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-items: space-around;
+        flex-grow: 1;
+      }
 
-        #section {
-            flex-grow: 1;
-            align-items: center;
-            justify-content: space-around;
-            flex-direction: column;
-        }
+      #section {
+        flex-grow: 1;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+      }
 
-        #toolbox>.container {
-            padding: 1em 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+      #toolbox > .container {
+        padding: 1em 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
 
-        #shareSorkk>h3 {
-            color: antiquewhite;
-        }
+      #shareSorkk > h3 {
+        color: antiquewhite;
+      }
 
-        #footer>.container {
-            padding: 1em 0;
-            display: flex;
-            justify-content: center;
-        }
+      #footer > .container {
+        padding: 1em 0;
+        display: flex;
+        justify-content: center;
+      }
 
-        #footer {
-            background-color: black;
-            color: antiquewhite;
-        }
+      #footer {
+        background-color: black;
+        color: antiquewhite;
+      }
 
-        .card {
-            flex-basis: 15em;
-            min-height: 15em;
-            max-height: 40em;
-            border-radius: 0.5em;
-            padding: 0.5em 1em;
+      .card {
+        flex-basis: 15em;
+        min-height: 15em;
+        max-height: 40em;
+        border-radius: 0.5em;
+        padding: 0.5em 1em;
 
-            background-color: white;
-            margin: 0.2em;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
+        background-color: white;
+        margin: 0.2em;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
 
-            align-self: stretch;
-        }
+        align-self: stretch;
+      }
 
-        .card>h2 {
-            padding-top: 0;
-            margin-top: 0;
-            color: #0c0c0c;
-            font-variant-caps: small-caps;
-            font-weight: 100;
-        }
+      .card > h2 {
+        padding-top: 0;
+        margin-top: 0;
+        color: #0c0c0c;
+        font-variant-caps: small-caps;
+        font-weight: 100;
+      }
 
-        .card>h3 {
-            padding-top: 0;
-            color: #0c0c0c;
-            font-variant-caps: small-caps;
-            font-weight: 100;
-            margin-bottom: 0;
-        }
+      .card > h3 {
+        padding-top: 0;
+        color: #0c0c0c;
+        font-variant-caps: small-caps;
+        font-weight: 100;
+        margin-bottom: 0;
+      }
 
-        .card>h2+h3 {
-            margin-top: 0;
-        }
+      .card > h2 + h3 {
+        margin-top: 0;
+      }
 
-        .card>p {
-            padding: 0.2em;
-            margin-top: 0;
-            background-color: #F8F8F8;
-        }
+      .card > p {
+        padding: 0.2em;
+        margin-top: 0;
+        background-color: #f8f8f8;
+      }
 
-        .hide {
-            display: none;
-        }
+      .hide {
+        display: none;
+      }
 
-        textarea {
-            flex-grow: 1;
-            resize: vertical;
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        }
+      textarea {
+        flex-grow: 1;
+        resize: vertical;
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+      }
 
-        #toolbar.container {
-            flex-grow: 0;
-        }
+      #toolbar.container {
+        flex-grow: 0;
+      }
 
-        #addRow {
-            padding: 1em;
-            margin: 1em;
-            justify-content: center;
-            align-items: center;
-            display: flow-root;
-            flex-wrap: wrap;
-            flex-shrink: 1;
-            height: fit-content;
-            background-color: #F8F8F8;
-            border-radius: 0.5em;
-        }
+      #addRow {
+        padding: 1em;
+        margin: 1em;
+        justify-content: center;
+        align-items: center;
+        display: flow-root;
+        flex-wrap: wrap;
+        flex-shrink: 1;
+        height: fit-content;
+        background-color: #f8f8f8;
+        border-radius: 0.5em;
+      }
 
-        #addRow>button {
-            margin: 0.25em;
-            height: 3em;
-        }
+      #addRow > button {
+        margin: 0.25em;
+        height: 3em;
+      }
 
-        #spacer {
-            flex-grow: 1;
-            min-height: 8em;
-            width: 100%;
-        }
+      #spacer {
+        flex-grow: 1;
+        min-height: 8em;
+        width: 100%;
+      }
 
-        #tableContainer.container {
-            overflow-x: auto;
-            display: flow-root;
-            padding: 1em;
-        }
+      #tableContainer.container {
+        overflow-x: auto;
+        display: flow-root;
+        padding: 1em;
+      }
 
-        #tableContainer.hide {
-            display: none;
-        }
+      #tableContainer.hide {
+        display: none;
+      }
 
-        table {
-            background-color: white;
-            display: table;
-            height: max-content;
-            width: inherit;
-            margin: 0 0.2em;
-        }
+      table {
+        background-color: white;
+        display: table;
+        height: max-content;
+        width: inherit;
+        margin: 0 0.2em;
+      }
 
-        th {
-            font-weight: 100;
-            background-color: #3030bb;
-            color: antiquewhite;
-        }
+      th {
+        font-weight: 100;
+        background-color: #3030bb;
+        color: antiquewhite;
+      }
 
-        td {
-            word-wrap: wrap;
-            word-break: normal;
-            white-space: pre-wrap;
-            vertical-align: baseline;
-        }
+      td {
+        word-wrap: wrap;
+        word-break: normal;
+        white-space: pre-wrap;
+        vertical-align: baseline;
+      }
 
-        /* .transpose > thead {
+      /* .transpose > thead {
             display: block;
             float: left;
         }
@@ -245,70 +247,93 @@
             clear: right;
         } */
 
-        tr:nth-child(odd) {
-            background-color: #F8F8F8;
+      tr:nth-child(odd) {
+        background-color: #f8f8f8;
+      }
+
+      tr:hover {
+        background-color: beige;
+      }
+
+      tr.selected {
+        background-color: cadetblue;
+      }
+
+      pre {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+      }
+
+      @media print {
+        #sorkkTable {
+          display: none;
+        }
+        table {
+          display: none;
+        }
+        #footer {
+          display: none;
         }
 
-        tr:hover {
-            background-color: beige;
+        #toolbox {
+          display: none;
         }
-
-        tr.selected {
-            background-color: cadetblue;
+        #addRow {
+          display: none;
         }
-
-        pre {
-            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-            word-wrap: break-word;
-            white-space: pre-wrap;
+        h1 {
+          font-size: small;
         }
-
-        @media print {
-            #sorkkTable { display: none; }
-            table { display: none;}
-            #footer { display: none;}
-
-            #toolbox { display: none; }
-            #addRow { display: none; }
-            h1 { font-size: small;}
-            #header .container p { display: none;}
-            /* #section > .container {
+        #header .container p {
+          display: none;
+        }
+        /* #section > .container {
                 display: none;
             } */
-            #toolbar.container { display: none; }
-            #tableContainer.container { display: none; }
-            #cardDeck.container {
-                flex-wrap: nowrap;
-                flex-grow: 1;
-            }
-            #section {
-                flex-grow: 1;
-            }
-
-            .card {
-                border: #0c0c0c solid 1pt;
-                flex-grow: 1;
-                min-height: auto;
-
-                max-height: none;
-            }
-            #cardDeck {
-                height: 100%;
-                display: flex;
-            }
-            #spacer {
-                /* border: 1pt solid cyan */
-                display: none;
-            }
-            .card > h2 { font-size: medium;}
-            .card > h3 { font-size: small;}
+        #toolbar.container {
+          display: none;
         }
+        #tableContainer.container {
+          display: none;
+        }
+        #cardDeck.container {
+          flex-wrap: nowrap;
+          flex-grow: 1;
+        }
+        #section {
+          flex-grow: 1;
+        }
+
+        .card {
+          border: #0c0c0c solid 1pt;
+          flex-grow: 1;
+          min-height: auto;
+
+          max-height: none;
+        }
+        #cardDeck {
+          height: 100%;
+          display: flex;
+        }
+        #spacer {
+          /* border: 1pt solid cyan */
+          display: none;
+        }
+        .card > h2 {
+          font-size: medium;
+        }
+        .card > h3 {
+          font-size: small;
+        }
+      }
     </style>
-    <script src="https://cdn.jsdelivr.net/pako/1.0.5/pako.min.js"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/excellentexport@3.8.0/dist/excellentexport.min.js"></script>
+    <script type="text/javascript" src="pako.min.js"></script>
+    <script type="text/javascript" src="jszip.min.js"></script>
+    <script type="text/javascript" src="FileSaver.min.js"></script>
     <script>
-        /*
+      /*
     MIT License
     Copyright (c) 2020 Egor Nepomnyaschih
     Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -328,7 +353,7 @@
     SOFTWARE.
     */
 
-        /*
+      /*
         // This constant can also be computed with the following algorithm:
         const base64abc = [],
             A = "A".charCodeAt(0),
@@ -346,15 +371,74 @@
         base64abc.push("+");
         base64abc.push("/");
         */
-        const base64abc = [
-            "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
-            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
-            "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
-            "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z",
-            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "+", "/"
-        ];
+      const base64abc = [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G",
+        "H",
+        "I",
+        "J",
+        "K",
+        "L",
+        "M",
+        "N",
+        "O",
+        "P",
+        "Q",
+        "R",
+        "S",
+        "T",
+        "U",
+        "V",
+        "W",
+        "X",
+        "Y",
+        "Z",
+        "a",
+        "b",
+        "c",
+        "d",
+        "e",
+        "f",
+        "g",
+        "h",
+        "i",
+        "j",
+        "k",
+        "l",
+        "m",
+        "n",
+        "o",
+        "p",
+        "q",
+        "r",
+        "s",
+        "t",
+        "u",
+        "v",
+        "w",
+        "x",
+        "y",
+        "z",
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "+",
+        "/",
+      ];
 
-        /*
+      /*
         // This constant can also be computed with the following algorithm:
         const l = 256, base64codes = new Uint8Array(l);
         for (let i = 0; i < l; ++i) {
@@ -365,1568 +449,1978 @@
         });
         base64codes["=".charCodeAt(0)] = 0; // ignored anyway, so we just need to prevent an error
         */
-        const base64codes = [
-            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-            255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
-            62, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 62, 255, 255, 255, 63,
-            52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 255, 255, 255, 0, 255, 255,
-            255, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-            15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 255, 255, 255, 255, 255,
-            255, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-            41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51
+      const base64codes = [
+        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+        255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+        255, 255, 255, 255, 62, 255, 255, 255, 255, 255, 255, 255, 255, 255,
+        255, 62, 255, 255, 255, 63, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 255,
+        255, 255, 0, 255, 255, 255, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+        13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 255, 255, 255, 255,
+        255, 255, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+        41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51,
+      ];
+
+      function getBase64Code(charCode) {
+        if (charCode >= base64codes.length) {
+          throw new Error("Unable to parse base64 string.");
+        }
+        const code = base64codes[charCode];
+        if (code === 255) {
+          throw new Error("Unable to parse base64 string.");
+        }
+        return code;
+      }
+
+      function bytesToBase64(bytes) {
+        let result = "",
+          i,
+          l = bytes.length;
+        for (i = 2; i < l; i += 3) {
+          result += base64abc[bytes[i - 2] >> 2];
+          result +=
+            base64abc[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+          result += base64abc[((bytes[i - 1] & 0x0f) << 2) | (bytes[i] >> 6)];
+          result += base64abc[bytes[i] & 0x3f];
+        }
+        if (i === l + 1) {
+          // 1 octet yet to write
+          result += base64abc[bytes[i - 2] >> 2];
+          result += base64abc[(bytes[i - 2] & 0x03) << 4];
+          result += "==";
+        }
+        if (i === l) {
+          // 2 octets yet to write
+          result += base64abc[bytes[i - 2] >> 2];
+          result +=
+            base64abc[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
+          result += base64abc[(bytes[i - 1] & 0x0f) << 2];
+          result += "=";
+        }
+        return result;
+      }
+
+      function base64ToBytes(str) {
+        if (str.length % 4 !== 0) {
+          throw new Error("Unable to parse base64 string.");
+        }
+        const index = str.indexOf("=");
+        if (index !== -1 && index < str.length - 2) {
+          throw new Error("Unable to parse base64 string.");
+        }
+        let missingOctets = str.endsWith("==") ? 2 : str.endsWith("=") ? 1 : 0,
+          n = str.length,
+          result = new Uint8Array(3 * (n / 4)),
+          buffer;
+        for (let i = 0, j = 0; i < n; i += 4, j += 3) {
+          buffer =
+            (getBase64Code(str.charCodeAt(i)) << 18) |
+            (getBase64Code(str.charCodeAt(i + 1)) << 12) |
+            (getBase64Code(str.charCodeAt(i + 2)) << 6) |
+            getBase64Code(str.charCodeAt(i + 3));
+          result[j] = buffer >> 16;
+          result[j + 1] = (buffer >> 8) & 0xff;
+          result[j + 2] = buffer & 0xff;
+        }
+        return result.subarray(0, result.length - missingOctets);
+      }
+
+      function base64encode(str, encoder = new TextEncoder()) {
+        return bytesToBase64(encoder.encode(str));
+      }
+
+      function base64decode(str, decoder = new TextDecoder()) {
+        return decoder.decode(base64ToBytes(str));
+      }
+    </script>
+    <script>
+      const XMLHeader =
+        '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>';
+      const xmlns = "http://www.w3.org/2000/xmlns/";
+
+      function xlCreateRels() {
+        const ns =
+          "http://schemas.openxmlformats.org/package/2006/relationships";
+        const root = document.implementation.createDocument(
+          ns,
+          "Relationships"
+        );
+        let rel = root.createElementNS(ns, "Relationship");
+        rel.setAttribute("Id", "rId1");
+        rel.setAttribute(
+          "Type",
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"
+        );
+        rel.setAttribute("Target", "xl/workbook.xml");
+
+        root.documentElement.prepend(rel);
+
+        rel = root.createElementNS(ns, "Relationship");
+        rel.setAttribute("Id", "rId2");
+        rel.setAttribute(
+          "Type",
+          "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties"
+        );
+        rel.setAttribute("Target", "docProps/core.xml");
+        root.documentElement.prepend(rel);
+
+        rel = root.createElementNS(ns, "Relationship");
+        rel.setAttribute("Id", "rId3");
+        rel.setAttribute(
+          "Type",
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties"
+        );
+        rel.setAttribute("Target", "docProps/app.xml");
+        root.documentElement.prepend(rel);
+
+        return {
+          "_rels/.rels":
+            XMLHeader + new XMLSerializer().serializeToString(root),
+        };
+      }
+
+      function xlCreateAppDocProps() {
+        const ns =
+          "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
+        const vt =
+          "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
+        const docRoot = document.implementation.createDocument(
+          ns,
+          "Properties"
+        );
+        const appRoot = docRoot.documentElement;
+        appRoot.setAttributeNS(xmlns, "xmlns:vt", vt);
+
+        let node = document.createElementNS(ns, "Application");
+        node.appendChild(document.createTextNode("Patrik Excel Exporter"));
+        appRoot.append(node);
+        
+        node = document.createElementNS(ns, "HeadingPairs");
+        let vector = document.createElementNS(vt, "vector");
+        vector.setAttribute("size", "2");
+        vector.setAttribute("baseType", "variant");
+
+        let variant = document.createElementNS(vt, "variant");
+        let lpstr = document.createElementNS(vt, "lpstr");
+        lpstr.append(document.createTextNode("Worksheets"));
+        variant.append(lpstr);
+        vector.append(variant);
+
+        variant = document.createElementNS(vt, "variant");
+        const i4 = document.createElementNS(vt, "i4");
+        i4.append(document.createTextNode("1"));
+        variant.append(i4);
+        vector.append(variant);
+        node.append(vector);
+        appRoot.append(node);
+
+        node = document.createElementNS(ns, "TitlesOfParts");
+        vector = document.createElementNS(vt, "vector");
+        vector.setAttribute("size", "1");
+        vector.setAttribute("baseType", "lpstr");
+        lpstr = document.createElementNS(vt, "lpstr");
+        lpstr.append(document.createTextNode("Sheet1"));
+        vector.append(lpstr);
+        node.append(vector);
+        appRoot.append(node);
+
+        return {
+          "docProps/app.xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function xlCreateCoreDocProps() {
+        const cp =
+          "http://schemas.openxmlformats.org/package/2006/metadata/core-properties";
+        const dc = "http://purl.org/dc/elements/1.1/";
+        const dcterms = "http://purl.org/dc/terms/";
+        const dcmitype = "http://purl.org/dc/dcmitype/";
+        const xsi = "http://www.w3.org/2001/XMLSchema-instance";
+
+        const docRoot = document.implementation.createDocument(
+          cp,
+          "coreProperties"
+        );
+        const appRoot = docRoot.documentElement;
+        appRoot.setAttributeNS(xmlns, "xmlns:cp", cp);
+        appRoot.setAttributeNS(xmlns, "xmlns:dc", dc);
+        appRoot.setAttributeNS(xmlns, "xmlns:dcterms", dcterms);
+        appRoot.setAttributeNS(xmlns, "xmlns:dcmitype", dcmitype);
+        appRoot.setAttributeNS(xmlns, "xmlns:xsi", xsi);
+        
+        node = document.createElementNS(dcterms, "created");
+        node.setAttributeNS(xsi, "type", "dcterms:W3CDTF");
+        node.appendChild(document.createTextNode(new Date().toISOString()));
+        appRoot.append(node);
+
+        node = document.createElementNS(dcterms, "modified");
+        node.setAttributeNS(xsi, "type", "dcterms:W3CDTF");
+        node.appendChild(document.createTextNode(new Date().toISOString()));
+        appRoot.append(node);
+
+        return {
+          "docProps/core.xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function xlCreateWorkbookRels() {
+        const ns =
+          "http://schemas.openxmlformats.org/package/2006/relationships";
+        const root = document.implementation.createDocument(
+          ns,
+          "Relationships"
+        );
+        let rel = root.createElementNS(ns, "Relationship");
+        rel.setAttribute("Id", "rId1");
+        rel.setAttribute(
+          "Type",
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+        );
+        rel.setAttribute("Target", "worksheets/sheet1.xml");
+
+        root.documentElement.prepend(rel);
+
+        rel = root.createElementNS(ns, "Relationship");
+        rel.setAttribute("Id", "rId2");
+        rel.setAttribute(
+          "Type",
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme"
+        );
+        rel.setAttribute("Target", "theme/theme1.xml");
+        root.documentElement.prepend(rel);
+
+        rel = root.createElementNS(ns, "Relationship");
+        rel.setAttribute("Id", "rId3");
+        rel.setAttribute(
+          "Type",
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles"
+        );
+        rel.setAttribute("Target", "styles.xml");
+        root.documentElement.prepend(rel);
+
+        rel = root.createElementNS(ns, "Relationship");
+        rel.setAttribute("Id", "rId4");
+        rel.setAttribute(
+          "Type",
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings"
+        );
+        rel.setAttribute("Target", "sharedStrings.xml");
+        root.documentElement.append(rel);
+
+        return {
+          "xl/_rels/workbook.xml.rels":
+            XMLHeader + new XMLSerializer().serializeToString(root),
+        };
+      }
+
+      function xlCreateTheme() {
+        const a = "http://schemas.openxmlformats.org/drawingml/2006/main";
+        const thm15 = "http://schemas.microsoft.com/office/thememl/2012/main";
+        const docRoot = document.implementation.createDocument(a, "theme");
+        const themeRoot = docRoot.documentElement;
+        themeRoot.setAttributeNS(xmlns, "xmlns:a", a);
+        themeRoot.setAttribute("name", "Office Theme");
+
+        const elements = document.createElementNS(a, "themeElements");
+        const clrScheme = document.createElementNS(a, "clrScheme");
+        clrScheme.setAttribute("name", "Office");
+
+        let node = document.createElementNS(a, "dk1");
+        let clr = document.createElementNS(a, "sysClr");
+        clr.setAttribute("val", "windowText");
+        clr.setAttribute("lastClr", "000000");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "lt1");
+        clr = document.createElementNS(a, "sysClr");
+        clr.setAttribute("val", "window");
+        clr.setAttribute("lastClr", "FFFFFF");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "dk2");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "44546A");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "lt2");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "E7E6E6");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "accent1");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "4472C4");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "accent2");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "ED7D31");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "accent3");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "A5A5A5");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "accent4");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "FFC000");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "accent5");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "5B9BD5");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "accent6");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "70AD47");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "hlink");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "0563C1");
+        node.append(clr);
+        clrScheme.append(node);
+
+        node = document.createElementNS(a, "folHlink");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "954F72");
+        node.append(clr);
+        clrScheme.append(node);
+
+        elements.append(clrScheme);
+
+        const fontScheme = document.createElementNS(a, "fontScheme");
+        fontScheme.setAttribute("name", "Office");
+        elements.append(fontScheme);
+
+        const majorFont = document.createElementNS(a, "majorFont");
+        fontScheme.append(majorFont);
+
+        let font = document.createElementNS(a, "latin");
+        font.setAttribute("typeface", "Calibri Light");
+        font.setAttribute("panose", "020F0302020204030204");
+        majorFont.append(font);
+
+        font = document.createElementNS(a, "ea");
+        font.setAttribute("typeface", "");
+        majorFont.append(font);
+
+        font = document.createElementNS(a, "cs");
+        font.setAttribute("typeface", "");
+        majorFont.append(font);
+
+        majorFont.append(newFont(a, "Jpan", "游ゴシック Light"));
+        majorFont.append(newFont(a, "Hang", "맑은 고딕"));
+        majorFont.append(newFont(a, "Hans", "等线 Light"));
+        majorFont.append(newFont(a, "Hant", "新細明體"));
+        majorFont.append(newFont(a, "Arab", "Times New Roman"));
+        majorFont.append(newFont(a, "Hebr", "Times New Roman"));
+        majorFont.append(newFont(a, "Thai", "Tahoma"));
+        majorFont.append(newFont(a, "Ethi", "Nyala"));
+        majorFont.append(newFont(a, "Beng", "Vrinda"));
+        majorFont.append(newFont(a, "Gujr", "Shruti"));
+        majorFont.append(newFont(a, "Khmr", "MoolBoran"));
+        majorFont.append(newFont(a, "Knda", "Tunga"));
+        majorFont.append(newFont(a, "Guru", "Raavi"));
+        majorFont.append(newFont(a, "Cans", "Euphemia"));
+        majorFont.append(newFont(a, "Cher", "Plantagenet Cherokee"));
+        majorFont.append(newFont(a, "Yiii", "Microsoft Yi Baiti"));
+        majorFont.append(newFont(a, "Tibt", "Microsoft Himalaya"));
+        majorFont.append(newFont(a, "Thaa", "MV Boli"));
+        majorFont.append(newFont(a, "Deva", "Mangal"));
+        majorFont.append(newFont(a, "Telu", "Gautami"));
+        majorFont.append(newFont(a, "Taml", "Latha"));
+        majorFont.append(newFont(a, "Syrc", "Estrangelo Edessa"));
+        majorFont.append(newFont(a, "Orya", "Kalinga"));
+        majorFont.append(newFont(a, "Mlym", "Kartika"));
+        majorFont.append(newFont(a, "Laoo", "DokChampa"));
+        majorFont.append(newFont(a, "Sinh", "Iskoola Pota"));
+        majorFont.append(newFont(a, "Mong", "Mongolian Baiti"));
+        majorFont.append(newFont(a, "Viet", "Times New Roman"));
+        majorFont.append(newFont(a, "Uigh", "Microsoft Uighur"));
+        majorFont.append(newFont(a, "Geor", "Sylfaen"));
+        majorFont.append(newFont(a, "Armn", "Arial"));
+        majorFont.append(newFont(a, "Bugi", "Leelawadee UI"));
+        majorFont.append(newFont(a, "Bopo", "Microsoft JhengHei"));
+        majorFont.append(newFont(a, "Java", "Javanese Text"));
+        majorFont.append(newFont(a, "Lisu", "Segoe UI"));
+        majorFont.append(newFont(a, "Mymr", "Myanmar Text"));
+        majorFont.append(newFont(a, "Nkoo", "Ebrima"));
+        majorFont.append(newFont(a, "Olck", "Nirmala UI"));
+        majorFont.append(newFont(a, "Osma", "Ebrima"));
+        majorFont.append(newFont(a, "Phag", "Phagspa"));
+        majorFont.append(newFont(a, "Syrn", "Estrangelo Edessa"));
+        majorFont.append(newFont(a, "Syrj", "Estrangelo Edessa"));
+        majorFont.append(newFont(a, "Syre", "Estrangelo Edessa"));
+        majorFont.append(newFont(a, "Sora", "Nirmala UI"));
+        majorFont.append(newFont(a, "Tale", "Microsoft Tai Le"));
+        majorFont.append(newFont(a, "Talu", "Microsoft New Tai Lue"));
+        majorFont.append(newFont(a, "Tfng", "Ebrima"));
+
+        const minorFont = document.createElementNS(a, "minorFont");
+        fontScheme.append(minorFont);
+
+        font = document.createElementNS(a, "latin");
+        font.setAttribute("typeface", "Calibri");
+        font.setAttribute("panose", "020F0502020204030204");
+        minorFont.append(font);
+
+        font = document.createElementNS(a, "ea");
+        font.setAttribute("typeface", "");
+        minorFont.append(font);
+
+        font = document.createElementNS(a, "cs");
+        font.setAttribute("typeface", "");
+        minorFont.append(font);
+
+        minorFont.append(newFont(a, "Jpan", "游ゴシック"));
+        minorFont.append(newFont(a, "Hang", "맑은 고딕"));
+        minorFont.append(newFont(a, "Hans", "等线"));
+        minorFont.append(newFont(a, "Hant", "新細明體"));
+        minorFont.append(newFont(a, "Arab", "Arial"));
+        minorFont.append(newFont(a, "Hebr", "Arial"));
+        minorFont.append(newFont(a, "Thai", "Tahoma"));
+        minorFont.append(newFont(a, "Ethi", "Nyala"));
+        minorFont.append(newFont(a, "Beng", "Vrinda"));
+        minorFont.append(newFont(a, "Gujr", "Shruti"));
+        minorFont.append(newFont(a, "Khmr", "DaunPenh"));
+        minorFont.append(newFont(a, "Knda", "Tunga"));
+        minorFont.append(newFont(a, "Guru", "Raavi"));
+        minorFont.append(newFont(a, "Cans", "Euphemia"));
+        minorFont.append(newFont(a, "Cher", "Plantagenet Cherokee"));
+        minorFont.append(newFont(a, "Yiii", "Microsoft Yi Baiti"));
+        minorFont.append(newFont(a, "Tibt", "Microsoft Himalaya"));
+        minorFont.append(newFont(a, "Thaa", "MV Boli"));
+        minorFont.append(newFont(a, "Deva", "Mangal"));
+        minorFont.append(newFont(a, "Telu", "Gautami"));
+        minorFont.append(newFont(a, "Taml", "Latha"));
+        minorFont.append(newFont(a, "Syrc", "Estrangelo Edessa"));
+        minorFont.append(newFont(a, "Orya", "Kalinga"));
+        minorFont.append(newFont(a, "Mlym", "Kartika"));
+        minorFont.append(newFont(a, "Laoo", "DokChampa"));
+        minorFont.append(newFont(a, "Sinh", "Iskoola Pota"));
+        minorFont.append(newFont(a, "Mong", "Mongolian Baiti"));
+        minorFont.append(newFont(a, "Viet", "Arial"));
+        minorFont.append(newFont(a, "Uigh", "Microsoft Uighur"));
+        minorFont.append(newFont(a, "Geor", "Sylfaen"));
+        minorFont.append(newFont(a, "Armn", "Arial"));
+        minorFont.append(newFont(a, "Bugi", "Leelawadee UI"));
+        minorFont.append(newFont(a, "Bopo", "Microsoft JhengHei"));
+        minorFont.append(newFont(a, "Java", "Javanese Text"));
+        minorFont.append(newFont(a, "Lisu", "Segoe UI"));
+        minorFont.append(newFont(a, "Mymr", "Myanmar Text"));
+        minorFont.append(newFont(a, "Nkoo", "Ebrima"));
+        minorFont.append(newFont(a, "Olck", "Nirmala UI"));
+        minorFont.append(newFont(a, "Osma", "Ebrima"));
+        minorFont.append(newFont(a, "Phag", "Phagspa"));
+        minorFont.append(newFont(a, "Syrn", "Estrangelo Edessa"));
+        minorFont.append(newFont(a, "Syrj", "Estrangelo Edessa"));
+        minorFont.append(newFont(a, "Syre", "Estrangelo Edessa"));
+        minorFont.append(newFont(a, "Sora", "Nirmala UI"));
+        minorFont.append(newFont(a, "Tale", "Microsoft Tai Le"));
+        minorFont.append(newFont(a, "Talu", "Microsoft New Tai Lue"));
+        minorFont.append(newFont(a, "Tfng", "Ebrima"));
+
+        const fmtScheme = document.createElementNS(a, "fmtScheme");
+        fmtScheme.setAttribute("name", "Office");
+        elements.append(fmtScheme);
+        let styleList = document.createElementNS(a, "fillStyleLst");
+        let fill = document.createElementNS(a, "solidFill");
+        clr = document.createElementNS(a, "schemeClr");
+        clr.setAttribute("val", "phClr");
+        fill.append(clr);
+        styleList.append(fill);
+
+        fill = document.createElementNS(a, "gradFill");
+        fill.setAttribute("rotWithShape", "1");
+        let gsList = document.createElementNS(a, "gsLst");
+        let gs = newGSPos(a, 0);
+        gs.append(
+          newSchemeColor(a, { lum: "110000", sat: "105000", tint: "67000" })
+        );
+        gsList.append(gs);
+        gs = newGSPos(a, 50000);
+        gs.append(
+          newSchemeColor(a, { lum: "105000", sat: "103000", tint: "73000" })
+        );
+        gsList.append(gs);
+        gs = newGSPos(a, 100000);
+        gs.append(
+          newSchemeColor(a, { lum: "105000", sat: "109000", tint: "81000" })
+        );
+        gsList.append(gs);
+        fill.append(gsList);
+        node = document.createElementNS(a, "lin");
+        node.setAttribute("ang", "5400000");
+        node.setAttribute("scaled", "0");
+        fill.append(node);
+        styleList.append(fill);
+
+        fill = document.createElementNS(a, "gradFill");
+        fill.setAttribute("rotWithShape", "1");
+        gsList = document.createElementNS(a, "gsLst");
+        gs = newGSPos(a, 0);
+        gs.append(
+          newSchemeColor(a, { lum: "102000", sat: "103000", tint: "94000" })
+        );
+        gsList.append(gs);
+        gs = newGSPos(a, 50000);
+        gs.append(
+          newSchemeColor(a, { lum: "100000", sat: "110000", shade: "100000" })
+        );
+        gsList.append(gs);
+        gs = newGSPos(a, 100000);
+        gs.append(
+          newSchemeColor(a, { lum: "99000", sat: "120000", shade: "78000" })
+        );
+        gsList.append(gs);
+        fill.append(gsList);
+        node = document.createElementNS(a, "lin");
+        node.setAttribute("ang", "5400000");
+        node.setAttribute("scaled", "0");
+        fill.append(node);
+        styleList.append(fill);
+
+        fmtScheme.append(styleList);
+
+        styleList = document.createElementNS(a, "lnStyleLst");
+
+        let ln = document.createElementNS(a, "ln");
+        ln.setAttribute("w", "6350");
+        ln.setAttribute("cap", "flat");
+        ln.setAttribute("cmpd", "sng");
+        ln.setAttribute("algn", "ctr");
+        clr = document.createElementNS(a, "schemeClr");
+        clr.setAttribute("val", "phClr");
+        fill = document.createElementNS(a, "solidFill");
+        fill.append(clr);
+        ln.append(fill);
+        let prstDash = document.createElementNS(a, "prstDash");
+        prstDash.setAttribute("val", "solid");
+        ln.append(prstDash);
+        let miter = document.createElementNS(a, "miter");
+        miter.setAttribute("lim", "800000");
+        ln.append(miter);
+        styleList.append(ln);
+
+        ln = document.createElementNS(a, "ln");
+        ln.setAttribute("w", "12700");
+        ln.setAttribute("cap", "flat");
+        ln.setAttribute("cmpd", "sng");
+        ln.setAttribute("algn", "ctr");
+        clr = document.createElementNS(a, "schemeClr");
+        clr.setAttribute("val", "phClr");
+        fill = document.createElementNS(a, "solidFill");
+        fill.append(clr);
+        ln.append(fill);
+        prstDash = document.createElementNS(a, "prstDash");
+        prstDash.setAttribute("val", "solid");
+        ln.append(prstDash);
+        miter = document.createElementNS(a, "miter");
+        miter.setAttribute("lim", "800000");
+        ln.append(miter);
+        styleList.append(ln);
+
+        ln = document.createElementNS(a, "ln");
+        ln.setAttribute("w", "19050");
+        ln.setAttribute("cap", "flat");
+        ln.setAttribute("cmpd", "sng");
+        ln.setAttribute("algn", "ctr");
+        clr = document.createElementNS(a, "schemeClr");
+        clr.setAttribute("val", "phClr");
+        fill = document.createElementNS(a, "solidFill");
+        fill.append(clr);
+        ln.append(fill);
+        prstDash = document.createElementNS(a, "prstDash");
+        prstDash.setAttribute("val", "solid");
+        ln.append(prstDash);
+        miter = document.createElementNS(a, "miter");
+        miter.setAttribute("lim", "800000");
+        ln.append(miter);
+        styleList.append(ln);
+
+        fmtScheme.append(styleList);
+
+        styleList = document.createElementNS(a, "effectStyleLst");
+
+        let effectStyle = document.createElementNS(a, "effectStyle");
+        let effectLst = document.createElementNS(a, "effectLst");
+        effectStyle.append(effectLst);
+        styleList.append(effectStyle);
+        styleList.append(effectStyle.cloneNode(true));
+
+        effectStyle = effectStyle.cloneNode(false);
+        effectLst = effectLst.cloneNode();
+        let outerShdw = document.createElementNS(a, "outerShdw");
+        outerShdw.setAttribute("blurRad", "57150");
+        outerShdw.setAttribute("dist", "19050");
+        outerShdw.setAttribute("dir", "5400000");
+        outerShdw.setAttribute("algn", "ctr");
+        outerShdw.setAttribute("rotWithShape", "0");
+        clr = document.createElementNS(a, "srgbClr");
+        clr.setAttribute("val", "000000");
+        let alpha = document.createElementNS(a, "alpha");
+        alpha.setAttribute("val", "63000");
+        clr.append(alpha);
+        outerShdw.append(clr);
+        effectLst.append(outerShdw);
+        effectStyle.append(effectLst);
+        styleList.append(effectStyle);
+
+        fmtScheme.append(styleList);
+
+        styleList = document.createElementNS(a, "bgFillStyleLst");
+        fill = document.createElementNS(a, "solidFill");
+        clr = document.createElementNS(a, "schemeClr");
+        clr.setAttribute("val", "phClr");
+        fill.append(clr);
+        styleList.append(fill);
+
+        fill = document.createElementNS(a, "solidFill");
+        clr = document.createElementNS(a, "schemeClr");
+        fill.append(newSchemeColor(a, { tint: "95000", sat: "170000" }));
+        styleList.append(fill);
+
+        fill = document.createElementNS(a, "gradFill");
+        fill.setAttribute("rotWithShape", "1");
+        gsList = document.createElementNS(a, "gsLst");
+        gs = newGSPos(a, 0);
+        gs.append(
+          newSchemeColor(a, {
+            tint: "93000",
+            sat: "150000",
+            shade: "98000",
+            lum: "102000",
+          })
+        );
+        gsList.append(gs);
+        gs = newGSPos(a, 50000);
+        gs.append(
+          newSchemeColor(a, {
+            tint: "98000",
+            sat: "130000",
+            shade: "90000",
+            lum: "103000",
+          })
+        );
+        gsList.append(gs);
+        gs = newGSPos(a, 100000);
+        gs.append(newSchemeColor(a, { sat: "120000", shade: "63000" }));
+        gsList.append(gs);
+        fill.append(gsList);
+        node = document.createElementNS(a, "lin");
+        node.setAttribute("ang", "5400000");
+        node.setAttribute("scaled", "0");
+        fill.append(node);
+        styleList.append(fill);
+
+        fmtScheme.append(styleList);
+        themeRoot.append(elements);
+
+        node = document.createElementNS(a, "objectDefaults");
+        themeRoot.append(node);
+
+        node = document.createElementNS(a, "extraClrSchemeLst");
+        themeRoot.append(node);
+
+        const extLst = document.createElementNS(a, "extLst");
+        const ext = document.createElementNS(a, "ext");
+        ext.setAttribute("uri", "{05A4C25C-085E-4340-85A3-A5531E510DB2}");
+
+        const themeFamily = document.createElementNS(thm15, "themeFamily");
+        themeFamily.setAttributeNS(xmlns, "xmlns:thm15", thm15);
+        themeFamily.setAttribute("name", "Office Theme");
+        themeFamily.setAttribute(
+          "id",
+          "{62F939B6-93AF-4DB8-9C6B-D6C7DFDC589F}"
+        );
+        themeFamily.setAttribute(
+          "vid",
+          "{4A3C46E8-61CC-4603-A589-7422A47A8E4A}"
+        );
+        ext.append(themeFamily);
+        extLst.append(ext);
+
+        themeRoot.append(extLst);
+        return {
+          "xl/theme/theme1.xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function newFont(ns, script, typeface) {
+        const font = document.createElementNS(ns, "font");
+        font.setAttribute("script", script);
+        font.setAttribute("typeface", typeface);
+        return font;
+      }
+
+      function newSchemeColor(ns, options) {
+        const clr = document.createElementNS(ns, "schemeClr");
+        clr.setAttribute("val", "phClr");
+        const lumMod = document.createElementNS(ns, "lumMod");
+        lumMod.setAttribute("val", options.lum ? options.lum : "");
+        const satMod = document.createElementNS(ns, "satMod");
+        satMod.setAttribute("val", options.sat ? options.sat : "");
+        const tintEl = document.createElementNS(ns, "tint");
+        tintEl.setAttribute("val", options.tint ? options.tint : "");
+        const shadeEl = document.createElementNS(ns, "shade");
+        shadeEl.setAttribute("val", options.shade ? options.shade : "");
+        if (options.lum) clr.append(lumMod);
+        if (options.sat) clr.append(satMod);
+        if (options.tint) clr.append(tintEl);
+        if (options.shade) clr.append(shadeEl);
+        return clr;
+      }
+
+      function newGSPos(ns, pos) {
+        const gs = document.createElementNS(ns, "gs");
+        gs.setAttribute("pos", pos);
+        return gs;
+      }
+
+      function xlCreateWorkbook() {
+        const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+        const r =
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+        const mc =
+          "http://schemas.openxmlformats.org/markup-compatibility/2006";
+        const x15 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main";
+        const xr =
+          "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
+        const xr6 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2016/revision6";
+        const xr10 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2016/revision10";
+        const xr2 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2";
+
+        const docRoot = document.implementation.createDocument(ns, "workbook");
+        const worksheets = docRoot.documentElement;
+        worksheets.setAttributeNS(xmlns, "xmlns:r", r);
+        worksheets.setAttributeNS(xmlns, "xmlns:mc", mc);
+        worksheets.setAttributeNS(mc, "Ignorable", "x15 xr xr6 xr10 xr2");
+        worksheets.setAttributeNS(xmlns, "xmlns:x15", x15);
+        worksheets.setAttributeNS(xmlns, "xmlns:xr", xr);
+        worksheets.setAttributeNS(xmlns, "xmlns:xr6", xr6);
+        worksheets.setAttributeNS(xmlns, "xmlns:xr10", xr10);
+        worksheets.setAttributeNS(xmlns, "xmlns:xr2", xr2);
+
+        let node = document.createElementNS(ns, "fileVersion");
+        node.setAttribute("appName", "xl");
+        node.setAttribute("lastEdited", "7");
+        node.setAttribute("lowestEdited", "7");
+        node.setAttribute("rupBuild", "25726");
+
+        worksheets.append(node);
+
+        node = document.createElementNS(ns, "workbookPr");
+        node.setAttribute("defaultThemeVersion", "166925");
+        worksheets.append(node);
+
+        node = document.createElementNS(mc, "AlternateContent");
+        node.setAttributeNS(xmlns, "xmlns:mc", mc);
+        worksheets.append(node);
+
+        const choice = document.createElementNS(mc, "Choice");
+        choice.setAttribute("Requires", "x15");
+        const x15ac =
+          "http://schemas.microsoft.com/office/spreadsheetml/2010/11/ac";
+        const absPath = document.createElementNS(x15ac, "absPath");
+        absPath.setAttribute("url", "C:\\Temp\\sorkk\\");
+        absPath.setAttributeNS(xmlns, "xmlns:x15ac", x15ac);
+        choice.append(absPath);
+        node.append(choice);
+        worksheets.append(node);
+
+        node = document.createElementNS(xr, "revisionPtr");
+        node.setAttribute("revIDLastSave", "0");
+        node.setAttribute("documentId", "8_{" + UUID() + "}");
+        node.setAttributeNS(xr6, "coauthVersionLast", "47");
+        node.setAttributeNS(xr6, "coauthVersionMax", "47");
+        node.setAttributeNS(
+          xr10,
+          "uidLastSave",
+          "{00000000-0000-0000-0000-000000000000}"
+        );
+        worksheets.append(node);
+
+        node = document.createElementNS(ns, "bookViews");
+        const workbookView = document.createElementNS(ns, "workbookView");
+        workbookView.setAttribute("xWindow", "390");
+        workbookView.setAttribute("yWindow", "390");
+        workbookView.setAttribute("windowWidth", "38160");
+        workbookView.setAttribute("windowHeight", "20640");
+        workbookView.setAttributeNS(
+          xr2,
+          "uid",
+          "{187A1CB2-544C-4454-8DF2-1F2656C9F38F}"
+        );
+        node.append(workbookView);
+        worksheets.append(node);
+
+        node = document.createElementNS(ns, "sheets");
+        const sheet = document.createElementNS(ns, "sheet");
+        sheet.setAttribute("name", "Sheet1");
+        sheet.setAttribute("sheetId", "1");
+        sheet.setAttributeNS(r, "id", "rId1");
+        node.append(sheet);
+        worksheets.append(node);
+
+        node = document.createElementNS(ns, "calcPr");
+        node.setAttribute("calcId", "191029");
+        worksheets.append(node);
+
+        node = document.createElementNS(ns, "extLst");
+        let ext = document.createElementNS(ns, "ext");
+        ext.setAttribute("uri", "{140A7094-0E35-4892-8432-C4D2E57EDEB5}");
+        ext.setAttributeNS(xmlns, "xmlns:x15", x15);
+        let feature = document.createElementNS(x15, "workbookPr");
+        feature.setAttribute("chartTrackingRefBase", "1");
+        ext.append(feature);
+        node.append(ext);
+        ext = document.createElementNS(ns, "ext");
+        ext.setAttribute("uri", "{B58B0392-4F1F-4190-BB64-5DF3571DCE5F}");
+        const xcalcf =
+          "http://schemas.microsoft.com/office/spreadsheetml/2018/calcfeatures";
+        ext.setAttributeNS(xmlns, "xmlns:xcalcf", xcalcf);
+        const features = document.createElementNS(xcalcf, "calcFeatures");
+        feature = document.createElementNS(xcalcf, "feature");
+        feature.setAttribute("name", "microsoft.com:RD");
+        features.append(feature);
+        feature = document.createElementNS(xcalcf, "feature");
+        feature.setAttribute("name", "microsoft.com:Single");
+        features.append(feature);
+        feature = document.createElementNS(xcalcf, "feature");
+        feature.setAttribute("name", "microsoft.com:FV");
+        features.append(feature);
+        feature = document.createElementNS(xcalcf, "feature");
+        feature.setAttribute("name", "microsoft.com:CNMTM");
+        features.append(feature);
+        feature = document.createElementNS(xcalcf, "feature");
+        feature.setAttribute("name", "microsoft.com:LET_WF");
+        features.append(feature);
+        feature = document.createElementNS(xcalcf, "feature");
+        feature.setAttribute("name", "microsoft.com:LAMBDA_WF");
+        features.append(feature);
+        feature = document.createElementNS(xcalcf, "feature");
+        feature.setAttribute("name", "microsoft.com:ARRAYTEXT_WF");
+        features.append(feature);
+        ext.append(features);
+        node.append(ext);
+        worksheets.append(node);
+
+        return {
+          "xl/workbook.xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function xlCreateStyles() {
+        const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+        const r =
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+        const mc =
+          "http://schemas.openxmlformats.org/markup-compatibility/2006";
+        const x14 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main";
+        const x14ac =
+          "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac";
+        const x15 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main";
+        const x16r2 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2015/02/main";
+        const xr =
+          "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
+        const xr2 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2";
+        const xr3 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3";
+
+        const docRoot = document.implementation.createDocument(
+          ns,
+          "styleSheet"
+        );
+        const styles = docRoot.documentElement;
+        styles.setAttributeNS(xmlns, "xmlns:r", r);
+        styles.setAttributeNS(xmlns, "xmlns:mc", mc);
+        styles.setAttributeNS(mc, "Ignorable", "x14ac x16r2 xr");
+        styles.setAttributeNS(xmlns, "xmlns:x14ac", x15);
+        styles.setAttributeNS(xmlns, "xmlns:x16r2", x16r2);
+        styles.setAttributeNS(xmlns, "xmlns:xr", xr);
+
+        let node = document.createElementNS(ns, "fonts");
+        node.setAttribute("count", 2);
+        node.setAttributeNS(x14ac, "knownFonts", "1");
+        let font = document.createElementNS(ns, "font");
+        let prop = document.createElementNS(ns, "sz");
+        prop.setAttribute("val", "11");
+        font.append(prop);
+        prop = document.createElementNS(ns, "color");
+        prop.setAttribute("theme", "1");
+        font.append(prop);
+        prop = document.createElementNS(ns, "name");
+        prop.setAttribute("val", "Calibri");
+        font.append(prop);
+        prop = document.createElementNS(ns, "family");
+        prop.setAttribute("val", "2");
+        font.append(prop);
+        prop = document.createElementNS(ns, "scheme");
+        prop.setAttribute("val", "minor");
+        font.append(prop);
+        node.append(font);
+        node.append(font.cloneNode(true));
+        font.append(document.createElementNS(ns,"b"));
+        styles.append(node);
+
+        node = document.createElementNS(ns, "fills");
+        node.setAttribute("count", "2");
+        let fill = document.createElementNS(ns, "fill");
+        prop = document.createElementNS(ns, "patternFill");
+        prop.setAttribute("patternType", "none");
+        fill.append(prop);
+        node.append(fill);
+
+        fill = document.createElementNS(ns, "fill");
+        prop = document.createElementNS(ns, "patternFill");
+        prop.setAttribute("patternType", "gray125");
+        fill.append(prop);
+        node.append(fill);
+        styles.append(node);
+
+        node = document.createElementNS(ns, "borders");
+        node.setAttribute("count", 1);
+        prop = document.createElementNS(ns, "border");
+        prop.append(document.createElementNS(ns, "left"));
+        prop.append(document.createElementNS(ns, "right"));
+        prop.append(document.createElementNS(ns, "top"));
+        prop.append(document.createElementNS(ns, "bottom"));
+        prop.append(document.createElementNS(ns, "diagonal"));
+        node.append(prop);
+        styles.append(node);
+
+        node = document.createElementNS(ns, "cellStyleXfs");
+        node.setAttribute("count", "1");
+        prop = document.createElementNS(ns, "xf");
+        prop.setAttribute("numFmtId", "0");
+        prop.setAttribute("fontId", "0");
+        prop.setAttribute("fillId", "0");
+        prop.setAttribute("borderId", "0");
+        node.append(prop);
+        styles.append(node);
+
+        node = document.createElementNS(ns, "cellXfs");
+        node.setAttribute("count", 4);
+        prop = document.createElementNS(ns, "xf");
+        prop.setAttribute("numFmtId", "0");
+        prop.setAttribute("fontId", "0");
+        prop.setAttribute("fillId", "0");
+        prop.setAttribute("borderId", "0");
+        node.append(prop);
+        prop = document.createElementNS(ns, "xf");
+        prop.setAttribute("numFmtId", "0");
+        prop.setAttribute("fontId", "1");
+        prop.setAttribute("fillId", "0");
+        prop.setAttribute("borderId", "0");
+        prop.setAttribute("applyFont", "1");
+        prop.setAttribute("applyAlignment", "1");
+        let subprop = document.createElementNS(ns, "alignment");
+        subprop.setAttribute("horizontal", "left");
+        subprop.setAttribute("vertical", "top");
+        subprop.setAttribute("wrapText", "1");
+        prop.append(subprop);
+        node.append(prop);
+        prop = document.createElementNS(ns, "xf");
+        prop.setAttribute("numFmtId", "0");
+        prop.setAttribute("fontId", "0");
+        prop.setAttribute("fillId", "0");
+        prop.setAttribute("borderId", "0");
+        prop.setAttribute("applyAlignment", "1");
+        subprop = document.createElementNS(ns, "alignment");
+        subprop.setAttribute("vertical", "center");
+        subprop.setAttribute("horizontal", "center");
+        subprop.setAttribute("wrapText", "1");
+        prop.append(subprop);
+        node.append(prop);
+        prop = document.createElementNS(ns, "xf");
+        prop.setAttribute("numFmtId", "0");
+        prop.setAttribute("fontId", "1");
+        prop.setAttribute("fillId", "0");
+        prop.setAttribute("borderId", "0");
+        prop.setAttribute("applyFont", "1");
+        prop.setAttribute("applyAlignment", "1");
+        subprop = document.createElementNS(ns, "alignment");
+        subprop.setAttribute("horizontal", "center");
+        subprop.setAttribute("vertical", "center");
+        subprop.setAttribute("wrapText", "1");
+        prop.append(subprop);
+        node.append(prop);
+        styles.append(node);
+
+        node = document.createElementNS(ns, "cellStyles");
+        node.setAttribute("count", "1");
+        prop = document.createElementNS(ns, "cellStyle");
+        prop.setAttribute("name", "Normal");
+        prop.setAttribute("xfId", "0");
+        prop.setAttribute("builtinId", "0");
+        node.append(prop);
+        styles.append(node);
+
+        node = document.createElementNS(ns, "dxfs");
+        node.setAttribute("count", "0");
+        styles.append(node);
+
+        node = document.createElementNS(ns, "tableStyles");
+        node.setAttribute("count", "0");
+        node.setAttribute("defaultTableStyle", "TableStyleMedium2");
+        node.setAttribute("defaultPivotStyle", "PivotStyleLight16");
+        styles.append(node);
+
+        node = document.createElementNS(ns, "extLst");
+        prop = document.createElementNS(ns, "ext");
+        prop.setAttribute("uri", "{EB79DEF2-80B8-43e5-95BD-54CBDDF9020C}");
+        prop.setAttributeNS(xmlns, "xmlns:x14", x14);
+        subprop = document.createElementNS(x14, "slicerStyles");
+        subprop.setAttribute("defaultSlicerStyle", "SlicerStyleLight1");
+        prop.append(subprop);
+        node.append(prop);
+        prop = document.createElementNS(ns, "ext");
+        prop.setAttribute("uri", "{9260A510-F301-46a8-8635-F512D64BE5F5}");
+        prop.setAttributeNS(xmlns, "xmlns:x15", x15);
+        subprop = document.createElementNS(x15, "timlineStyles");
+        subprop.setAttribute("defaultTimelinenStyle", "TimeSlicerStyleLight1");
+        prop.append(subprop);
+        node.append(prop);
+        styles.append(node);
+
+        return {
+          "xl/styles.xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function xlCreateSharedStrings(sharedStrings, stringsCount) {
+        const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+        const docRoot = document.implementation.createDocument(ns, "sst");
+        const sst = docRoot.documentElement;
+        sst.setAttribute("count", stringsCount);
+        sst.setAttribute("uniqueCount", sharedStrings.length);
+
+        const textNode = function (str) {
+          const si = document.createElementNS(ns, "si");
+          const t = document.createElementNS(ns, "t");
+          t.append(document.createTextNode(str));
+          si.append(t);
+          return si;
+        };
+
+        sharedStrings.forEach((text) => {
+            sst.appendChild(textNode(text))
+        })
+
+        return {
+          "xl/sharedStrings.xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function xlCreateContentTypes() {
+        const ns =
+          "http://schemas.openxmlformats.org/package/2006/content-types";
+        const docRoot = document.implementation.createDocument(ns, "Types");
+        const types = docRoot.documentElement;
+        let node = document.createElementNS(ns, "Default");
+        node.setAttribute("Extension", "rels");
+        node.setAttribute(
+          "ContentType",
+          "application/vnd.openxmlformats-package.relationships+xml"
+        );
+        types.append(node);
+
+        node = document.createElementNS(ns, "Default");
+        node.setAttribute("Extension", "xml");
+        node.setAttribute("ContentType", "application/xml");
+        types.append(node);
+
+        const override = function (partName, contentType) {
+          const n = document.createElementNS(ns, "Override");
+          n.setAttribute("PartName", partName);
+          n.setAttribute("ContentType", contentType);
+          return n;
+        };
+
+        types.append(
+          override(
+            "/xl/workbook.xml",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"
+          )
+        );
+        types.append(
+          override(
+            "/xl/worksheets/sheet1.xml",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"
+          )
+        );
+        types.append(
+          override(
+            "/xl/theme/theme1.xml",
+            "application/vnd.openxmlformats-officedocument.theme+xml"
+          )
+        );
+        types.append(
+          override(
+            "/xl/styles.xml",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"
+          )
+        );
+        types.append(
+          override(
+            "/xl/sharedStrings.xml",
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"
+          )
+        );
+        types.append(
+          override(
+            "/docProps/core.xml",
+            "application/vnd.openxmlformats-package.core-properties+xml"
+          )
+        );
+        types.append(
+          override(
+            "/docProps/app.xml",
+            "application/vnd.openxmlformats-officedocument.extended-properties+xml"
+          )
+        );
+
+        return {
+          "[Content_Types].xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function xlCreateWorksheet(tableId) {
+        const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
+        const r =
+          "http://schemas.openxmlformats.org/officeDocument/2006/relationships";
+        const mc =
+          "http://schemas.openxmlformats.org/markup-compatibility/2006";
+        const x14ac =
+          "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac";
+        const xr =
+          "http://schemas.microsoft.com/office/spreadsheetml/2014/revision";
+        const xr2 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2";
+        const xr3 =
+          "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3";
+
+        const docRoot = document.implementation.createDocument(ns, "worksheet");
+        const sheet = docRoot.documentElement;
+        sheet.setAttributeNS(xmlns, "xmlns:r", r);
+        sheet.setAttributeNS(xmlns, "xmlns:mc", mc);
+        sheet.setAttributeNS(mc, "Ignorable", "x14ac xr xr2 xr3");
+        sheet.setAttributeNS(xmlns, "xmlns:x14ac", x14ac);
+        sheet.setAttributeNS(xmlns, "xmlns:xr", xr);
+        sheet.setAttributeNS(xmlns, "xmlns:xr2", xr2);
+        sheet.setAttributeNS(xmlns, "xmlns:xr3", xr3);
+        sheet.setAttributeNS(
+          xr,
+          "uid",
+          "{03A428F4-4357-45F3-A061-8AD5C5DD8E68}"
+        );
+
+        const sheetViews = document.createElementNS(ns, "sheetViews");
+        const sheetView = document.createElementNS(ns, "sheetView");
+        sheetView.setAttribute("workbookViewId", "0");
+        sheetViews.appendChild(sheetView);
+
+        const sheetData = document.createElementNS(ns, "sheetData");
+        const mergeCells = document.createElementNS(ns, "mergeCells");
+
+        const dimension = document.createElementNS(ns, "dimension");
+
+        const table = document.getElementById(tableId);
+
+        const sharedStrings = [];
+        let stringsCount = 0
+
+        const parseTable = function (node, cursor) {
+          console.log("new Node: ", node.nodeName);
+          if (node.nodeName === "TR") {
+            cursor.nextRow();
+            console.log("new row");
+          } else if (node.nodeName === "TD" || node.nodeName === "TH") {
+            let spans = Number(node.getAttribute("colspan"));
+            spans = spans > 0 ? spans : 1;
+
+            console.log(
+              cursor.asCell(),
+              spans,
+              node.innerText,
+              cursor.asCell(1)
+            );
+            let index = sharedStrings.indexOf(node.innerText);
+
+            if (index < 0) {
+              index = sharedStrings.length;
+              sharedStrings.push(node.innerText);
+            }
+            stringsCount += 1;
+
+            let col = document.createElementNS(ns, "c");
+            col.setAttribute("r", cursor.asCell());
+            col.setAttribute("s", (node.nodeName === "TH") ? 2 : 1);
+            col.setAttribute("t", "s");
+            const v = document.createElementNS(ns, "v");
+            v.appendChild(document.createTextNode(index.toString()))
+            v.innerText = index.toString();
+            col.appendChild(v);
+            cursor.node.appendChild(col);
+
+            for (var span = 1; span < spans; span++) {
+              col = document.createElementNS(ns, "c");
+              col.setAttribute("r", cursor.asCell(span));
+              col.setAttribute("s", 2);
+              cursor.node.appendChild(col);
+            }
+
+            cursor.nextCol(spans);
+          }
+
+          for (var child of node.children) {
+            parseTable(child, cursor);
+          }
+        };
+
+        const cursor = {
+          row: 0,
+          col: 0,
+          maxCol: 0,
+          mergeCells: [],
+          nodes: [],
+          node: undefined,
+          inThead: false,
+          nextCol: function (spans) {
+            if (spans > 1) {
+              let mergeCells = this.asCell() + ":";
+              this.col += spans - 1;
+              mergeCells += this.asCell();
+              console.log(mergeCells);
+              this.mergeCells.push(mergeCells);
+            }
+            this.col += 1;
+            this.maxCol = Math.max(this.col, this.maxCol);
+          },
+          nextRow: function () {
+            if (this.node !== undefined) {
+              this.node.setAttribute("spans", "1:" + this.col.toString());
+            }
+            this.row += 1;
+            this.node = document.createElementNS(ns, "row");
+            this.nodes.push(this.node);
+            this.node.setAttribute("r", this.row);
+            this.col = 0;
+          },
+          asCell: function (col_offset, row_offset) {
+            if (col_offset === undefined) {
+              col_offset = 0;
+            }
+            if (row_offset === undefined) {
+              row_offset = 0;
+            }
+            return (
+              String.fromCharCode(65 + this.col + col_offset) +
+              (this.row + row_offset).toString()
+            );
+          },
+        };
+
+        for (var node of table.children) {
+          parseTable(node, cursor);
+        }
+        cursor.nodes.forEach((node) => {
+          sheetData.appendChild(node);
+        });
+        cursor.mergeCells.forEach((ref) => {
+          const cell = document.createElementNS(ns,"mergeCell");
+          cell.setAttribute("ref", ref);
+          mergeCells.appendChild(cell);
+        });
+
+        dimension.setAttribute("ref", "A1:" + cursor.asCell(-1))
+
+        sheet.appendChild(dimension);
+        sheet.appendChild(sheetViews);
+        sheet.appendChild(sheetData);
+        sheet.appendChild(mergeCells);
+        
+        return {
+            ...xlCreateSharedStrings(sharedStrings, stringsCount),
+          "xl/worksheets/sheet1.xml":
+            XMLHeader + new XMLSerializer().serializeToString(docRoot),
+        };
+      }
+
+      function UUID() {
+        const a = function () {
+          return Math.round(Math.random() * 0xefff + 0x1000).toString(16);
+        };
+        const b = function () {
+          return Math.round(Math.random() * 0x4f + 0x10).toString(16);
+        };
+        const c = function () {
+          return Math.round(Math.random() * 0xef + 0x10).toString(16);
+        };
+
+        return (
+          a() +
+          a() +
+          "-" +
+          a() +
+          "-" +
+          b() +
+          c() +
+          "-" +
+          b() +
+          c() +
+          "-" +
+          a() +
+          a() +
+          a()
+        ).toUpperCase();
+      }
+    </script>
+    <script>
+      "use strict";
+
+      function strToBytes(str) {
+        return str.split("").map((c) => c.charCodeAt());
+      }
+
+      function containsUtf16(bytes) {
+        return !bytes.every((c) => c < 0xff);
+      }
+
+      async function encode(obj) {
+        const str = JSON.stringify(obj);
+        const bytes = strToBytes(str);
+        const isUtf16String = containsUtf16(bytes);
+        const byteArray = isUtf16String
+          ? Uint16Array.from(bytes)
+          : Uint8Array.from(bytes);
+        const result = window.pako.deflate(
+          new Uint8Array(
+            byteArray.buffer,
+            byteArray.byteOffset,
+            byteArray.byteLength
+          )
+        );
+        const blob = bytesToBase64(result);
+        console.log("JSON object:", str);
+        console.log("Blob       :", blob);
+        return Promise.resolve({
+          encodedData: blob,
+          isUtf16String: isUtf16String,
+        });
+      }
+
+      async function decode(data64, isUtf16String) {
+        const compressed = base64ToBytes(data64);
+        const uncompressed8 = window.pako.inflate(compressed);
+        const uncompressed = isUtf16String
+          ? new Uint16Array(
+              uncompressed8.buffer,
+              uncompressed8.byteOffset,
+              uncompressed8.byteLength / 2
+            )
+          : uncompressed8;
+        return Promise.resolve(
+          JSON.parse(String.fromCharCode.apply(null, uncompressed))
+        );
+      }
+    </script>
+
+    <script>
+      function loadSORKK() {
+        const result = prompt("Paste an SORKK-string or URL", "");
+        let data64 = "";
+        let isUtf16String = false;
+
+        if (result != null) {
+          try {
+            const url = new URL(result);
+            isUtf16String = url.searchParams.has("d");
+
+            if (isUtf16String || url.searchParams.has("s")) {
+              data64 = isUtf16String
+                ? url.searchParams.get("d")
+                : url.searchParams.get("s");
+            }
+          } catch (typeError) {}
+        } else {
+          return;
+        }
+
+        if (data64.length == 0) {
+          isUtf16String = result.trim().charAt(0) == "d";
+          data64 = result.trim().substring(2);
+        }
+
+        if (data64 == "") {
+          alert("Couldn't load SORKK. Invalid text or URL.");
+        }
+
+        decode(data64, isUtf16String).then((sorkkObj) => {
+          if (sorkkObj !== undefined) {
+            if (sorkkObj instanceof Array) {
+              sorkkObj.forEach((sorkk) => {
+                saveSORKKToList(sorkk);
+              });
+            } else {
+              saveSORKKToList(sorkkObj);
+            }
+            showAllSORKKs();
+          } else {
+            alert("Couldn't load SORKK. Invalid text.");
+          }
+        });
+      }
+
+      function readMoreSORKK(obj) {
+        let displayStyle = document.getElementById("readMoreSORKK");
+        let showMore = document.getElementById("showInformation");
+        let hideMore = document.getElementById("hideInformation");
+
+        if (displayStyle.classList.contains("hide")) {
+          displayStyle.classList.remove("hide");
+          showMore.classList.add("hide");
+          hideMore.classList.remove("hide");
+        } else {
+          displayStyle.classList.add("hide");
+          showMore.classList.remove("hide");
+          hideMore.classList.add("hide");
+        }
+      }
+
+      function isEverySORKKFiledPopulated(sorkkObj) {
+        return (
+          sorkkObj.ingoingFeeling &&
+          sorkkObj.situation &&
+          sorkkObj.organism.whatDoIThink &&
+          sorkkObj.organism.whatDoIFeel &&
+          sorkkObj.organism.bodyReactions &&
+          sorkkObj.reaction &&
+          sorkkObj.consequences.short &&
+          sorkkObj.consequences.long
+        );
+      }
+
+      function saveSORKKToList(loadedSork) {
+        // window.top.location = window.location.protocol + "//" + window.location.host + window.location.pathname
+        const tableBody = document.getElementById("sorkkTableBody");
+        sorkkObj = loadedSork || getCurrentSORKK();
+
+        if (!isEverySORKKFiledPopulated(sorkkObj)) {
+          return;
+        }
+
+        const tableData = [
+          document.createTextNode(sorkkObj.ingoingFeeling),
+          document.createTextNode(sorkkObj.situation),
+          document.createTextNode(sorkkObj.organism.whatDoIThink),
+          document.createTextNode(sorkkObj.organism.whatDoIFeel),
+          document.createTextNode(sorkkObj.organism.bodyReactions),
+          document.createTextNode(sorkkObj.reaction),
+          document.createTextNode(sorkkObj.consequences.short),
+          document.createTextNode(sorkkObj.consequences.long),
         ];
 
-        function getBase64Code(charCode) {
-            if (charCode >= base64codes.length) {
-                throw new Error("Unable to parse base64 string.");
-            }
-            const code = base64codes[charCode];
-            if (code === 255) {
-                throw new Error("Unable to parse base64 string.");
-            }
-            return code;
+        const row = document.createElement("tr");
+
+        tableData.forEach((value) => {
+          const cell = document.createElement("td");
+          const pre = document.createElement("pre");
+          //pre.appendChild(value);
+          cell.appendChild(value);
+          row.appendChild(cell);
+        });
+        row.setAttribute(
+          "onclick",
+          "showSORKK(this, " + JSON.stringify(sorkkObj) + ")"
+        );
+        tableBody.prepend(row);
+        document.getElementById("sorkkCount").innerText++;
+        clearSORKK();
+        showSORKK(row, sorkkObj);
+      }
+
+      function clearSORKK() {
+        const textareas = document.getElementsByTagName("textarea");
+        for (let i = 0; i < textareas.length; i++) {
+          textareas.item(i).value = "";
+        }
+      }
+
+      function exportXLSX() {
+        const files = {
+          ...xlCreateContentTypes(),
+          ...xlCreateRels(),
+          ...xlCreateAppDocProps(),
+          ...xlCreateCoreDocProps(),
+          ...xlCreateWorkbookRels(),
+          ...xlCreateTheme(),
+          ...xlCreateStyles(),
+          ...xlCreateWorkbook(),
+          ...xlCreateWorksheet("sorkkTable")
+        }
+        const zip = new JSZip()
+        Object.keys(files).forEach((filename) => {
+            zip.file(filename, files[filename])
+        } )
+        zip.generateAsync({type:"blob"})
+        .then(function (blob) {
+            saveAs(blob, "sorkk.xlsx");
+        });
+      }
+
+      function getCurrentSORKK() {
+        return {
+          ingoingFeeling: document.getElementById("ingoingFeeling").value,
+          situation: document.getElementById("situation").value,
+          organism: {
+            whatDoIThink: document.getElementById("whatDoIThink").value,
+            whatDoIFeel: document.getElementById("whatDoIFeel").value,
+            bodyReactions: document.getElementById("bodyReactions").value,
+          },
+          reaction: document.getElementById("reaction").value,
+          consequences: {
+            short: document.getElementById("shortConsequence").value,
+            long: document.getElementById("longConsequence").value,
+          },
+        };
+      }
+      function getAllSORKKs() {
+        const tableBody = document.getElementById("sorkkTableBody");
+        var sorkks = new Array();
+
+        tableBody.childNodes.forEach((row) => {
+          if (!(row instanceof Text)) {
+            jsonString = row
+              .getAttribute("onclick")
+              .substring("showSORKK(this, ".length);
+            jsonString = jsonString.substring(0, jsonString.length - 1);
+            sorkks.push(JSON.parse(jsonString));
+          }
+        });
+        if (sorkks.length === 0) {
+          return undefined;
+        } else if (sorkks.length === 1) {
+          return sorkks[0];
+        } else {
+          return sorkks;
+        }
+      }
+
+      function shareSORKK() {
+        const currentSorkk = getCurrentSORKK();
+        let sorkkObj = getAllSORKKs() || currentSorkk;
+
+        if (
+          currentSorkk !== currentSorkk &&
+          isEverySORKKFiledPopulated(currentSorkk)
+        ) {
+          if (sorkkObj instanceof Array) {
+            sorkkObj.push(currentSorkk);
+          } else {
+            sorkkObj = [sorkkObj, currentSorkk];
+          }
         }
 
-        function bytesToBase64(bytes) {
-            let result = '', i, l = bytes.length;
-            for (i = 2; i < l; i += 3) {
-                result += base64abc[bytes[i - 2] >> 2];
-                result += base64abc[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
-                result += base64abc[((bytes[i - 1] & 0x0F) << 2) | (bytes[i] >> 6)];
-                result += base64abc[bytes[i] & 0x3F];
-            }
-            if (i === l + 1) { // 1 octet yet to write
-                result += base64abc[bytes[i - 2] >> 2];
-                result += base64abc[(bytes[i - 2] & 0x03) << 4];
-                result += "==";
-            }
-            if (i === l) { // 2 octets yet to write
-                result += base64abc[bytes[i - 2] >> 2];
-                result += base64abc[((bytes[i - 2] & 0x03) << 4) | (bytes[i - 1] >> 4)];
-                result += base64abc[(bytes[i - 1] & 0x0F) << 2];
-                result += "=";
-            }
-            return result;
+        encode(sorkkObj).then((result) => {
+          const url =
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            window.location.pathname +
+            "?" +
+            (result.isUtf16String ? "d" : "s") +
+            "=" +
+            encodeURIComponent(result.encodedData);
+          const link = document.getElementById("link");
+          link.value = url;
+          link.select();
+          link.setSelectionRange(0, url.length);
+
+          navigator.clipboard.writeText(link.value);
+          try {
+            navigator.share({ title: "SORKK Link", url: url });
+          } catch (err) {
+            console.error("Share failed:", err.message);
+          }
+        });
+      }
+
+      function showAllSORKKs() {
+        disableEditing();
+        document.getElementById("tableContainer").classList.remove("hide");
+        // document.getElementById("cardDeck").classList.replace("container", "hide")
+      }
+
+      function hideAllSORKKs() {
+        enableEditing();
+        document.getElementById("tableContainer").classList.add("hide");
+      }
+
+      function disableEditing() {
+        const controls = document.getElementsByClassName("editModeOnly");
+        for (let i = 0; i < controls.length; i++) {
+          console.log("Disable item", controls.item(i));
+          controls.item(i).classList.add("hide");
         }
-
-        function base64ToBytes(str) {
-            if (str.length % 4 !== 0) {
-                throw new Error("Unable to parse base64 string.");
-            }
-            const index = str.indexOf("=");
-            if (index !== -1 && index < str.length - 2) {
-                throw new Error("Unable to parse base64 string.");
-            }
-            let missingOctets = str.endsWith("==") ? 2 : str.endsWith("=") ? 1 : 0,
-                n = str.length,
-                result = new Uint8Array(3 * (n / 4)),
-                buffer;
-            for (let i = 0, j = 0; i < n; i += 4, j += 3) {
-                buffer =
-                    getBase64Code(str.charCodeAt(i)) << 18 |
-                    getBase64Code(str.charCodeAt(i + 1)) << 12 |
-                    getBase64Code(str.charCodeAt(i + 2)) << 6 |
-                    getBase64Code(str.charCodeAt(i + 3));
-                result[j] = buffer >> 16;
-                result[j + 1] = (buffer >> 8) & 0xFF;
-                result[j + 2] = buffer & 0xFF;
-            }
-            return result.subarray(0, result.length - missingOctets);
+        const readOnlys = document.getElementsByClassName("viewModeOnly");
+        for (let i = 0; i < readOnlys.length; i++) {
+          readOnlys.item(i).classList.remove("hide");
         }
+      }
 
-        function base64encode(str, encoder = new TextEncoder()) {
-            return bytesToBase64(encoder.encode(str));
+      function enableEditing() {
+        const controls = document.getElementsByClassName("editModeOnly");
+        for (let i = 0; i < controls.length; i++) {
+          controls.item(i).classList.remove("hide");
         }
-
-        function base64decode(str, decoder = new TextDecoder()) {
-            return decoder.decode(base64ToBytes(str));
+        const readOnlys = document.getElementsByClassName("viewModeOnly");
+        for (let i = 0; i < readOnlys.length; i++) {
+          readOnlys.item(i).classList.add("hide");
         }
-    </script>
-    <script>
-        const XMLHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>";
-        const xmlns = "http://www.w3.org/2000/xmlns/";
+      }
 
-        function xlCreateRels() {
-            const ns = "http://schemas.openxmlformats.org/package/2006/relationships"
-            const root = document.implementation.createDocument(ns, "Relationships");
-            let rel = root.createElementNS(ns, "RelationShip");
-            rel.setAttribute("Id", "rId1");
-            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument");
-            rel.setAttribute("Target", "xl/workbook.xml");
-
-            root.documentElement.prepend(rel);
-
-            rel = root.createElementNS(ns, "RelationShip");
-            rel.setAttribute("Id", "rId2");
-            rel.setAttribute("Type", "http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties");
-            rel.setAttribute("Target", "docProps/core.xml");
-            root.documentElement.prepend(rel);
-
-            rel = root.createElementNS(ns, "RelationShip");
-            rel.setAttribute("Id", "rId3");
-            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/extended-properties");
-            rel.setAttribute("Target", "docProps/app.xml");
-            root.documentElement.prepend(rel);
-
-            return { "_rels/.rels": XMLHeader + (new XMLSerializer()).serializeToString(root) };
+      function enableReadOnly() {
+        const controls = document.getElementsByClassName("editModeOnly");
+        for (let i = 0; i < controls.length; i++) {
+          controls.item(i).classList.add("hide");
         }
-
-        function xlCreateAppDocProps() {
-            const ns = "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties";
-            const vt = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes";
-            const docRoot = document.implementation.createDocument(ns, "Properties");
-            const appRoot = docRoot.documentElement;
-            appRoot.setAttributeNS(xmlns, "xmlns:vt", vt);
-
-            let node = document.createElementNS(ns, "Application");
-            node.appendChild(document.createTextNode("Patrik Excel Exporter"));
-            appRoot.append(node);
-            node = document.createElementNS(ns, "DocSecurity");
-            node.appendChild(document.createTextNode("0"));
-            appRoot.append(node);
-            node = document.createElementNS(ns, "ScaleCrop");
-            node.appendChild(document.createTextNode("false"));
-            appRoot.append(node);
-
-            node = document.createElementNS(ns, "HeadingPairs");
-            let vector = document.createElementNS(vt, "vector");
-            vector.setAttribute("size", "2");
-            vector.setAttribute("baseType", "variant");
-
-            let variant = document.createElementNS(vt, "variant");
-            let lpstr = document.createElementNS(vt, "lpstr");
-            lpstr.append(document.createTextNode("Worksheets"));
-            variant.append(lpstr);
-            vector.append(variant);
-
-            variant = document.createElementNS(vt, "variant");
-            const i4 = document.createElementNS(vt, "i4");
-            i4.append(document.createTextNode("1"));
-            variant.append(i4);
-            vector.append(variant);
-            node.append(vector);
-            appRoot.append(node);
-
-            node = document.createElementNS(ns, "TitlesOfParts");
-            vector = document.createElementNS(vt, "vector");
-            vector.setAttribute("size", "1");
-            vector.setAttribute("baseType", "lpstr");
-            lpstr = document.createElementNS(vt, "lpstr");
-            lpstr.append(document.createTextNode("Sheet1"));
-            vector.append(lpstr);
-            node.append(vector);
-            appRoot.append(node);
-
-            node = document.createElementNS(ns, "Company");
-            node.appendChild(document.createTextNode(""));
-            appRoot.append(node);
-            node = document.createElementNS(ns, "LinksUpToDate");
-            node.appendChild(document.createTextNode("false"));
-            appRoot.append(node);
-            node = document.createElementNS(ns, "SharedDoc");
-            node.appendChild(document.createTextNode("false"));
-            appRoot.append(node);
-            node = document.createElementNS(ns, "HyperlinksChanged");
-            node.appendChild(document.createTextNode("false"));
-            appRoot.append(node);
-            node = document.createElementNS(ns, "AppVersion");
-            node.appendChild(document.createTextNode("16.0300"));
-            appRoot.append(node);
-
-            return { "docProps/app.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
+        const viewModeOnlys = document.getElementsByClassName("viewModeOnly");
+        for (let i = 0; i < viewModeOnlys.length; i++) {
+          viewModeOnlys.item(i).classList.add("hide");
         }
-
-        function xlCreateCoreDocProps() {
-            const cp = "http://schemas.openxmlformats.org/package/2006/metadata/core-properties";
-            const dc = "http://purl.org/dc/elements/1.1/"
-            const dcterms = "http://purl.org/dc/terms/"
-            const dcmitype = "http://purl.org/dc/dcmitype/"
-            const xsi = "http://www.w3.org/2001/XMLSchema-instance"
-
-            const docRoot = document.implementation.createDocument(cp, "coreProperties");
-            const appRoot = docRoot.documentElement;
-            appRoot.setAttributeNS(xmlns, "xmlns:cp", cp);
-            appRoot.setAttributeNS(xmlns, "xmlns:dc", dc);
-            appRoot.setAttributeNS(xmlns, "xmlns:dcterms", dcterms);
-            appRoot.setAttributeNS(xmlns, "xmlns:dcmitype", dcmitype);
-            appRoot.setAttributeNS(xmlns, "xmlns:xsi", xsi);
-
-            let node = document.createElementNS(dc, "creator");
-            node.appendChild(document.createTextNode("Patrik Andersson"));
-            appRoot.append(node);
-            node = document.createElementNS(cp, "lastModifiedBy");
-            node.appendChild(document.createTextNode("Patrik Andersson"));
-            appRoot.append(node);
-
-            node = document.createElementNS(dcterms, "created");
-            node.setAttributeNS(xsi, "type", "dcterms:W3CDTF");
-            node.appendChild(document.createTextNode((new Date()).toISOString()));
-            appRoot.append(node);
-
-            node = document.createElementNS(dcterms, "modified");
-            node.setAttributeNS(xsi, "type", "dcterms:W3CDTF");
-            node.appendChild(document.createTextNode((new Date()).toISOString()));
-            appRoot.append(node);
-
-            return { "docProps/core.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
+        const readOnlys = document.getElementsByClassName("readOnly");
+        for (let i = 0; i < readOnlys.length; i++) {
+          readOnlys.item(i).classList.remove("hide");
         }
-
-        function xlCreateWorkbookRels() {
-            const ns = "http://schemas.openxmlformats.org/package/2006/relationships"
-            const root = document.implementation.createDocument(ns, "Relationships");
-            let rel = root.createElementNS(ns, "RelationShip");
-            rel.setAttribute("Id", "rId1");
-            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet");
-            rel.setAttribute("Target", "worksheets/sheet1.xml");
-
-            root.documentElement.prepend(rel);
-
-            rel = root.createElementNS(ns, "RelationShip");
-            rel.setAttribute("Id", "rId2");
-            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme");
-            rel.setAttribute("Target", "theme/theme1.xml");
-            root.documentElement.prepend(rel);
-
-            rel = root.createElementNS(ns, "RelationShip");
-            rel.setAttribute("Id", "rId3");
-            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles");
-            rel.setAttribute("Target", "styles.xml");
-            root.documentElement.prepend(rel);
-
-            rel = root.createElementNS(ns, "RelationShip");
-            rel.setAttribute("Id", "rId4");
-            rel.setAttribute("Type", "http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings");
-            rel.setAttribute("Target", "sharedStrings.xml");
-            root.documentElement.append(rel);
-
-            return { "xl/_rels/workbook.xml.rels": XMLHeader + (new XMLSerializer()).serializeToString(root) };
-        }
-
-        function xlCreateTheme() {
-            const a = "http://schemas.openxmlformats.org/drawingml/2006/main";
-            const thm15 = "http://schemas.microsoft.com/office/thememl/2012/main";
-            const docRoot = document.implementation.createDocument(a, "theme");
-            const themeRoot = docRoot.documentElement;
-            themeRoot.setAttributeNS(xmlns, "xmlns:a", a);
-            themeRoot.setAttribute("name", "Office Theme");
-
-            const elements = document.createElementNS(a, "themeElements");
-            const clrScheme = document.createElementNS(a, "clrScheme");
-            clrScheme.setAttribute("name", "Office");
-
-            let node = document.createElementNS(a, "dk1");
-            let clr = document.createElementNS(a, "sysClr");
-            clr.setAttribute("val", "windowText");
-            clr.setAttribute("lastClr", "000000");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "lt1");
-            clr = document.createElementNS(a, "sysClr");
-            clr.setAttribute("val", "window");
-            clr.setAttribute("lastClr", "FFFFFF");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "dk2");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "44546A");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "lt2");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "E7E6E6");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "accent1");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "4472C4");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "accent2");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "ED7D31");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "accent3");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "A5A5A5");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "accent4");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "FFC000");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "accent5");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "5B9BD5");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "accent6");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "70AD47");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "hlink");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "0563C1");
-            node.append(clr);
-            clrScheme.append(node);
-
-            node = document.createElementNS(a, "folHlink");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "954F72");
-            node.append(clr);
-            clrScheme.append(node);
-
-            elements.append(clrScheme);
-
-            const fontScheme = document.createElementNS(a, "fontScheme");
-            fontScheme.setAttribute("name", "Office");
-            elements.append(fontScheme);
-
-            const majorFont = document.createElementNS(a, "majorFont");
-            fontScheme.append(majorFont);
-
-            let font = document.createElementNS(a, "latin");
-            font.setAttribute("typeface", "Calibri Light");
-            font.setAttribute("panose", "020F0302020204030204");
-            majorFont.append(font);
-
-            font = document.createElementNS(a, "ea");
-            font.setAttribute("typeface", "");
-            majorFont.append(font);
-
-            font = document.createElementNS(a, "cs");
-            font.setAttribute("typeface", "");
-            majorFont.append(font);
-
-            majorFont.append(newFont(a, "Jpan", "游ゴシック Light"));
-            majorFont.append(newFont(a, "Hang", "맑은 고딕"));
-            majorFont.append(newFont(a, "Hans", "等线 Light"));
-            majorFont.append(newFont(a, "Hant", "新細明體"));
-            majorFont.append(newFont(a, "Arab", "Times New Roman"));
-            majorFont.append(newFont(a, "Hebr", "Times New Roman"));
-            majorFont.append(newFont(a, "Thai", "Tahoma"));
-            majorFont.append(newFont(a, "Ethi", "Nyala"));
-            majorFont.append(newFont(a, "Beng", "Vrinda"));
-            majorFont.append(newFont(a, "Gujr", "Shruti"));
-            majorFont.append(newFont(a, "Khmr", "MoolBoran"));
-            majorFont.append(newFont(a, "Knda", "Tunga"));
-            majorFont.append(newFont(a, "Guru", "Raavi"));
-            majorFont.append(newFont(a, "Cans", "Euphemia"));
-            majorFont.append(newFont(a, "Cher", "Plantagenet Cherokee"));
-            majorFont.append(newFont(a, "Yiii", "Microsoft Yi Baiti"));
-            majorFont.append(newFont(a, "Tibt", "Microsoft Himalaya"));
-            majorFont.append(newFont(a, "Thaa", "MV Boli"));
-            majorFont.append(newFont(a, "Deva", "Mangal"));
-            majorFont.append(newFont(a, "Telu", "Gautami"));
-            majorFont.append(newFont(a, "Taml", "Latha"));
-            majorFont.append(newFont(a, "Syrc", "Estrangelo Edessa"));
-            majorFont.append(newFont(a, "Orya", "Kalinga"));
-            majorFont.append(newFont(a, "Mlym", "Kartika"));
-            majorFont.append(newFont(a, "Laoo", "DokChampa"));
-            majorFont.append(newFont(a, "Sinh", "Iskoola Pota"));
-            majorFont.append(newFont(a, "Mong", "Mongolian Baiti"));
-            majorFont.append(newFont(a, "Viet", "Times New Roman"));
-            majorFont.append(newFont(a, "Uigh", "Microsoft Uighur"));
-            majorFont.append(newFont(a, "Geor", "Sylfaen"));
-            majorFont.append(newFont(a, "Armn", "Arial"));
-            majorFont.append(newFont(a, "Bugi", "Leelawadee UI"));
-            majorFont.append(newFont(a, "Bopo", "Microsoft JhengHei"));
-            majorFont.append(newFont(a, "Java", "Javanese Text"));
-            majorFont.append(newFont(a, "Lisu", "Segoe UI"));
-            majorFont.append(newFont(a, "Mymr", "Myanmar Text"));
-            majorFont.append(newFont(a, "Nkoo", "Ebrima"));
-            majorFont.append(newFont(a, "Olck", "Nirmala UI"));
-            majorFont.append(newFont(a, "Osma", "Ebrima"));
-            majorFont.append(newFont(a, "Phag", "Phagspa"));
-            majorFont.append(newFont(a, "Syrn", "Estrangelo Edessa"));
-            majorFont.append(newFont(a, "Syrj", "Estrangelo Edessa"));
-            majorFont.append(newFont(a, "Syre", "Estrangelo Edessa"));
-            majorFont.append(newFont(a, "Sora", "Nirmala UI"));
-            majorFont.append(newFont(a, "Tale", "Microsoft Tai Le"));
-            majorFont.append(newFont(a, "Talu", "Microsoft New Tai Lue"));
-            majorFont.append(newFont(a, "Tfng", "Ebrima"));
-
-            const minorFont = document.createElementNS(a, "minorFont");
-            fontScheme.append(minorFont);
-
-            font = document.createElementNS(a, "latin");
-            font.setAttribute("typeface", "Calibri");
-            font.setAttribute("panose", "020F0502020204030204");
-            minorFont.append(font);
-
-            font = document.createElementNS(a, "ea");
-            font.setAttribute("typeface", "");
-            minorFont.append(font);
-
-            font = document.createElementNS(a, "cs");
-            font.setAttribute("typeface", "");
-            minorFont.append(font);
-
-            minorFont.append(newFont(a, "Jpan", "游ゴシック"));
-            minorFont.append(newFont(a, "Hang", "맑은 고딕"));
-            minorFont.append(newFont(a, "Hans", "等线"));
-            minorFont.append(newFont(a, "Hant", "新細明體"));
-            minorFont.append(newFont(a, "Arab", "Arial"));
-            minorFont.append(newFont(a, "Hebr", "Arial"));
-            minorFont.append(newFont(a, "Thai", "Tahoma"));
-            minorFont.append(newFont(a, "Ethi", "Nyala"));
-            minorFont.append(newFont(a, "Beng", "Vrinda"));
-            minorFont.append(newFont(a, "Gujr", "Shruti"));
-            minorFont.append(newFont(a, "Khmr", "DaunPenh"));
-            minorFont.append(newFont(a, "Knda", "Tunga"));
-            minorFont.append(newFont(a, "Guru", "Raavi"));
-            minorFont.append(newFont(a, "Cans", "Euphemia"));
-            minorFont.append(newFont(a, "Cher", "Plantagenet Cherokee"));
-            minorFont.append(newFont(a, "Yiii", "Microsoft Yi Baiti"));
-            minorFont.append(newFont(a, "Tibt", "Microsoft Himalaya"));
-            minorFont.append(newFont(a, "Thaa", "MV Boli"));
-            minorFont.append(newFont(a, "Deva", "Mangal"));
-            minorFont.append(newFont(a, "Telu", "Gautami"));
-            minorFont.append(newFont(a, "Taml", "Latha"));
-            minorFont.append(newFont(a, "Syrc", "Estrangelo Edessa"));
-            minorFont.append(newFont(a, "Orya", "Kalinga"));
-            minorFont.append(newFont(a, "Mlym", "Kartika"));
-            minorFont.append(newFont(a, "Laoo", "DokChampa"));
-            minorFont.append(newFont(a, "Sinh", "Iskoola Pota"));
-            minorFont.append(newFont(a, "Mong", "Mongolian Baiti"));
-            minorFont.append(newFont(a, "Viet", "Arial"));
-            minorFont.append(newFont(a, "Uigh", "Microsoft Uighur"));
-            minorFont.append(newFont(a, "Geor", "Sylfaen"));
-            minorFont.append(newFont(a, "Armn", "Arial"));
-            minorFont.append(newFont(a, "Bugi", "Leelawadee UI"));
-            minorFont.append(newFont(a, "Bopo", "Microsoft JhengHei"));
-            minorFont.append(newFont(a, "Java", "Javanese Text"));
-            minorFont.append(newFont(a, "Lisu", "Segoe UI"));
-            minorFont.append(newFont(a, "Mymr", "Myanmar Text"));
-            minorFont.append(newFont(a, "Nkoo", "Ebrima"));
-            minorFont.append(newFont(a, "Olck", "Nirmala UI"));
-            minorFont.append(newFont(a, "Osma", "Ebrima"));
-            minorFont.append(newFont(a, "Phag", "Phagspa"));
-            minorFont.append(newFont(a, "Syrn", "Estrangelo Edessa"));
-            minorFont.append(newFont(a, "Syrj", "Estrangelo Edessa"));
-            minorFont.append(newFont(a, "Syre", "Estrangelo Edessa"));
-            minorFont.append(newFont(a, "Sora", "Nirmala UI"));
-            minorFont.append(newFont(a, "Tale", "Microsoft Tai Le"));
-            minorFont.append(newFont(a, "Talu", "Microsoft New Tai Lue"));
-            minorFont.append(newFont(a, "Tfng", "Ebrima"));
-
-            const fmtScheme = document.createElementNS(a, "fmtScheme");
-            fmtScheme.setAttribute("name", "Office");
-            elements.append(fmtScheme);
-            let styleList = document.createElementNS(a, "fillStyleLst");
-            let fill = document.createElementNS(a, "solidFill");
-            clr = document.createElementNS(a, "schemeClr");
-            clr.setAttribute("val", "phClr");
-            fill.append(clr);
-            styleList.append(fill);
-
-            fill = document.createElementNS(a, "gradFill");
-            fill.setAttribute("rotWithShape", "1");
-            let gsList = document.createElementNS(a, "gsLst");
-            let gs = newGSPos(a, 0);
-            gs.append(newSchemeColor(a, { lum: "110000", sat: "105000", tint: "67000" }));
-            gsList.append(gs);
-            gs = newGSPos(a, 50000);
-            gs.append(newSchemeColor(a, { lum: "105000", sat: "103000", tint: "73000" }));
-            gsList.append(gs);
-            gs = newGSPos(a, 100000);
-            gs.append(newSchemeColor(a, { lum: "105000", sat: "109000", tint: "81000" }));
-            gsList.append(gs);
-            fill.append(gsList);
-            node = document.createElementNS(a, "lin");
-            node.setAttribute("ang", "5400000");
-            node.setAttribute("scaled", "0");
-            fill.append(node);
-            styleList.append(fill);
-
-            fill = document.createElementNS(a, "gradFill");
-            fill.setAttribute("rotWithShape", "1");
-            gsList = document.createElementNS(a, "gsLst");
-            gs = newGSPos(a, 0);
-            gs.append(newSchemeColor(a, { lum: "102000", sat: "103000", tint: "94000" }));
-            gsList.append(gs);
-            gs = newGSPos(a, 50000);
-            gs.append(newSchemeColor(a, { lum: "100000", sat: "110000", shade: "100000" }));
-            gsList.append(gs);
-            gs = newGSPos(a, 100000);
-            gs.append(newSchemeColor(a, { lum: "99000", sat: "120000", shade: "78000" }));
-            gsList.append(gs);
-            fill.append(gsList);
-            node = document.createElementNS(a, "lin");
-            node.setAttribute("ang", "5400000");
-            node.setAttribute("scaled", "0");
-            fill.append(node);
-            styleList.append(fill);
-
-            fmtScheme.append(styleList);
-
-            styleList = document.createElementNS(a, "lnStyleLst");
-
-            let ln = document.createElementNS(a, "ln");
-            ln.setAttribute("w", "6350");
-            ln.setAttribute("cap", "flat");
-            ln.setAttribute("cmpd", "sng");
-            ln.setAttribute("algn", "ctr");
-            clr = document.createElementNS(a, "schemeClr");
-            clr.setAttribute("val", "phClr");
-            fill = document.createElementNS(a, "solidFill");
-            fill.append(clr);
-            ln.append(fill);
-            let prstDash = document.createElementNS(a, "prstDash");
-            prstDash.setAttribute("val", "solid");
-            ln.append(prstDash);
-            let miter = document.createElementNS(a, "miter");
-            miter.setAttribute("lim", "800000");
-            ln.append(miter);
-            styleList.append(ln);
-
-            ln = document.createElementNS(a, "ln");
-            ln.setAttribute("w", "12700");
-            ln.setAttribute("cap", "flat");
-            ln.setAttribute("cmpd", "sng");
-            ln.setAttribute("algn", "ctr");
-            clr = document.createElementNS(a, "schemeClr");
-            clr.setAttribute("val", "phClr");
-            fill = document.createElementNS(a, "solidFill");
-            fill.append(clr);
-            ln.append(fill);
-            prstDash = document.createElementNS(a, "prstDash");
-            prstDash.setAttribute("val", "solid");
-            ln.append(prstDash);
-            miter = document.createElementNS(a, "miter");
-            miter.setAttribute("lim", "800000");
-            ln.append(miter);
-            styleList.append(ln);
-
-            ln = document.createElementNS(a, "ln");
-            ln.setAttribute("w", "19050");
-            ln.setAttribute("cap", "flat");
-            ln.setAttribute("cmpd", "sng");
-            ln.setAttribute("algn", "ctr");
-            clr = document.createElementNS(a, "schemeClr");
-            clr.setAttribute("val", "phClr");
-            fill = document.createElementNS(a, "solidFill");
-            fill.append(clr);
-            ln.append(fill);
-            prstDash = document.createElementNS(a, "prstDash");
-            prstDash.setAttribute("val", "solid");
-            ln.append(prstDash);
-            miter = document.createElementNS(a, "miter");
-            miter.setAttribute("lim", "800000");
-            ln.append(miter);
-            styleList.append(ln);
-
-            fmtScheme.append(styleList);
-
-            styleList = document.createElementNS(a, "effectStyleLst");
-
-            let effectStyle = document.createElementNS(a, "effectStyle");
-            let effectLst = document.createElementNS(a, "effectLst");
-            effectStyle.append(effectLst);
-            styleList.append(effectStyle);
-            styleList.append(effectStyle.cloneNode(true));
-
-            effectStyle = effectStyle.cloneNode(false);
-            effectLst = effectLst.cloneNode();
-            let outerShdw = document.createElementNS(a, "outerShdw");
-            outerShdw.setAttribute("blurRad", "57150");
-            outerShdw.setAttribute("dist", "19050");
-            outerShdw.setAttribute("dir", "5400000");
-            outerShdw.setAttribute("algn", "ctr");
-            outerShdw.setAttribute("rotWithShape", "0");
-            clr = document.createElementNS(a, "srgbClr");
-            clr.setAttribute("val", "000000");
-            let alpha = document.createElementNS(a, "alpha");
-            alpha.setAttribute("val", "63000");
-            clr.append(alpha);
-            outerShdw.append(clr);
-            effectLst.append(outerShdw);
-            effectStyle.append(effectLst);
-            styleList.append(effectStyle);
-
-            fmtScheme.append(styleList);
-
-            styleList = document.createElementNS(a, "bgFillStyleLst");
-            fill = document.createElementNS(a, "solidFill");
-            clr = document.createElementNS(a, "schemeClr");
-            clr.setAttribute("val", "phClr");
-            fill.append(clr);
-            styleList.append(fill);
-
-            fill = document.createElementNS(a, "solidFill");
-            clr = document.createElementNS(a, "schemeClr");
-            fill.append(newSchemeColor(a, { tint: "95000", sat: "170000" }));
-            styleList.append(fill);
-
-            fill = document.createElementNS(a, "gradFill");
-            fill.setAttribute("rotWithShape", "1");
-            gsList = document.createElementNS(a, "gsLst");
-            gs = newGSPos(a, 0);
-            gs.append(newSchemeColor(a, { tint: "93000", sat: "150000", shade: "98000", lum: "102000" }));
-            gsList.append(gs);
-            gs = newGSPos(a, 50000);
-            gs.append(newSchemeColor(a, { tint: "98000", sat: "130000", shade: "90000", lum: "103000" }));
-            gsList.append(gs);
-            gs = newGSPos(a, 100000);
-            gs.append(newSchemeColor(a, { sat: "120000", shade: "63000" }));
-            gsList.append(gs);
-            fill.append(gsList);
-            node = document.createElementNS(a, "lin");
-            node.setAttribute("ang", "5400000");
-            node.setAttribute("scaled", "0");
-            fill.append(node);
-            styleList.append(fill);
-
-            fmtScheme.append(styleList);
-            themeRoot.append(elements);
-
-            node = document.createElementNS(a, "objectDefaults");
-            themeRoot.append(node);
-
-            node = document.createElementNS(a, "extraClrSchemeLst");
-            themeRoot.append(node);
-
-            const extLst = document.createElementNS(a, "extLst");
-            const ext = document.createElementNS(a, "ext");
-            ext.setAttribute("uri", "{05A4C25C-085E-4340-85A3-A5531E510DB2}");
-
-            const themeFamily = document.createElementNS(thm15, "themeFamily");
-            themeFamily.setAttributeNS(xmlns, "xmlns:thm15", thm15);
-            themeFamily.setAttribute("name", "Office Theme");
-            themeFamily.setAttribute("id", "{62F939B6-93AF-4DB8-9C6B-D6C7DFDC589F}");
-            themeFamily.setAttribute("vid", "{4A3C46E8-61CC-4603-A589-7422A47A8E4A}");
-            ext.append(themeFamily);
-            extLst.append(ext);
-
-            themeRoot.append(extLst);
-            return { "xl/theme/theme1.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
-        }
-
-        function newFont(ns, script, typeface) {
-            const font = document.createElementNS(ns, "font");
-            font.setAttribute("script", script);
-            font.setAttribute("typeface", typeface);
-            return font;
-        }
-
-        function newSchemeColor(ns, options) {
-            const clr = document.createElementNS(ns, "schemeClr");
-            clr.setAttribute("val", "phClr");
-            const lumMod = document.createElementNS(ns, "lumMod");
-            lumMod.setAttribute("val", (options.lum) ? options.lum : "");
-            const satMod = document.createElementNS(ns, "satMod");
-            satMod.setAttribute("val", (options.sat) ? options.sat : "");
-            const tintEl = document.createElementNS(ns, "tint");
-            tintEl.setAttribute("val", (options.tint) ? options.tint : "");
-            const shadeEl = document.createElementNS(ns, "shade");
-            shadeEl.setAttribute("val", (options.shade) ? options.shade : "");
-            if (options.lum) clr.append(lumMod);
-            if (options.sat) clr.append(satMod);
-            if (options.tint) clr.append(tintEl);
-            if (options.shade) clr.append(shadeEl);
-            return clr;
-        }
-
-        function newGSPos(ns, pos) {
-            const gs = document.createElementNS(ns, "gs");
-            gs.setAttribute("pos", pos);
-            return gs;
-        }
-
-        function xlCreateWorkbook() {
-            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
-            const r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-            const mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-            const x15 = "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main"
-            const xr = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
-            const xr6 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision6"
-            const xr10 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision10"
-            const xr2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
-
-            const docRoot = document.implementation.createDocument(ns, "workbook");
-            const worksheets = docRoot.documentElement;
-            worksheets.setAttributeNS(xmlns, "xmlns:r", r);
-            worksheets.setAttributeNS(xmlns, "xmlns:mc", mc);
-            worksheets.setAttributeNS(mc, "Ignorable", "x15 xr xr6 xr10 xr2");
-            worksheets.setAttributeNS(xmlns, "xmlns:x15", x15);
-            worksheets.setAttributeNS(xmlns, "xmlns:xr", xr);
-            worksheets.setAttributeNS(xmlns, "xmlns:xr6", xr6);
-            worksheets.setAttributeNS(xmlns, "xmlns:xr10", xr10);
-            worksheets.setAttributeNS(xmlns, "xmlns:xr2", xr2);
-
-            let node = document.createElementNS(ns, "fileVersion");
-            node.setAttribute("appName", "xl");
-            node.setAttribute("lastEdited", "7");
-            node.setAttribute("lowestEdited", "7");
-            node.setAttribute("rupBuild", "25726");
-
-            worksheets.append(node);
-
-            node = document.createElementNS(ns, "workbookPr");
-            node.setAttribute("defaultThemeVersion", "166925");
-            worksheets.append(node);
-
-            node = document.createElementNS(mc, "AlternateContent");
-            node.setAttributeNS(xmlns, "xmlns:mc", mc);
-            worksheets.append(node);
-
-            const choice = document.createElementNS(mc, "Choice");
-            choice.setAttribute("Requires", "x15");
-            const x15ac = "http://schemas.microsoft.com/office/spreadsheetml/2010/11/ac";
-            const absPath = document.createElementNS(x15ac, "absPath");
-            absPath.setAttribute("url", "C:\\Temp\\sorkk\\");
-            absPath.setAttributeNS(xmlns, "xmlns:x15ac", x15ac);
-            choice.append(absPath);
-            node.append(choice);
-            worksheets.append(node);
-
-            node = document.createElementNS(xr, "revisionPtr");
-            node.setAttribute("revIDLastSave", "0");
-            node.setAttribute("documentId", "8_{" + UUID() + "}");
-            node.setAttributeNS(xr6, "coauthVersionLast", "47");
-            node.setAttributeNS(xr6, "coauthVersionMax", "47");
-            node.setAttributeNS(xr10, "uidLastSave", "{00000000-0000-0000-0000-000000000000}");
-            worksheets.append(node);
-
-            node = document.createElementNS(ns, "bookViews");
-            const workbookView = document.createElementNS(ns, "workbookView");
-            workbookView.setAttribute("xWindow", "390");
-            workbookView.setAttribute("yWindow", "390");
-            workbookView.setAttribute("windowWidth", "38160");
-            workbookView.setAttribute("windowHeight", "20640");
-            workbookView.setAttributeNS(xr2, "uid", "{187A1CB2-544C-4454-8DF2-1F2656C9F38F}");
-            node.append(workbookView);
-            worksheets.append(node);
-
-            node = document.createElementNS(ns, "sheets");
-            const sheet = document.createElementNS(ns, "sheet");
-            sheet.setAttribute("name", "Sheet1");
-            sheet.setAttribute("sheetId", "1");
-            sheet.setAttributeNS(r, "id", "rId1");
-            node.append(sheet);
-            worksheets.append(node);
-
-            node = document.createElementNS(ns, "calcPr");
-            node.setAttribute("calcId", "191029");
-            worksheets.append(node);
-
-            node = document.createElementNS(ns, "extLst");
-            let ext = document.createElementNS(ns, "ext");
-            ext.setAttribute("uri", "{140A7094-0E35-4892-8432-C4D2E57EDEB5}");
-            ext.setAttributeNS(xmlns, "xmlns:x15", x15);
-            let feature = document.createElementNS(x15, "workbookPr");
-            feature.setAttribute("chartTrackingRefBase", "1");
-            ext.append(feature);
-            node.append(ext);
-            ext = document.createElementNS(ns, "ext");
-            ext.setAttribute("uri", "{B58B0392-4F1F-4190-BB64-5DF3571DCE5F}");
-            const xcalcf = "http://schemas.microsoft.com/office/spreadsheetml/2018/calcfeatures";
-            ext.setAttributeNS(xmlns, "xmlns:xcalcf", xcalcf);
-            const features = document.createElementNS(xcalcf, "calcFeatures");
-            feature = document.createElementNS(xcalcf, "feature");
-            feature.setAttribute("name", "microsoft.com:RD");
-            features.append(feature);
-            feature = document.createElementNS(xcalcf, "feature");
-            feature.setAttribute("name", "microsoft.com:Single");
-            features.append(feature);
-            feature = document.createElementNS(xcalcf, "feature");
-            feature.setAttribute("name", "microsoft.com:FV");
-            features.append(feature);
-            feature = document.createElementNS(xcalcf, "feature");
-            feature.setAttribute("name", "microsoft.com:CNMTM");
-            features.append(feature);
-            feature = document.createElementNS(xcalcf, "feature");
-            feature.setAttribute("name", "microsoft.com:LET_WF");
-            features.append(feature);
-            feature = document.createElementNS(xcalcf, "feature");
-            feature.setAttribute("name", "microsoft.com:LAMBDA_WF");
-            features.append(feature);
-            feature = document.createElementNS(xcalcf, "feature");
-            feature.setAttribute("name", "microsoft.com:ARRAYTEXT_WF");
-            features.append(feature);
-            ext.append(features);
-            node.append(ext);
-            worksheets.append(node);
-
-            return { "xl/workbook.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
-        }
-
-        function xlCreateStyles() {
-            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
-            const r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-            const mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-            const x14 = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/main"
-            const x14ac = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
-            const x15 = "http://schemas.microsoft.com/office/spreadsheetml/2010/11/main"
-            const x16r2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/02/main"
-            const xr = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
-            const xr2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
-            const xr3 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
-
-            const docRoot = document.implementation.createDocument(ns, "styleSheet");
-            const styles = docRoot.documentElement;
-            styles.setAttributeNS(xmlns, "xmlns:r", r);
-            styles.setAttributeNS(xmlns, "xmlns:mc", mc);
-            styles.setAttributeNS(mc, "Ignorable", "x14ac x16r2 xr");
-            styles.setAttributeNS(xmlns, "xmlns:x14ac", x15);
-            styles.setAttributeNS(xmlns, "xmlns:x16r2", x16r2);
-            styles.setAttributeNS(xmlns, "xmlns:xr", xr);
-
-            let node = document.createElementNS(ns, "fonts");
-            node.setAttribute("count", 2);
-            node.setAttributeNS(x14ac, "knownFonts", "1");
-            let font = document.createElementNS(ns, "font");
-            let prop = document.createElementNS(ns, "sz");
-            prop.setAttribute("val", "11");
-            font.append(prop);
-            prop = document.createElementNS(ns, "color");
-            prop.setAttribute("theme", "1");
-            font.append(prop);
-            prop = document.createElementNS(ns, "name");
-            prop.setAttribute("val", "Calibri");
-            font.append(prop);
-            prop = document.createElementNS(ns, "family");
-            prop.setAttribute("val", "2");
-            font.append(prop);
-            prop = document.createElementNS(ns, "scheme");
-            prop.setAttribute("val", "minor");
-            font.append(prop);
-            node.append(font);
-            node.append(font.cloneNode(true));
-            styles.append(node);
-
-            node = document.createElementNS(ns, "fills");
-            node.setAttribute("count", "2");
-            let fill = document.createElementNS(ns, "fill");
-            prop = document.createElementNS(ns, "patternFill");
-            prop.setAttribute("patternType", "none");
-            fill.append(prop);
-            node.append(fill);
-
-            fill = document.createElementNS(ns, "fill");
-            prop = document.createElementNS(ns, "patternFill");
-            prop.setAttribute("patternType", "gray125");
-            fill.append(prop);
-            node.append(fill);
-            styles.append(node);
-
-            node = document.createElementNS(ns, "borders");
-            node.setAttribute("count", 1);
-            prop = document.createElementNS(ns, "border");
-            prop.append(document.createElementNS(ns, "left"));
-            prop.append(document.createElementNS(ns, "right"));
-            prop.append(document.createElementNS(ns, "top"));
-            prop.append(document.createElementNS(ns, "bottom"));
-            prop.append(document.createElementNS(ns, "diagonal"));
-            node.append(prop);
-            styles.append(node);
-
-            node = document.createElementNS(ns, "cellStyleXfs");
-            node.setAttribute("count", "1");
-            prop = document.createElementNS(ns, "xf");
-            prop.setAttribute("numFmtId", "0");
-            prop.setAttribute("fontId", "0");
-            prop.setAttribute("fillId", "0");
-            prop.setAttribute("borderId", "0");
-            node.append(prop);
-            styles.append(node);
-
-            node = document.createElementNS(ns, "cellXfs");
-            node.setAttribute("count", 4);
-            prop = document.createElementNS(ns, "xf");
-            prop.setAttribute("numFmtId", "0");
-            prop.setAttribute("fontId", "0");
-            prop.setAttribute("fillId", "0");
-            prop.setAttribute("borderId", "0");
-            node.append(prop);
-            prop = document.createElementNS(ns, "xf");
-            prop.setAttribute("numFmtId", "0");
-            prop.setAttribute("fontId", "1");
-            prop.setAttribute("fillId", "0");
-            prop.setAttribute("borderId", "0");
-            prop.setAttribute("applyFont", "1");
-            prop.setAttribute("applyAlignment", "1");
-            let subprop = document.createElementNS(ns, "alignment");
-            subprop.setAttribute("horizontal", "center");
-            subprop.setAttribute("vertical", "center");
-            subprop.setAttribute("wrapText", "1");
-            prop.append(subprop);
-            node.append(prop);
-            prop = document.createElementNS(ns, "xf");
-            prop.setAttribute("numFmtId", "0");
-            prop.setAttribute("fontId", "0");
-            prop.setAttribute("fillId", "0");
-            prop.setAttribute("borderId", "0");
-            prop.setAttribute("applyAlignment", "1");
-            subprop = document.createElementNS(ns, "alignment");
-            subprop.setAttribute("vertical", "center");
-            subprop.setAttribute("wrapText", "1");
-            prop.append(subprop);
-            node.append(prop);
-            prop = document.createElementNS(ns, "xf");
-            prop.setAttribute("numFmtId", "0");
-            prop.setAttribute("fontId", "1");
-            prop.setAttribute("fillId", "0");
-            prop.setAttribute("borderId", "0");
-            prop.setAttribute("applyFont", "1");
-            prop.setAttribute("applyAlignment", "1");
-            subprop = document.createElementNS(ns, "alignment");
-            subprop.setAttribute("horizontal", "center");
-            subprop.setAttribute("vertical", "center");
-            subprop.setAttribute("wrapText", "1");
-            prop.append(subprop);
-            node.append(prop);
-            styles.append(node);
-
-            node = document.createElementNS(ns, "cellStyles");
-            node.setAttribute("count", "1");
-            prop = document.createElementNS(ns, "cellStyle");
-            prop.setAttribute("name", "Normal");
-            prop.setAttribute("xfId", "0");
-            prop.setAttribute("builtinId", "0");
-            node.append(prop);
-            styles.append(node);
-
-            node = document.createElementNS(ns, "dxfs");
-            node.setAttribute("count", "0");
-            styles.append(node);
-
-            node = document.createElementNS(ns, "tableStyles");
-            node.setAttribute("count", "0");
-            node.setAttribute("defaultTableStyle", "TableStyleMedium2");
-            node.setAttribute("defaultPivotStyle", "PivotStyleLight16");
-            styles.append(node);
-
-            node = document.createElementNS(ns, "extLst");
-            prop = document.createElementNS(ns, "ext");
-            prop.setAttribute("uri", "{EB79DEF2-80B8-43e5-95BD-54CBDDF9020C}");
-            prop.setAttributeNS(xmlns, "xmlns:x14", x14);
-            subprop = document.createElementNS(x14, "slicerStyles");
-            subprop.setAttribute("defaultSlicerStyle", "SlicerStyleLight1");
-            prop.append(subprop);
-            node.append(prop);
-            prop = document.createElementNS(ns, "ext");
-            prop.setAttribute("uri", "{9260A510-F301-46a8-8635-F512D64BE5F5}");
-            prop.setAttributeNS(xmlns, "xmlns:x15", x15);
-            subprop = document.createElementNS(x15, "timlineStyles");
-            subprop.setAttribute("defaultTimelinenStyle", "TimeSlicerStyleLight1");
-            prop.append(subprop);
-            node.append(prop);
-            styles.append(node);
-
-            return { "xl/styles.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
-        }
-
-        function xlCreateSharedStrings() {
-            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main";
-            const docRoot = document.implementation.createDocument(ns, "sst");
-            const sst = docRoot.documentElement;
-            sst.setAttribute("count", "");
-            sst.setAttribute("uniqueCount", "");
-
-            const textNode = function (str) {
-                const si = document.createElementNS(ns, "si");
-                const t = document.createElementNS(ns, "t");
-                t.append(document.createTextNode(str));
-                si.append(t);
-                return si;
-            }
-
-            sst.append(textNode("test"));
-
-            return { "xl/sharedStrings.xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
-        }
-
-        function xlCreateContentTypes() {
-            const ns = "http://schemas.openxmlformats.org/package/2006/content-types";
-            const docRoot = document.implementation.createDocument(ns, "Types");
-            const types = docRoot.documentElement;
-            let node = document.createElementNS(ns, "Default");
-            node.setAttribute("Extension", "rels");
-            node.setAttribute("ContentType", "application/vnd.openxmlformats-package.relationships+xml");
-            types.append(node);
-
-            node = document.createElementNS(ns, "Default");
-            node.setAttribute("Extension", "xml");
-            node.setAttribute("ContentType", "application/xml");
-            types.append(node);
-
-            const override = function (partName, contentType) {
-                const n = document.createElementNS(ns, "Override");
-                n.setAttribute("PartName", partName);
-                n.setAttribute("ContentType", contentType);
-                return n;
-            }
-
-            types.append(override("/xl/workbook.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"));
-            types.append(override("/xl/worksheets/sheet1.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"));
-            types.append(override("/xl/theme/theme1.xml", "application/vnd.openxmlformats-officedocument.theme+xml"));
-            types.append(override("/xl/styles.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"));
-            types.append(override("/xl/sharedStrings.xml", "application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"));
-            types.append(override("/docProps/core.xml", "application/vnd.openxmlformats-package.core-properties+xml"));
-            types.append(override("/docProps/app.xml", "application/vnd.openxmlformats-officedocument.extended-properties+xml"));
-
-            return { "[Content_Types].xml": XMLHeader + (new XMLSerializer()).serializeToString(docRoot) };
-        }
-
-        function xlCreateWorksheet() {
-            const ns = "http://schemas.openxmlformats.org/spreadsheetml/2006/main"
-            const r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
-            const mc = "http://schemas.openxmlformats.org/markup-compatibility/2006"
-            const x14ac = "http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac"
-            const xr = "http://schemas.microsoft.com/office/spreadsheetml/2014/revision"
-            const xr2 = "http://schemas.microsoft.com/office/spreadsheetml/2015/revision2"
-            const xr3 = "http://schemas.microsoft.com/office/spreadsheetml/2016/revision3"
-
-            const docRoot = document.implementation.createDocument(ns, "work");
-            const sheet = docRoot.documentElement;
-            sheet.setAttributeNS(xmlns, "xmlns:r", r);
-            sheet.setAttributeNS(xmlns, "xmlns:mc", mc);
-            sheet.setAttributeNS(mc, "Ignorable", "x14ac xr xr2 xr3");
-            sheet.setAttributeNS(xmlns, "xmlns:x14ac", x15);
-            sheet.setAttributeNS(xmlns, "xmlns:xr", xr);
-            sheet.setAttributeNS(xmlns, "xmlns:xr2", x2);
-            sheet.setAttributeNS(xmlns, "xmlns:xr3", xr3);
-            sheet.setAttributeNS(xr, "uid", "{03A428F4-4357-45F3-A061-8AD5C5DD8E68}");
-        }
-
-        function UUID() {
-            const a = function () { return Math.round(Math.random() * 0xEFFF + 0x1000).toString(16) };
-            const b = function () { return Math.round(Math.random() * 0x4f + 0x10).toString(16) };
-            const c = function () { return Math.round(Math.random() * 0xEF + 0x10).toString(16) };
-
-            return (a() + a() + "-" + a() + "-" + b() + c() + "-" + b() + c() + "-" + a() + a() + a()).toUpperCase();
-        }
-    </script>
-    <script>
-        'use strict';
-
-        function strToBytes(str) {
-            return str.split("").map(c => c.charCodeAt())
-        }
-
-        function containsUtf16(bytes) {
-            return !bytes.every(c => c < 0xFF);
-        }
-
-        async function encode(obj) {
-            const str = JSON.stringify(obj);
-            const bytes = strToBytes(str);
-            const isUtf16String = containsUtf16(bytes);
-            const byteArray = (isUtf16String ? Uint16Array.from(bytes) : Uint8Array.from(bytes));
-            const result = window.pako.deflate(new Uint8Array(byteArray.buffer, byteArray.byteOffset, byteArray.byteLength));
-            const blob = bytesToBase64(result);
-            console.log("JSON object:", str);
-            console.log("Blob       :", blob);
-            return Promise.resolve({ encodedData: blob, isUtf16String: isUtf16String });
-        }
-
-        async function decode(data64, isUtf16String) {
-            const compressed = base64ToBytes(data64);
-            const uncompressed8 = window.pako.inflate(compressed);
-            const uncompressed = (isUtf16String) ? new Uint16Array(uncompressed8.buffer, uncompressed8.byteOffset, uncompressed8.byteLength / 2) : uncompressed8;
-            return Promise.resolve(JSON.parse(String.fromCharCode.apply(null, uncompressed)));
-        }
-
-    </script>
-
-    <script>
-        function loadSORKK() {
-            const result = prompt("Paste an SORKK-string or URL", "");
-            let data64 = ""
-            let isUtf16String = false
-            
-            if (result != null) {   
-                try {
-                    const url = new URL(result)
-                    isUtf16String = url.searchParams.has("d");
-
-                    if (isUtf16String || url.searchParams.has("s")) {
-                            data64 = (isUtf16String) ? url.searchParams.get("d") : url.searchParams.get("s");
-                    }
-                } catch (typeError) {
-                }
-            } else {
-                return
-            }
-
-            if (data64.length == 0) {
-                isUtf16String = result.trim().charAt(0) == "d"
-                data64 = result.trim().substring(2)
-            }
-            
-            if (data64 == "") {
-                alert("Couldn't load SORKK. Invalid text or URL.")
-            }
-
-            decode(data64, isUtf16String).then(sorkkObj => {
-                if (sorkkObj !== undefined) {
-                    if (sorkkObj instanceof Array) {
-                        sorkkObj.forEach( sorkk => {
-                            saveSORKKToList(sorkk);
-                        })
-                    } else {
-                        saveSORKKToList(sorkkObj)
-                    }
-                    showAllSORKKs();
-                } else {
-                    alert("Couldn't load SORKK. Invalid text.")
-                }
-            })
-        }
-
-        function readMoreSORKK(obj) {
-            let displayStyle = document.getElementById("readMoreSORKK");
-            let showMore = document.getElementById("showInformation");
-            let hideMore = document.getElementById("hideInformation");
-
-            if (displayStyle.classList.contains("hide")) {
-                displayStyle.classList.remove("hide");
-                showMore.classList.add("hide");
-                hideMore.classList.remove("hide");
-            } else {
-                displayStyle.classList.add("hide");
-                showMore.classList.remove("hide");
-                hideMore.classList.add("hide");
-            }
-        }
-
-        function isEverySORKKFiledPopulated(sorkkObj) {
-            return sorkkObj.ingoingFeeling
-                && sorkkObj.situation
-                && sorkkObj.organism.whatDoIThink
-                && sorkkObj.organism.whatDoIFeel
-                && sorkkObj.organism.bodyReactions
-                && sorkkObj.reaction
-                && sorkkObj.consequences.short
-                && sorkkObj.consequences.long
-        }
-
-        function saveSORKKToList(loadedSork) {
-            // window.top.location = window.location.protocol + "//" + window.location.host + window.location.pathname
-            const tableBody = document.getElementById("sorkkTableBody");
-            sorkkObj = loadedSork || getCurrentSORKK();
-
-            if (!isEverySORKKFiledPopulated(sorkkObj)) {
-                return;
-            }
-
-            const tableData = [
-                document.createTextNode(sorkkObj.ingoingFeeling)
-                , document.createTextNode(sorkkObj.situation)
-                , document.createTextNode(sorkkObj.organism.whatDoIThink)
-                , document.createTextNode(sorkkObj.organism.whatDoIFeel)
-                , document.createTextNode(sorkkObj.organism.bodyReactions)
-                , document.createTextNode(sorkkObj.reaction)
-                , document.createTextNode(sorkkObj.consequences.short)
-                , document.createTextNode(sorkkObj.consequences.long)
-            ];
-
-            const row = document.createElement("tr");
-
-            tableData.forEach(value => {
-                const cell = document.createElement("td");
-                const pre = document.createElement("pre");
-                //pre.appendChild(value);
-                cell.appendChild(value);
-                row.appendChild(cell);
-
-            });
-            row.setAttribute("onclick", "showSORKK(this, " + JSON.stringify(sorkkObj) + ")");
-            tableBody.prepend(row);
-            document.getElementById("sorkkCount").innerText++;
-            clearSORKK();
-            showSORKK(row, sorkkObj);
-        }
-
-        function clearSORKK() {
-            const textareas = document.getElementsByTagName("textarea")
-            for (let i = 0; i < textareas.length; i++) {
-                textareas.item(i).value = ""
-            }
-        }
-
-        function exportXLSX(anchor) {
-            const options = {
-                anchor: anchor,
-                format: 'xlsx',
-                filename: 'sorkk',
-                openAsDownload: true,
-            };
-            const sheets = [
-                {
-                    name: 'SORKK Sheet 1',
-                    from: {
-                        table: "sorkkTable",
-                    },
-                }
-            ]
-            return ExcellentExport.convert(options, sheets);
-        }
-
-        function getCurrentSORKK() {
-            return {
-                ingoingFeeling: document.getElementById("ingoingFeeling").value,
-                situation: document.getElementById("situation").value,
-                organism: {
-                    whatDoIThink: document.getElementById("whatDoIThink").value,
-                    whatDoIFeel: document.getElementById("whatDoIFeel").value,
-                    bodyReactions: document.getElementById("bodyReactions").value
-                },
-                reaction: document.getElementById("reaction").value,
-                consequences: {
-                    short: document.getElementById("shortConsequence").value,
-                    long: document.getElementById("longConsequence").value
-                }
-            }
-        }
-        function getAllSORKKs() {
-            const tableBody = document.getElementById("sorkkTableBody");
-            var sorkks = new Array();
-
-            tableBody.childNodes.forEach(row => {
-                if (!(row instanceof Text)) {
-                    jsonString = row.getAttribute("onclick").substring("showSORKK(this, ".length);
-                    jsonString = jsonString.substring(0, jsonString.length - 1);
-                    sorkks.push(JSON.parse(jsonString));
-                }
-            });
-            if (sorkks.length === 0) {
-                return undefined;
-            }
-            else if (sorkks.length === 1) {
-                return sorkks[0];
-            } else {
-                return sorkks;
-            }
-        }
-
-        function shareSORKK() {
-            const currentSorkk = getCurrentSORKK();
-            let sorkkObj = getAllSORKKs() || currentSorkk
-
-            if (currentSorkk !== currentSorkk && isEverySORKKFiledPopulated(currentSorkk)) {
+      }
+
+      function showSORKK(row, sorkkObj) {
+        document.getElementById("ingoingFeelingP").innerText =
+          sorkkObj.ingoingFeeling;
+        document.getElementById("situationP").innerText = sorkkObj.situation;
+        document.getElementById("whatDoIThinkP").innerText =
+          sorkkObj.organism.whatDoIThink;
+        document.getElementById("whatDoIFeelP").innerText =
+          sorkkObj.organism.whatDoIFeel;
+        document.getElementById("bodyReactionsP").innerText =
+          sorkkObj.organism.bodyReactions;
+        document.getElementById("reactionP").innerText = sorkkObj.reaction;
+        document.getElementById("shortConsequenceP").innerText =
+          sorkkObj.consequences.short;
+        document.getElementById("longConsequenceP").innerText =
+          sorkkObj.consequences.long;
+
+        document.getElementById("sorkkTableBody").childNodes.forEach((node) => {
+          if (node === row) {
+            row.classList.add("selected");
+          } else if (node.classList) {
+            node.classList.remove("selected");
+          }
+        });
+      }
+
+      function init() {
+        const selfUrl = new URL(window.location.href);
+        const isUtf16String = selfUrl.searchParams.has("d");
+
+        if (isUtf16String || selfUrl.searchParams.has("s")) {
+          try {
+            const data64 = isUtf16String
+              ? selfUrl.searchParams.get("d")
+              : selfUrl.searchParams.get("s");
+            decode(data64, isUtf16String).then((sorkkObj) => {
+              if (sorkkObj !== undefined) {
                 if (sorkkObj instanceof Array) {
-                    sorkkObj.push(currentSorkk);
+                  sorkkObj.forEach((sorkk) => {
+                    saveSORKKToList(sorkk);
+                  });
                 } else {
-                    sorkkObj = [sorkkObj, currentSorkk];
+                  saveSORKKToList(sorkkObj);
                 }
-            }
-
-            encode(sorkkObj).then(result => {
-                const url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + (result.isUtf16String ? "d" : "s") + "=" + encodeURIComponent(result.encodedData);
-                const link = document.getElementById("link");
-                link.value = url;
-                link.select();
-                link.setSelectionRange(0, url.length);
-
-                navigator.clipboard.writeText(link.value);
-                try {
-                    navigator.share({ title: "SORKK Link", url: url });
-                } catch (err) {
-                    console.error("Share failed:", err.message);
-                }
-            })
-        }
-
-        function showAllSORKKs() {
-            disableEditing();
-            document.getElementById("tableContainer").classList.remove("hide");
-            // document.getElementById("cardDeck").classList.replace("container", "hide")
-        }
-
-        function hideAllSORKKs() {
-            enableEditing();
-            document.getElementById("tableContainer").classList.add("hide");
-        }
-
-        function disableEditing() {
-            const controls = document.getElementsByClassName("editModeOnly");
-            for (let i = 0; i < controls.length; i++) {
-                console.log("Disable item", controls.item(i));
-                controls.item(i).classList.add("hide");
-            }
-            const readOnlys = document.getElementsByClassName("viewModeOnly");
-            for (let i = 0; i < readOnlys.length; i++) {
-                readOnlys.item(i).classList.remove("hide");
-            }
-        }
-
-        function enableEditing() {
-            const controls = document.getElementsByClassName("editModeOnly");
-            for (let i = 0; i < controls.length; i++) {
-                controls.item(i).classList.remove("hide");
-            }
-            const readOnlys = document.getElementsByClassName("viewModeOnly");
-            for (let i = 0; i < readOnlys.length; i++) {
-                readOnlys.item(i).classList.add("hide");
-            }
-        }
-
-        function enableReadOnly() {
-            const controls = document.getElementsByClassName("editModeOnly");
-            for (let i = 0; i < controls.length; i++) {
-                controls.item(i).classList.add("hide");
-            }
-            const viewModeOnlys = document.getElementsByClassName("viewModeOnly");
-            for (let i = 0; i < viewModeOnlys.length; i++) {
-                viewModeOnlys.item(i).classList.add("hide");
-            }
-            const readOnlys = document.getElementsByClassName("readOnly");
-            for (let i = 0; i < readOnlys.length; i++) {
-                readOnlys.item(i).classList.remove("hide");
-            }
-        }
-
-        function showSORKK(row, sorkkObj) {
-            document.getElementById("ingoingFeelingP").innerText = sorkkObj.ingoingFeeling;
-            document.getElementById("situationP").innerText = sorkkObj.situation;
-            document.getElementById("whatDoIThinkP").innerText = sorkkObj.organism.whatDoIThink;
-            document.getElementById("whatDoIFeelP").innerText = sorkkObj.organism.whatDoIFeel;
-            document.getElementById("bodyReactionsP").innerText = sorkkObj.organism.bodyReactions;
-            document.getElementById("reactionP").innerText = sorkkObj.reaction;
-            document.getElementById("shortConsequenceP").innerText = sorkkObj.consequences.short;
-            document.getElementById("longConsequenceP").innerText = sorkkObj.consequences.long;
-
-            document.getElementById("sorkkTableBody").childNodes.forEach(node => {
-                if (node === row) {
-                    row.classList.add("selected")
-                } else if (node.classList) {
-                    node.classList.remove("selected")
-                }
+                showAllSORKKs();
+                enableReadOnly();
+                document.getElementById("shareSorkk").classList.add("hide");
+              }
             });
+          } catch (err) {
+            console.log("error:", err);
+            return;
+          }
+        } else {
+          document.getElementById("loadedSork").classList.add("hide");
         }
+      }
 
-        function init() {
-            const selfUrl = new URL(window.location.href);
-            const isUtf16String = selfUrl.searchParams.has("d");
+      function xmlGen() {
+        return [
+          xlCreateContentTypes(),
+          xlCreateRels(),
+          xlCreateAppDocProps(),
+          xlCreateCoreDocProps(),
+          xlCreateWorkbookRels(),
+          xlCreateTheme(),
+          xlCreateStyles(),
+          xlCreateWorkbook(),
+          xlCreateSharedStrings(),
+          xlCreateWorksheet("sorkkTable"),
+        ];
+      }
 
-            if (isUtf16String || selfUrl.searchParams.has("s")) {
-                try {
-                    const data64 = (isUtf16String) ? selfUrl.searchParams.get("d") : selfUrl.searchParams.get("s");
-                    decode(data64, isUtf16String).then(sorkkObj => {
-                        if (sorkkObj !== undefined) {
-                            if (sorkkObj instanceof Array) {
-                                sorkkObj.forEach( sorkk => {
-                                    saveSORKKToList(sorkk);
-                                })
-                            } else {
-                                saveSORKKToList(sorkkObj)
-                            }
-                            showAllSORKKs();
-                            enableReadOnly();
-                            document.getElementById("shareSorkk").classList.add("hide");
-                        }
-                    })
-                } catch (err) {
-                    console.log("error:", err);
-                    return;
-                }
-            } else {
-                document.getElementById("loadedSork").classList.add("hide");
-            }
-        }
-
-        function xmlGen() {
-            return [xlCreateRels(), xlCreateAppDocProps(), xlCreateCoreDocProps(), xlCreateWorkbookRels(), xlCreateTheme(), xlCreateWorkbook(), xlCreateSharedStrings()]
-        }
-
-        function newSORKK() {
-            const selfUrl = new URL(window.location.href);
-            console.log("selfURL", selfUrl)
-            selfUrl.search =""
-            console.log("newURL", selfUrl)
-            window.location.assign(selfUrl);
-        }
+      function newSORKK() {
+        const selfUrl = new URL(window.location.href);
+        console.log("selfURL", selfUrl);
+        selfUrl.search = "";
+        console.log("newURL", selfUrl);
+        window.location.assign(selfUrl);
+      }
     </script>
-</head>
+  </head>
 
-<body onload="init()">
+  <body onload="init()">
     <div id="header">
-        <div class="container">
-            <h1>SORKK en beteende&shy;analytisk modell</h1>
+      <div class="container">
+        <h1>SORKK en beteende&shy;analytisk modell</h1>
 
-            <p>Situation, Objekt, Reaktion, Konsekvens (kortsiktig), Konsekvens (Långsiktig) <a
-                    href="javascript:readMoreSORKK();" id="showInformation">Visa mer</a><a
-                    href="javascript:readMoreSORKK();" class="hide" id="hideInformation">Dölj</a></p>
-            <div id="readMoreSORKK" class="hide">
-                <h2>Situation (omständigheter, utlösande faktor):</h2>
-                <p>Här tar du upp de situationer då du prokrastinering genom att för varje situation skriva upp:</p>
-                <ul>
-                    <li>När hände det?</li>
-                    <li>Var hände det?</li>
-                    <li>Vad hände innan?</li>
-                </ul>
+        <p>
+          Situation, Objekt, Reaktion, Konsekvens (kortsiktig), Konsekvens
+          (Långsiktig)
+          <a href="javascript:readMoreSORKK();" id="showInformation">Visa mer</a
+          ><a
+            href="javascript:readMoreSORKK();"
+            class="hide"
+            id="hideInformation"
+            >Dölj</a
+          >
+        </p>
+        <div id="readMoreSORKK" class="hide">
+          <h2>Situation (omständigheter, utlösande faktor):</h2>
+          <p>
+            Här tar du upp de situationer då du prokrastinering genom att för
+            varje situation skriva upp:
+          </p>
+          <ul>
+            <li>När hände det?</li>
+            <li>Var hände det?</li>
+            <li>Vad hände innan?</li>
+          </ul>
 
-                <h2>Objekt (Automatisk tanke, känsla, fysiologiska reaktioner i kroppen):</h2>
-                <p>Här ska du identifiera de reaktioner som väcks inom dig som leder till att du prokrastinerar genom
-                    att ta upp:</p>
-                <ul>
-                    <li>Automatiska tankar:
-                        <ul>
-                            <li> Vad fick du för tanke, bild eller minne? Tankar kan vara både i form av ord (t. ex.
-                                ”Jag klarar ingenting” eller ”Ingen uppskattar mig” etc.), inre bilder (t.ex. att se en
-                                inre bild av sig själv som nedvärderad, misslyckad, etc.), eller minnen (t.ex. minnen
-                                av att ha blivit utskrattad, kritiserad eller bortgjord etc).
-                            </li>
-                        </ul>
-                    </li>
-                    <li>Känslor:
-                        <ul>
-                            <li>Vad upplevde du för känsla? Känslor kan beskrivas med ett ord (t.ex. arg, irriterad,
-                                glad, ledsen, förbannad, sorgsen, ångestfylld, rädd, orolig, panikslagen, skamsen,
-                                besviken, skuldfylld, äcklad, generad, intresserad, lugn, sårad osv.).</li>
-                            <li>Hur stark var den känslan (0-10)?</li>
-                            <li>Hur länge satt den i?</li>
-                        </ul>
-                    <li>Fysiologiska reaktioner i kroppen:
-                        <ul>
-                            <li>beskriv de sensationer du kände i kroppen (t.ex. yrsel, huvudvärk, hjärtklappning,
-                                tryck över bröstet, magont, anspänning osv.)</li>
-                            <li>Skatta hur störande eller jobbiga dessa upplevelser var på en skala från 0 (inte
-                                jobbiga alls) – 10 (extremt jobbiga)</li>
-                        </ul>
-                    </li>
+          <h2>
+            Objekt (Automatisk tanke, känsla, fysiologiska reaktioner i
+            kroppen):
+          </h2>
+          <p>
+            Här ska du identifiera de reaktioner som väcks inom dig som leder
+            till att du prokrastinerar genom att ta upp:
+          </p>
+          <ul>
+            <li>
+              Automatiska tankar:
+              <ul>
+                <li>
+                  Vad fick du för tanke, bild eller minne? Tankar kan vara både
+                  i form av ord (t. ex. ”Jag klarar ingenting” eller ”Ingen
+                  uppskattar mig” etc.), inre bilder (t.ex. att se en inre bild
+                  av sig själv som nedvärderad, misslyckad, etc.), eller minnen
+                  (t.ex. minnen av att ha blivit utskrattad, kritiserad eller
+                  bortgjord etc).
+                </li>
+              </ul>
+            </li>
+            <li>
+              Känslor:
+              <ul>
+                <li>
+                  Vad upplevde du för känsla? Känslor kan beskrivas med ett ord
+                  (t.ex. arg, irriterad, glad, ledsen, förbannad, sorgsen,
+                  ångestfylld, rädd, orolig, panikslagen, skamsen, besviken,
+                  skuldfylld, äcklad, generad, intresserad, lugn, sårad osv.).
+                </li>
+                <li>Hur stark var den känslan (0-10)?</li>
+                <li>Hur länge satt den i?</li>
+              </ul>
+            </li>
 
-                </ul>
-                <h2>Reaktion (beteende, handling):</h2>
-                <p>Här ska du ta upp vad du faktiskt gjorde till följd av tankarna och känslorna.</p>
-                <h2>Konsekvens (kortsiktig)</h2>
-                <p>Vilket resultat blir det för dig direkt efter beteendet? Det som händer i och utanför dig när du
-                    genomfört ditt valda beteende (kanske slipper jobbiga känslor, blir av med ett inre tryck, etc.).
-                    Skriv ned vilka konsekvenser detta beteende får på kort sikt (kanske slipper jobbiga känslor, får
-                    min vilja igenom, blir av med ett inre tryck, vinner
-                    konflikten etc.) och på lång sikt (Vad gör detta beteende med trygghet, tillit och kärlek i min
-                    relation?).</p>
-                <h2>Konsekvens (Långsiktig)</h2>
-                <p>Vilka konsekvenser som drabbar dig på sikt? Det som händer i och utanför dig när du genomfört
-                    ditt valda beteende på längre sikt (Vad gör detta beteende med trygghet, resultatet, prestation?).
-                </p>
-                <p>Text av Aseel Berglund hämtad från <a
-                        href="https://www.ida.liu.se/~TDDD84/sjalvmotivation/SORKK.pdf">https://www.ida.liu.se/~TDDD84/sjalvmotivation/SORKK.pdf</a>
-                    den 24 November 2022.</p>
+            <li>
+              Fysiologiska reaktioner i kroppen:
+              <ul>
+                <li>
+                  beskriv de sensationer du kände i kroppen (t.ex. yrsel,
+                  huvudvärk, hjärtklappning, tryck över bröstet, magont,
+                  anspänning osv.)
+                </li>
+                <li>
+                  Skatta hur störande eller jobbiga dessa upplevelser var på en
+                  skala från 0 (inte jobbiga alls) – 10 (extremt jobbiga)
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <h2>Reaktion (beteende, handling):</h2>
+          <p>
+            Här ska du ta upp vad du faktiskt gjorde till följd av tankarna och
+            känslorna.
+          </p>
+          <h2>Konsekvens (kortsiktig)</h2>
+          <p>
+            Vilket resultat blir det för dig direkt efter beteendet? Det som
+            händer i och utanför dig när du genomfört ditt valda beteende
+            (kanske slipper jobbiga känslor, blir av med ett inre tryck, etc.).
+            Skriv ned vilka konsekvenser detta beteende får på kort sikt (kanske
+            slipper jobbiga känslor, får min vilja igenom, blir av med ett inre
+            tryck, vinner konflikten etc.) och på lång sikt (Vad gör detta
+            beteende med trygghet, tillit och kärlek i min relation?).
+          </p>
+          <h2>Konsekvens (Långsiktig)</h2>
+          <p>
+            Vilka konsekvenser som drabbar dig på sikt? Det som händer i och
+            utanför dig när du genomfört ditt valda beteende på längre sikt (Vad
+            gör detta beteende med trygghet, resultatet, prestation?).
+          </p>
+          <p>
+            Text av Aseel Berglund hämtad från
+            <a href="https://www.ida.liu.se/~TDDD84/sjalvmotivation/SORKK.pdf"
+              >https://www.ida.liu.se/~TDDD84/sjalvmotivation/SORKK.pdf</a
+            >
+            den 24 November 2022.
+          </p>
 
-                <p><a href="javascript:readMoreSORKK();">Dölj information.</a></p>
-                </p>
-            </div>
+          <p><a href="javascript:readMoreSORKK();">Dölj information.</a></p>
         </div>
+      </div>
     </div>
     <div id="section">
-        <div class="container" id="cardDeck">
-            <div class="card">
-                <h2>
-                    Ingående Känsla
-                </h2>
-                <textarea id="ingoingFeeling" class="editModeOnly"></textarea>
-                <p id="ingoingFeelingP" class="viewModeOnly readOnly hide"></p>
-            </div>
-            <div class="card">
-                <h2>
-                    Situation
-                </h2>
-                <textarea id="situation" class="editModeOnly"></textarea>
-                <p id="situationP" class="viewModeOnly readOnly hide"></p>
-            </div>
-            <div class="card">
-                <h2>
-                    Organism
-                </h2>
-                <h3>Vad tänker jag?</h3>
-                <textarea id="whatDoIThink" class="editModeOnly"></textarea>
-                <p id="whatDoIThinkP" class="viewModeOnly readOnly hide"></p>
-                <h3>Vad känner jag?</h3>
-                <textarea id="whatDoIFeel" class="editModeOnly"></textarea>
-                <p id="whatDoIFeelP" class="viewModeOnly readOnly hide"></p>
-                <h3>Vad får jag för fysiska reaktioner?</h3>
-                <textarea id="bodyReactions" class="editModeOnly"></textarea>
-                <p id="bodyReactionsP" class="viewModeOnly readOnly hide"></p>
-            </div>
-            <div class="card">
-                <h2>
-                    Reaktion
-                </h2>
-                <textarea id="reaction" class="editModeOnly"></textarea>
-                <p id="reactionP" class="viewModeOnly readOnly hide"></p>
-            </div>
-            <div class="card">
-                <h2>
-                    Konsekvens
-                </h2>
-                <h3>Kort Konsekvens</h3>
-                <textarea id="shortConsequence" class="editModeOnly"></textarea>
-                <p id="shortConsequenceP" class="viewModeOnly readOnly hide"></p>
-                <h3>Långsiktig Konsekvens</h3>
-                <textarea id="longConsequence" class="editModeOnly"></textarea>
-                <p id="longConsequenceP" class="viewModeOnly readOnly hide"></p>
-            </div>
+      <div class="container" id="cardDeck">
+        <div class="card">
+          <h2>Ingående Känsla</h2>
+          <textarea id="ingoingFeeling" class="editModeOnly"></textarea>
+          <p id="ingoingFeelingP" class="viewModeOnly readOnly hide"></p>
         </div>
-        <div class="container" id="toolbar">
-            <div id="addRow">
-                <button onclick="loadSORKK()">Ladda in en SORKK</button>
-                <button onclick="saveSORKKToList()" class="editModeOnly">Spara Till Lista (<span
-                        id="sorkkCount">0</span>)</button>
-                <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Skapa en ny SORKK</button>
-                <button onclick="showAllSORKKs()" class="editModeOnly">Visa alla SORKK:ar</button>
-                <button onclick="hideAllSORKKs()" class="viewModeOnly hide">Dölj alla SORKK:ar</button>
-                <a href="#" onclick="exportXLSX(this)" class="viewModeOnly readOnly hide">Exportera Till Excel</a>
-            </div>
+        <div class="card">
+          <h2>Situation</h2>
+          <textarea id="situation" class="editModeOnly"></textarea>
+          <p id="situationP" class="viewModeOnly readOnly hide"></p>
         </div>
-        <div class="hide container" id="tableContainer">
-            <table id="sorkkTable" class="transpose">
-                <thead>
-                    <tr>
-                        <th scope="col">Ingående Känsla</th>
-                        <th scope="col">Situation</th>
-                        <th colspan="3" scope="colgroup">Organism</th>
-                        <th scope="col">Reaktion</th>
-                        <th colspan="2" scope="colgroup">Konsekvens</th>
-                    </tr>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col"></th>
-                        <th scope="col">Vad tänker jag?</th>
-                        <th scope="col">Vad känner jag?</th>
-                        <th scope="col">Vad får jag för fysiska reaktioner?</th>
-                        <th scope="col"></th>
-                        <th scope="col">Kort</th>
-                        <th scope="col">Lång</th>
-                    </tr>
-                </thead>
-                <tbody id="sorkkTableBody">
-
-                </tbody>
-            </table>
+        <div class="card">
+          <h2>Organism</h2>
+          <h3>Vad tänker jag?</h3>
+          <textarea id="whatDoIThink" class="editModeOnly"></textarea>
+          <p id="whatDoIThinkP" class="viewModeOnly readOnly hide"></p>
+          <h3>Vad känner jag?</h3>
+          <textarea id="whatDoIFeel" class="editModeOnly"></textarea>
+          <p id="whatDoIFeelP" class="viewModeOnly readOnly hide"></p>
+          <h3>Vad får jag för fysiska reaktioner?</h3>
+          <textarea id="bodyReactions" class="editModeOnly"></textarea>
+          <p id="bodyReactionsP" class="viewModeOnly readOnly hide"></p>
         </div>
-        <div id="spacer"></div>
+        <div class="card">
+          <h2>Reaktion</h2>
+          <textarea id="reaction" class="editModeOnly"></textarea>
+          <p id="reactionP" class="viewModeOnly readOnly hide"></p>
+        </div>
+        <div class="card">
+          <h2>Konsekvens</h2>
+          <h3>Kort Konsekvens</h3>
+          <textarea id="shortConsequence" class="editModeOnly"></textarea>
+          <p id="shortConsequenceP" class="viewModeOnly readOnly hide"></p>
+          <h3>Långsiktig Konsekvens</h3>
+          <textarea id="longConsequence" class="editModeOnly"></textarea>
+          <p id="longConsequenceP" class="viewModeOnly readOnly hide"></p>
+        </div>
+      </div>
+      <div class="container" id="toolbar">
+        <div id="addRow">
+          <button onclick="loadSORKK()">Ladda in en SORKK</button>
+          <button onclick="saveSORKKToList()" class="editModeOnly">
+            Spara Till Lista (<span id="sorkkCount">0</span>)
+          </button>
+          <button onclick="hideAllSORKKs()" class="viewModeOnly hide">
+            Skapa en ny SORKK
+          </button>
+          <button onclick="showAllSORKKs()" class="editModeOnly">
+            Visa alla SORKK:ar
+          </button>
+          <button onclick="hideAllSORKKs()" class="viewModeOnly hide">
+            Dölj alla SORKK:ar
+          </button>
+          <button
+            onclick="exportXLSX()"
+            class="viewModeOnly readOnly hide"
+            >Exportera Till Excel</button>
+        </div>
+      </div>
+      <div class="hide container" id="tableContainer">
+        <table id="sorkkTable" class="transpose">
+          <thead>
+            <tr>
+              <th scope="col">Ingående Känsla</th>
+              <th scope="col">Situation</th>
+              <th colspan="3" scope="colgroup">Organism</th>
+              <th scope="col">Reaktion</th>
+              <th colspan="2" scope="colgroup">Konsekvens</th>
+            </tr>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col">Vad tänker jag?</th>
+              <th scope="col">Vad känner jag?</th>
+              <th scope="col">Vad får jag för fysiska reaktioner?</th>
+              <th scope="col"></th>
+              <th scope="col">Kort</th>
+              <th scope="col">Lång</th>
+            </tr>
+          </thead>
+          <tbody id="sorkkTableBody"></tbody>
+        </table>
+      </div>
+      <div id="spacer"></div>
     </div>
     <div id="toolbox">
-        <div class="container">
-            <div id="shareSorkk">
-                <h3>Dela din SORKK med någon</h3>
-                <input type="text" id="link" readonly="true" /><button onclick="shareSORKK()">Kopiera Länk</button>
-            </div>
-            <div id="loadedSork">
-                <button onclick="newSORKK()">Ny SORKK</button>
-            </div>
+      <div class="container">
+        <div id="shareSorkk">
+          <h3>Dela din SORKK med någon</h3>
+          <input type="text" id="link" readonly="true" /><button
+            onclick="shareSORKK()"
+          >
+            Kopiera Länk
+          </button>
         </div>
+        <div id="loadedSork">
+          <button onclick="newSORKK()">Ny SORKK</button>
+        </div>
+      </div>
     </div>
     <div id="footer">
-        <div class="container">
-            <p>Skapad av: Patrik Andersson 2023</p>
-        </div>
+      <div class="container">
+        <p>Skapad av: Patrik Andersson 2023</p>
+      </div>
     </div>
-</body>
-
+  </body>
 </html>
