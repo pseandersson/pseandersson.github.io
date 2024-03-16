@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>LocalFile API</title>
+    <script src="LocalFile.js"></script>
+    <style type="text/css">
+        pre {
+            border: 1px solid black;
+            border-radius: 1em;
+            padding: 0.5em;
+            width: 80em;
+        }
+    </style>
+  </head>
+  <body>
+      <h1>LocalFile API</h1>
+    <script src="test.js"></script>
+    <p id="text"></p>
+    <script>
+      document.getElementById("text").innerHTML =localFile.read("test.js").join("<br />");
+    </script>
+    <h2>test.js</h2>
+    <pre>l=localFile.register("test.js")
+l("Hello World!")
+l("&lt;b&gt;Foo&lt;/b&gt; &lt;i&gt;bar&lt;/i&gt;")</pre>
+    <h2>LocalFile.js</h2>
+    <pre>
+(function (localFile, undefined) {
+    var t = {}
+    if (localFile.read === undefined) {
+        localFile.read = function (file) {
+        return t[file];
+        };
+    }
+    if (localFile.readBytes === undefined) {
+        localFile.readBytes = function (file) {
+        return Uint8Array.from(localFile.read(file).join().split("").map(x => x.charCodeAt()))
+        };
+    }
+    localFile.register = function (file) {
+        t[file] = new Array()
+        return function(s) {
+            t[file].push(s)
+        }
+    }
+})((window.localFile = window.localFile || {}));</pre>
+    <h2>demo.html</h2>
+    <pre>
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Stats Viewer&lt;/title&gt;
+    &lt;script src="LocalFile.js"&gt;&lt;/script&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+      &lt;h1&gt;LocalFile API&lt;/h1&gt;
+    &lt;script src="test.js"&gt;&lt;/script&gt;
+    &lt;p id="text"&gt;&lt;/p&gt;
+    &lt;script&gt;
+      document.getElementById("text").innerHTML =localFile.read("test.js").join("&lt;br /&gt;");
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+  </body>
+</html>
