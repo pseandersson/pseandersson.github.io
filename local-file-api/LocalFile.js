@@ -1,3 +1,4 @@
+console.log(this);
 (function (localFile, undefined) {
   var t = {}
   if (localFile.read === undefined) {
@@ -10,10 +11,16 @@
       return Uint8Array.from(localFile.read(file).join().split("").map(x => x.charCodeAt()))
     };
   }
+  function push(file, s) {
+    if (s !== undefined) {
+      t[file].push(s)
+    }
+    return function (t) {
+      return push(file, t)
+    }
+  }
   localFile.register = function (file) {
     t[file] = new Array()
-    return function(s) {
-        t[file].push(s)
-    }
+    return push(file, undefined)
   }
 })((window.localFile = window.localFile || {}));

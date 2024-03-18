@@ -20,36 +20,43 @@
       document.getElementById("text").innerHTML =localFile.read("test.js").join("<br />");
     </script>
     <h2>test.js</h2>
-    <pre>l=localFile.register("test.js")
-l("Hello World!")
-l("&lt;b&gt;Foo&lt;/b&gt; &lt;i&gt;bar&lt;/i&gt;")</pre>
+    <pre>localFile.register("test.js")
+("Hello World!")
+("&lt;b&gt;Foo&lt;/b&gt; &lt;i&gt;bar&lt;/i&gt;")</pre>
     <h2>LocalFile.js</h2>
     <pre>
 (function (localFile, undefined) {
-    var t = {}
-    if (localFile.read === undefined) {
-        localFile.read = function (file) {
-        return t[file];
-        };
+  var t = {}
+  if (localFile.read === undefined) {
+    localFile.read = function (file) {
+      return t[file];
+    };
+  }
+  if (localFile.readBytes === undefined) {
+    localFile.readBytes = function (file) {
+      return Uint8Array.from(localFile.read(file).join().split("").map(x => x.charCodeAt()))
+    };
+  }
+  function push(file, s) {
+    if (s !== undefined) {
+      t[file].push(s)
     }
-    if (localFile.readBytes === undefined) {
-        localFile.readBytes = function (file) {
-        return Uint8Array.from(localFile.read(file).join().split("").map(x => x.charCodeAt()))
-        };
+    return function (t) {
+      return push(file, t)
     }
-    localFile.register = function (file) {
-        t[file] = new Array()
-        return function(s) {
-            t[file].push(s)
-        }
-    }
-})((window.localFile = window.localFile || {}));</pre>
+  }
+  localFile.register = function (file) {
+    t[file] = new Array()
+    return push(file, undefined)
+  }
+})((window.localFile = window.localFile || {}));
+</pre>
     <h2>demo.html</h2>
     <pre>
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
-    &lt;title&gt;My Stats Viewer&lt;/title&gt;
+    &lt;title&gt;LocalFile API&lt;/title&gt;
     &lt;script src="LocalFile.js"&gt;&lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
