@@ -1,3 +1,3 @@
-localFile.register("test.js")
+localFile.header()
 ("Hello World!")
 ("<b>Foo</b> <i>bar</i>")

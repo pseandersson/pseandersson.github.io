@@ -14,27 +14,50 @@
   </head>
   <body>
       <h1>LocalFile API</h1>
-    <script src="test.js"></script>
     <p id="text"></p>
     <script>
-      document.getElementById("text").innerHTML =localFile.read("test.js").join("<br />");
+      async function demo() {
+        var lines = await localFile.read("test.js")
+        document.getElementById("text").innerHTML = lines.join("<br />")
+      }
+
+      demo()
     </script>
     <h2>test.js</h2>
-    <pre>localFile.register("test.js")
+    <pre>localFile.header()
 ("Hello World!")
 ("&lt;b&gt;Foo&lt;/b&gt; &lt;i&gt;bar&lt;/i&gt;")</pre>
     <h2>LocalFile.js</h2>
     <pre>
 (function (localFile, undefined) {
-  var t = {}
+  const t = {}
+  var current_file;
+
   if (localFile.read === undefined) {
-    localFile.read = function (file) {
-      return t[file];
+    localFile.read = async function (file) { 
+      return new Promise((resolve, reject) => {
+        if (t[file] === undefined) {
+          const node = document.createElement("script")
+          node.setAttribute("src", file)
+          // node.async = true
+          current_file = file
+          document.querySelector("head").append(node)
+          const timeout = setTimeout( _ => reject("Timeout"), 1000);
+          node.onload = _ => localFile.read(file).then( _ => {
+            resolve(t[file])
+            current_file = undefined
+            clearTimeout(timeout)
+            document.querySelector("head").removeChild(node)
+          })
+        } else {
+          resolve(t[file])
+        }
+      })
     };
   }
   if (localFile.readBytes === undefined) {
-    localFile.readBytes = function (file) {
-      return Uint8Array.from(localFile.read(file).join().split("").map(x => x.charCodeAt()))
+    localFile.readBytes = async function (file) {
+      return Uint8Array.from((await localFile.read(file)).join().split("").map(x => x.charCodeAt()))
     };
   }
   function push(file, s) {
@@ -45,11 +68,12 @@
       return push(file, t)
     }
   }
-  localFile.register = function (file) {
-    t[file] = new Array()
-    return push(file, undefined)
+  localFile.header = function () {
+    t[current_file] = new Array()
+
+    return push(current_file, undefined)
   }
-})((window.localFile = window.localFile || {}));
+})((window.localFile = window.localFile || {}));      
 </pre>
     <h2>demo.html</h2>
     <pre>
@@ -60,11 +84,15 @@
     &lt;script src="LocalFile.js"&gt;&lt;/script&gt;
   &lt;/head&gt;
   &lt;body&gt;
-      &lt;h1&gt;LocalFile API&lt;/h1&gt;
-    &lt;script src="test.js"&gt;&lt;/script&gt;
+    &lt;h1&gt;LocalFile API&lt;/h1&gt;
     &lt;p id="text"&gt;&lt;/p&gt;
     &lt;script&gt;
-      document.getElementById("text").innerHTML =localFile.read("test.js").join("&lt;br /&gt;");
+      async function demo() {
+        var lines = await localFile.read("test.js")
+        document.getElementById("text").innerHTML = lines.join("&lt;br /&gt;");
+      }
+
+      demo()
     &lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;</pre>
