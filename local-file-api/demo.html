@@ -4,77 +4,85 @@
     <title>LocalFile API</title>
     <script src="LocalFile.js"></script>
     <style type="text/css">
-        pre {
-            border: 1px solid black;
-            border-radius: 1em;
-            padding: 0.5em;
-            width: 80em;
-        }
+      pre {
+        border: 1px solid black;
+        border-radius: 1em;
+        padding: 0.5em;
+        width: 80em;
+      }
     </style>
   </head>
   <body>
-      <h1>LocalFile API</h1>
+    <h1>LocalFile API</h1>
     <p id="text"></p>
     <script>
       async function demo() {
-        var lines = await localFile.read("test.js")
-        document.getElementById("text").innerHTML = lines.join("<br />")
+        var lines = await localFile.read("test.js");
+        document.getElementById("text").innerHTML = lines.join("<br />");
       }
 
-      demo()
+      demo();
     </script>
     <h2>test.js</h2>
-    <pre>localFile.header()
+    <pre>
+localFile.header()
 ("Hello World!")
-("&lt;b&gt;Foo&lt;/b&gt; &lt;i&gt;bar&lt;/i&gt;")</pre>
+("&lt;b&gt;Foo&lt;/b&gt; &lt;i&gt;bar&lt;/i&gt;")</pre
+    >
     <h2>LocalFile.js</h2>
     <pre>
-(function (localFile, undefined) {
-  const t = {}
-  var current_file;
-
-  if (localFile.read === undefined) {
-    localFile.read = async function (file) { 
-      return new Promise((resolve, reject) => {
-        if (t[file] === undefined) {
-          const node = document.createElement("script")
-          node.setAttribute("src", file)
-          // node.async = true
-          current_file = file
-          document.querySelector("head").append(node)
-          const timeout = setTimeout( _ => reject("Timeout"), 1000);
-          node.onload = _ => localFile.read(file).then( _ => {
-            resolve(t[file])
-            current_file = undefined
-            clearTimeout(timeout)
-            document.querySelector("head").removeChild(node)
-          })
-        } else {
-          resolve(t[file])
+      (function (localFile, undefined) {
+        const t = {}
+        var current_file;
+      
+        if (localFile.read === undefined) {
+          localFile.read = async function (file) { 
+            return new Promise((resolve, reject) => {
+              if (t[file] === undefined) {
+                const node = document.createElement("script")
+                node.src = file
+                current_file = file
+      
+                node.onerror = ev => {
+                  document.querySelector("head").removeChild(node)
+                  reject(ev)
+                }
+      
+                node.onload = _ => localFile.read(file).catch((reason) => reject(reason)).then( _ => {
+                  resolve(t[file])
+                  current_file = undefined
+                  document.querySelector("head").removeChild(node)
+                  node.onerror = undefined
+                })
+      
+                document.querySelector("head").append(node)
+              } else {
+                resolve(t[file])
+              }
+            })
+          };
         }
-      })
-    };
-  }
-  if (localFile.readBytes === undefined) {
-    localFile.readBytes = async function (file) {
-      return Uint8Array.from((await localFile.read(file)).join().split("").map(x => x.charCodeAt()))
-    };
-  }
-  function push(file, s) {
-    if (s !== undefined) {
-      t[file].push(s)
-    }
-    return function (t) {
-      return push(file, t)
-    }
-  }
-  localFile.header = function () {
-    t[current_file] = new Array()
-
-    return push(current_file, undefined)
-  }
-})((window.localFile = window.localFile || {}));      
-</pre>
+        if (localFile.readBytes === undefined) {
+          localFile.readBytes = async function (file) {
+            return Uint8Array.from((await localFile.read(file)).join().split("").map(x => x.charCodeAt()))
+          };
+        }
+        function push(file, s) {
+          if (s !== undefined) {
+            t[file].push(s)
+          }
+          return function (t) {
+            return push(file, t)
+          }
+        }
+        localFile.header = function () {
+          t[current_file] = new Array()
+      
+          return push(current_file, undefined)
+        }
+      })((window.localFile = window.localFile || {}));        
+</pre
+    >
     <h2>demo.html</h2>
     <pre>
 &lt;!DOCTYPE html&gt;
@@ -95,6 +103,7 @@
       demo()
     &lt;/script&gt;
   &lt;/body&gt;
-&lt;/html&gt;</pre>
+&lt;/html&gt;</pre
+    >
   </body>
 </html>

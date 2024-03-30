@@ -7,17 +7,22 @@
       return new Promise((resolve, reject) => {
         if (t[file] === undefined) {
           const node = document.createElement("script")
-          node.setAttribute("src", file)
-          // node.async = true
+          node.src = file
           current_file = file
-          document.querySelector("head").append(node)
-          const timeout = setTimeout( _ => reject("Timeout"), 1000);
-          node.onload = _ => localFile.read(file).then( _ => {
+
+          node.onerror = ev => {
+            document.querySelector("head").removeChild(node)
+            reject(ev)
+          }
+
+          node.onload = _ => localFile.read(file).catch((reason) => reject(reason)).then( _ => {
             resolve(t[file])
             current_file = undefined
-            clearTimeout(timeout)
             document.querySelector("head").removeChild(node)
+            node.onerror = undefined
           })
+
+          document.querySelector("head").append(node)
         } else {
           resolve(t[file])
         }
