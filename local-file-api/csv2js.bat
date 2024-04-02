@@ -81,7 +81,9 @@ for %%i in (%*) do (
 goto :eof
 
 :write_cell
-echo|set /p=%~1|findstr /R "^[-0-9][0-9]*\.*[0-9]*$" >nul
+IF "%~1"==%1 goto :write_string
+
+echo|set /p=%1|findstr /R "^[-0-9][0-9]*\.*[0-9]*$" >nul
 IF %errorlevel%==0 (
     call :write_number %1
     goto :eof
@@ -132,7 +134,7 @@ IF %errorlevel%==0 (
     call :write_date %~1
     goto :eof
 )
-
+:write_string
 call set LINE_%rows%=%%LINE_%rows%%%"%~1",
 goto :eof
 
