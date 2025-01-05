@@ -1,45 +1,58 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Chinese Checker</title>
-    <style type="text/css">
-      div {
-        min-width: 1em;
-        min-height: 1em;
-        background: green;
-      }
-      #board {
-        background: none;
-        display: flex;
-        width: 95vmin;
-        height: 95vmin;
-        flex-direction: row;
-        border: 1px solid blueviolet;
-      }
-      .row {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        background: orange;
-        height: max-content;
-      }
-      .spot {
-        display: block;
-        width: calc(95vmin / 14);
-        height: calc(95vmin / 14);
-        border-radius:  calc(95vmin / 14 / 2);
-        border: 1px solid black;
-        background: aqua;
-        margin: 2px;
-      }
-      
-    </style>
-    <script>
-    
+
+<head>
+  <title>Chinese Checker</title>
+  <style type="text/css">
+    div {
+
+      background: green;
+    }
+
+    #board {
+      background: none;
+      display: flex;
+      width: 95vmin;
+      height: 95vmin;
+      flex-direction: column;
+      border: 1px solid blueviolet;
+    }
+
+    .row {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      height: max-content;
+      justify-content: center;
+    }
+
+    .spot {
+      display: inline-block;
+      width: calc(95vmin / 14 - 2px);
+      height: calc(95vmin / 14 - 2px);
+      border-radius: calc(95vmin / 14 - 2px);
+      border: 1px solid black;
+      background: aqua;
+
+    }
+
+    div.row:nth-child(1n+5) {
+      background: white;
+    }
+
+    div.row:nth-child(1n+5) .spot {
+      background: white;
+    }
+  </style>
+  <script>
+
     function setupBoard() {
-      const rows = new Array([1,2,3,4,13,12,11,10,9,10,11,12,13,4,3,2,1])
-      rows.forEach(spots=> {
+
+      const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
+      rows.forEach(spots => {
         const row = document.createElement("div")
+
         row.classList.add("row")
         for (var i = 0; i < spots; i++) {
           const spot = document.createElement("div")
@@ -49,20 +62,21 @@
         document.getElementById("board").appendChild(row)
       })
     }
-    </script>
-  </head>
-  <body onload="setupBoard()">
-    <h1>Chinese Checker</h1>
-    <div id="board">
-    </div>
-    <script>
-      try {
-        setupBoard()
-      } catch (err) {
-        document.getElementById("board").innerText=err.message
-      }
-      document.write(document.getElementById("board").innerHTML)
-    </script>
-    <p>lalaula</p>
-  </body>
+  </script>
+</head>
+
+<body>
+  <h1>Chinese Checker</h1>
+  <div id="board">
+  </div>
+  <script>
+    try {
+      setupBoard()
+    } catch (err) {
+      document.getElementById("board").innerText = err.message
+    }
+
+  </script>
+</body>
+
 </html>
