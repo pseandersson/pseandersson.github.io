@@ -8,6 +8,7 @@
         width: 100vmin;
         height: 100vmin;
         flex-direction: row;
+        border: 1px solid blueviolet;
       }
       .row {
         display: flex;
@@ -34,13 +35,13 @@
           spot.classList.add("spot")
           row.appendChild(spot)
         }
-        board.appendChild(row)
+        document.getElementById("board").appendChild(row)
       })
     }
     </script>
   </head>
   <body onload="setupBoard()">
-    <h1>xChinese Checker</h1>
+    <h1>Chinese Checker</h1>
     <div id="board">
     </div>
     <script>
