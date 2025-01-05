@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chinese Checker</title>
+    <style type="text/css">
+      #board {
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+      }
+      .row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+      .spot {
+        width: calc(100vw / 14);
+        height: calc(100vw / 14);
+        border-radius:  calc(100vw / 14 / 2);
+        border: 1px solid black;
+      }
+      
+    </style>
+    <script language="javascript">
+    
+    function setupBoard() {
+      const rows = new Array([1,2,3,4,13,12,11,10,9,10,11,12,13,4,3,2,1])
+      rows.forEach(spots=> {
+        const row = document.createElement("div")
+        row.classList.add("row")
+        for (var i = 0; i < spots; i++) {
+          const spot = document.createElement("div")
+          spot.classList.add("spot")
+          row.appendChild(spot)
+        }
+        board.appendChild(row)
+      })
+    }
+    </script>
+  </head>
+  <body onload="setupBoard()">
+    <h1>Chinese Checker</h1>
+    <div id="board">
+    </div>
+  </body>
+</html>
