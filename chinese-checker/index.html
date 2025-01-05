@@ -44,7 +44,12 @@
     <div id="board">
     </div>
     <script>
-      setupBoard()
+      try {
+        setupBoard()
+      } catch (er) {
+        document.writeln(er)
+      }
+      
     </script>
   </body>
 </html>
