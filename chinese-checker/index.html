@@ -46,8 +46,8 @@
     <script language="javascript">
       try {
         setupBoard()
-      } catch (er) {
-        document.writeln(er)
+      } catch (err) {
+        document.getElementById("board").innerText=err.message
       }
       
     </script>
