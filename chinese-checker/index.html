@@ -163,7 +163,7 @@
     function beginMove(node, origin) {
       let firstMove = origin === undefined
       let moves = moveFrom(node, firstMove)
-      debug.innerText += "sss " + moves.jump + " lll " + moves.near
+      //debug.innerText += "sss " + moves.jump + " lll " + moves.near
       if (moves.near.length === 0 && moves.jump.length === 0) {
         return undefined
       }
@@ -179,9 +179,9 @@
           toggleHighlightMove(moves)
           if (n === undefined) {
             performMove(node, origin)
-          } else if (moves.jump.contains(n)) {
+          } else if (moves.jump.indexOf(n)>-1) {
             return beginMove(n, origin | node)
-          } else if (moves.near.contains(n)) {
+          } else if (moves.near.indexOf(n)>-1) {
             performMove(origin | node, n)
           }
         } catch (err) {
