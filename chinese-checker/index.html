@@ -93,8 +93,8 @@
         let spot = collection[i]
         centers.push({
           node: spot, 
-          x: spot.clientLeft + spot.clientWidth / 2,
-          y: spot.clientTop + spot.clientHeight / 2,
+          x: spot.offsetLeft + spot.clientWidth / 2,
+          y: spot.offsetTop + spot.clientHeight / 2,
           neighbors: new Array(),
           state: 0
         })
