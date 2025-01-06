@@ -84,7 +84,9 @@
       
       const centers = new Array();
       
-      document.getElementsByClassName("spot").forEach(spot => {
+      let collection = document.getElementsByClassName("spot")
+      for (var i = 0; i < collection.length; i++) {
+        let spot = collection[i]
         centers.add({
           node: spot, 
           x: spot.clientLeft + spot.clientWidth / 2,
@@ -92,7 +94,7 @@
           neighbors: new Array(),
           state: 0
         })
-      })
+      }
       
       let r2 = 1.1 * (Math.pow(centers[0].x - centers[1].x, 2) + Math.pow(centers[0].y - centers[1].y, 2))
       
