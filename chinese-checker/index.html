@@ -180,7 +180,7 @@
           if (n === undefined) {
             performMove(node, origin)
           } else if (moves.jump.indexOf(n)>-1) {
-            performMove((origin !== undefined)? origin: node, n)
+            performMove(node, n)
             return beginMove(n, (origin !== undefined)? origin : node)
           } else if (moves.near.indexOf(n)>-1) {
             performMove((origin !== undefined)? origin :  node, n)
