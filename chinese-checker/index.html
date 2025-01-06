@@ -134,20 +134,30 @@
       nodes.forEach(n=>n.nodes.classList.remove("jump","near"))
     }
 
+    function performMove(a,b) {
+      for (var i = 0; i < 6; i++) {
+        let tag = `player${i}`
+        if (a.node.classList.contains(tag)) {
+          a.node.classList.remove(tag)
+          b.node.classList.add(tag)
+          break
+        }
+      }
+    }
+
     function beginMove(node, origin) {
       let moves = moveFrom(node, true)
       toggleHighlightMove(node)
       return function(n) {
         toggleHighlightMove(node)
         if (n === undefined) {
-          return {from: origin, to: node}
+          performMove(node, origin)
         } else if (moves.jump.contains(n)) {
           return beginMove(n, origin | node)
         } else if (moves.near.contains(n)) {
-          return {from: node, to: n}
-        } else {
-          return {}
+          performMove(origin | node, n)
         }
+        return undefined
       }
     }
 
@@ -168,18 +178,26 @@
       })
       
       const centers = new Array();
-      
+      const state = { clickAction: undefined }
       let collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
         let spot = collection[i]
-        centers.push({
+        let center = {
           node: spot, 
           x: spot.offsetLeft + spot.clientWidth / 2,
           y: spot.offsetTop + spot.clientHeight / 2,
           neighbors: new Array(),
-          directions: new Array(),
-          state: 0
-        })
+          directions: new Array()
+        }
+        spot.onclick = (ev) => {
+          if (state.clickAction) {
+            state.clickAction = state.clickAction(center)
+          } else {
+            state.clickAction = beginMove(center)
+          }
+        }
+
+        centers.push(center)
       }
       
       let r2 = 1.1 * (Math.pow(centers[0].x - centers[1].x, 2) + Math.pow(centers[0].y - centers[1].y, 2))
