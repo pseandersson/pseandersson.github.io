@@ -121,9 +121,9 @@
           tips.push(centers[i])
         }
       }
-      debug.innerText += centers
+      debug.innerText += centers.length + " zzz "
 
-      debug.innerText += tips
+      debug.innerText += tips.map(v=> v.neighbors.length)
 
       for (var i = 0; i < tips.length; i++) {
         let tip = tips[i]
