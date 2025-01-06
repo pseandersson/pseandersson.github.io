@@ -135,6 +135,9 @@
           for (var k = 0; k < tip2.neighbors.length;k++){
             let tip3 = tip2.neighbors[k]
             tip3.node.classList.add("home")
+            for (var l = 0; l < tip3.neighbors; l++) {
+              tip3.neighbors[l].node.classList.add("home")
+            }
           }
         }
       }
