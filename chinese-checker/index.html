@@ -160,6 +160,7 @@
       for (var i = 0; i < tips.length; i++) {
         let tip = tips[i]
         let p = playerOrder[i]
+        debug.innerText += `[player${p}]`
         tip.node.classList.add("home", `player${p}` )
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
