@@ -38,7 +38,27 @@
     }
 
     .player0 {
+      background: radial-gradient(circle at 10% 10%, #cff, #000);
+    }
+
+    .player1 {
       background: radial-gradient(circle at 10% 10%, #cfc, #000);
+    }
+
+    .player2 {
+      background: radial-gradient(circle at 10% 10%, #fdc, #000);
+    }
+
+    .player3 {
+      background: radial-gradient(circle at 10% 10%, #fcc, #000);
+    }
+
+    .player4 {
+      background: radial-gradient(circle at 10% 10%, #fdc, #000);
+    }
+
+    .player5 {
+      background: radial-gradient(circle at 10% 10%, #ffc, #000);
     }
 
     .row:nth-child(1n+5) .spot:nth-child(1n + 10) {
@@ -139,15 +159,16 @@
 
       for (var i = 0; i < tips.length; i++) {
         let tip = tips[i]
-        tip.node.classList.add("home", `player${i}` )
+        let p = playerOrder[i]
+        tip.node.classList.add("home", `player${p}` )
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
-          tip2.node.classList.add("home", `player${i}`)
+          tip2.node.classList.add("home", `player${p}`)
           for (var k = 0; k < tip2.neighbors.length;k++){
             let tip3 = tip2.neighbors[k]
-            tip3.node.classList.add("home", `player${i}`)
+            tip3.node.classList.add("home", `player${p}`)
             for (var l = 0; l < tip3.neighbors.length; l++) {
-              tip3.neighbors[l].node.classList.add("home", `player${i}`)
+              tip3.neighbors[l].node.classList.add("home", `player${p}`)
             }
           }
         }
