@@ -182,7 +182,7 @@
           } else if (moves.jump.indexOf(n)>-1) {
             return beginMove(n, origin | node)
           } else if (moves.near.indexOf(n)>-1) {
-            performMove(origin | node, n)
+            performMove((origin !== undefined)? origin :  node, n)
           }
         } catch (err) {
           debug.innerText += err.message
