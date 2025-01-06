@@ -161,9 +161,14 @@
     }
 
     function beginMove(node, origin) {
-      let moves = moveFrom(node, origin === undefined)
+      let firstMove = origin === undefined
+      let moves = moveFrom(node, firstMove)
       
       if (moves.near.length === 0 && moves.jump.length === 0) {
+        return undefined
+      }
+
+      if (firstMove && isOccupied(node)) {
         return undefined
       }
 
