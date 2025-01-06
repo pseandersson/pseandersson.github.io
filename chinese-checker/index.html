@@ -236,6 +236,7 @@
                 state.clickAction = beginMove(center)
               }
               if (state.clickAction === undefined) {
+                debug.innerText += "[Next Player]"
                 state.activePlayer = (state.activePlayer + 1) % 6
               }
             }
