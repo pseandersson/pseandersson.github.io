@@ -121,6 +121,9 @@
           tips.push(centers[i])
         }
       }
+      debug.innerText += centers
+
+      debug.innerText += tips
 
       for (var i = 0; i < tips.length; i++) {
         let tip = tips[i]
@@ -154,6 +157,7 @@
   </div>
   <div id="board">
   </div>
+  <div id="debug"></div>
   <script>
     try {
       setupBoard()
