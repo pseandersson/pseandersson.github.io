@@ -103,7 +103,7 @@
   </style>
   <script>
     function isOccupied(node) {
-      return [0, 1, 2, 3, 4, 5].some(v => node.classList.contains(`player${v}`))
+      return [0, 1, 2, 3, 4, 5].some(v => node.node.classList.contains(`player${v}`))
     }
 
     function moveFrom(node, firstMove) {
@@ -203,8 +203,6 @@
         }
         spot.onclick = (ev) => {
           try {
-
-
             if (state.clickAction) {
               state.clickAction = state.clickAction(center)
             } else {
