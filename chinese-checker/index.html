@@ -87,7 +87,7 @@
       let collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
         let spot = collection[i]
-        centers.add({
+        centers.push({
           node: spot, 
           x: spot.clientLeft + spot.clientWidth / 2,
           y: spot.clientTop + spot.clientHeight / 2,
@@ -105,8 +105,8 @@
           let cr2 = (Math.pow(ci.x - cj.x, 2) + Math.pow(ci.y - cj.y, 2))
           
           if (cr2 <= r2) {
-            ci.neighbors.add(cj)
-            cj.neighbors.add(ci)
+            ci.neighbors.push(cj)
+            cj.neighbors.push(ci)
           }
         }
       }
