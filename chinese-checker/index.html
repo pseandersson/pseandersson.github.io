@@ -131,8 +131,14 @@
     }
 
     function toggleHighlightMove(moves) {
-      moves.near.forEach(n => n.node.classList.toggle("near"))
-      moves.jump.forEach(n => n.node.classList.toggle("jump"))
+      for (var i = 0; i < moves.near.length; i++) {
+        moves.near[i].node.classList.toggle("near")
+      }
+      for (let i = 0; i < moves.jump.length; i++) {
+        moves.jump[i].node.classList.toggle("jump")
+        
+      }
+      // moves.jump.forEach(n => n.node.classList.toggle("jump"))
     }
 
     function clearHighlights() {
@@ -140,7 +146,7 @@
       for (var i = 0; i < collection.length; i++) {
         collection[i].classList.remove("near", "jump")
       }
-      nodes.forEach(n => n.nodes.classList.remove("jump", "near"))
+      // nodes.forEach(n => n.nodes.classList.remove("jump", "near"))
     }
 
     function performMove(a, b) {
