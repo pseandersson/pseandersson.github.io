@@ -168,15 +168,15 @@
         return undefined
       }
 
-      if (firstMove && isOccupied(node)) {
+      if (firstMove && !isOccupied(node)) {
         return undefined
       }
 
-      toggleHighlightMove(node)
+      toggleHighlightMove(moves)
       
       return function (n) {
         try {
-          toggleHighlightMove(node)
+          toggleHighlightMove(moves)
           if (n === undefined) {
             performMove(node, origin)
           } else if (moves.jump.contains(n)) {
