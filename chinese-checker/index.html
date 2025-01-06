@@ -116,7 +116,7 @@
         let di = node.directions[i]
 
         if (isOccupied(ni)) {
-          for (var j = 0; j < nb.neighbors.length; j++) {
+          for (var j = 0; j < ni.neighbors.length; j++) {
             let nj = ni.neighbors[j]
             let dj = ni.directions[j]
             if ((di - dj) % 180 === 0) {
