@@ -121,25 +121,32 @@
       }
     }
 
-    function highlightMove(moves) {
-      moves.near.forEach(n=>n.node.classList.add("near"))
-      moves.jump.forEach(n=n.node.classList.add("jump"))
+    function toggleHighlightMove(moves) {
+      moves.near.forEach(n=>n.node.classList.toggle("near"))
+      moves.jump.forEach(n=n.node.classList.toggle("jump"))
     }
 
-    function clearHighlights(nodes) {
+    function clearHighlights() {
+      let collection = document.getElementsByClassName("spot")
+      for (var i = 0; i < collection.length; i++) {
+        collection[i].classList.remove("near", "jump")
+      }
       nodes.forEach(n=>n.nodes.classList.remove("jump","near"))
     }
 
-    function beginMove(node, firstMove) {
-      let moves = moveFrom(node, firstMove | true)
-      highlightMove(node)
+    function beginMove(node, origin) {
+      let moves = moveFrom(node, true)
+      toggleHighlightMove(node)
       return function(n) {
-        if (moves.near.contains(n)) {
-
+        toggleHighlightMove(node)
+        if (n === undefined) {
+          return {from: origin, to: node}
         } else if (moves.jump.contains(n)) {
-          return beginMove(n, false)
+          return beginMove(n, origin | node)
+        } else if (moves.near.contains(n)) {
+          return {from: node, to: n}
         } else {
-          return false
+          return {}
         }
       }
     }
