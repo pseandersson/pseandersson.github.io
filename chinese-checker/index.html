@@ -119,7 +119,7 @@
           for (var j = 0; j < ni.neighbors.length; j++) {
             let nj = ni.neighbors[j]
             let dj = ni.directions[j]
-            if ((di - dj) % 180 === 0) {
+            if ((di - dj) % 180 === 0 && !isOccupied(nj)) {
               result.jump.push(nj)
             }
           }
