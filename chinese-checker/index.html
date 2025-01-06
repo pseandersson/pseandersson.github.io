@@ -135,7 +135,8 @@
           let dx = cj.x - ci.x
           let dy = cj.y - ci.y
           let cr2 = (dx*dx + dy*dy)
-          let ang = (Math.round(Math.atan2(dy, dx)*180/Math.PI) + 180) % 360
+          var ang = (Math.round(Math.atan2(dy, dx)*180/Math.PI) + 180) % 360
+          ang = Math.round(ang/60.0) * 60
           
           if (cr2 <= r2) {
             ci.neighbors.push(cj)
