@@ -121,8 +121,7 @@
       }
     }
 
-    function highlightMove(node, firstMove) {
-      let moves = moveFrom(node, firstMove)
+    function highlightMove(moves) {
       moves.near.forEach(n=>n.node.classList.add("near"))
       moves.jump.forEach(n=n.node.classList.add("jump"))
     }
@@ -131,9 +130,18 @@
       nodes.forEach(n=>n.nodes.classList.remove("jump","near"))
     }
 
-    function beginMove(node) {
-      highlightMove(node, true)
-      
+    function beginMove(node, firstMove) {
+      let moves = moveFrom(node, firstMove | true)
+      highlightMove(node)
+      return function(n) {
+        if (moves.near.contains(n)) {
+
+        } else if (moves.jump.contains(n)) {
+          return beginMove(n, false)
+        } else {
+          return false
+        }
+      }
     }
 
     function setupBoard() {
