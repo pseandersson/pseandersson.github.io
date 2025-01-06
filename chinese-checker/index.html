@@ -163,7 +163,7 @@
     function beginMove(node, origin) {
       let firstMove = origin === undefined
       let moves = moveFrom(node, firstMove)
-      debug.innerText += "sss " + JSON.stringify(moves)
+      debug.innerText += "sss " + moves.jump
       if (moves.near.length === 0 && moves.jump.length === 0) {
         return undefined
       }
