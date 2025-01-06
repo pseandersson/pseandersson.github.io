@@ -132,7 +132,7 @@
 
     function toggleHighlightMove(moves) {
       moves.near.forEach(n => n.node.classList.toggle("near"))
-      moves.jump.forEach(n = n.node.classList.toggle("jump"))
+      moves.jump.forEach(n => n.node.classList.toggle("jump"))
     }
 
     function clearHighlights() {
@@ -156,7 +156,13 @@
 
     function beginMove(node, origin) {
       let moves = moveFrom(node, origin === undefined)
+      
+      if (moves.near.length === 0 && moves.jump.length === 0) {
+        return undefined
+      }
+
       toggleHighlightMove(node)
+      
       return function (n) {
         try {
           toggleHighlightMove(node)
