@@ -190,7 +190,7 @@
             performMove((origin !== undefined) ? origin : node, n)
           } else {
             debug.innerText += "[Move cancelled]"
-            return false
+            return (node === n)
           }
         } catch (err) {
           debug.innerText += err.message
@@ -231,12 +231,12 @@
           try {
             if (state.clickAction) {
               state.clickAction = state.clickAction(center)
+              if (state.clickAction === undefined) {
+                debug.innerText += "[Next Player]"
+                state.activePlayer = (state.activePlayer + 1) % 6
+              }
             } else if (checkPlayer(state, center)) {
               state.clickAction = beginMove(center)
-            }
-            if (state.clickAction === undefined) {
-              debug.innerText += "[Next Player]"
-              state.activePlayer = (state.activePlayer + 1) % 6
             }
 
           } catch (err) {
