@@ -131,7 +131,7 @@
     }
 
     function checkPlayer(state, node) {
-      return node.node.classList.contains(`player${state.activePlayer}`) || state.clickAction !== undefined
+      return node.node.classList.contains(`player${state.activePlayer}`)
     }
 
     function toggleHighlightMove(moves) {
@@ -229,17 +229,16 @@
         }
         spot.onclick = (ev) => {
           try {
-            if (checkPlayer(state, center)) {
-              if (state.clickAction) {
-                state.clickAction = state.clickAction(center)
-              } else {
-                state.clickAction = beginMove(center)
-              }
-              if (state.clickAction === undefined) {
-                debug.innerText += "[Next Player]"
-                state.activePlayer = (state.activePlayer + 1) % 6
-              }
+            if (state.clickAction) {
+              state.clickAction = state.clickAction(center)
+            } else if (checkPlayer(state, center)) {
+              state.clickAction = beginMove(center)
             }
+            if (state.clickAction === undefined) {
+              debug.innerText += "[Next Player]"
+              state.activePlayer = (state.activePlayer + 1) % 6
+            }
+
           } catch (err) {
             debug.innerText += err.message
           }
