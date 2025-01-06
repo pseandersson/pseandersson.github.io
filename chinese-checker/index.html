@@ -94,6 +94,47 @@
     }
   </style>
   <script>
+    function isOccupied(node) {
+      return [0,1,2,3,4,5].some(v=>node.classList.contains(`player${v}`))
+    }
+
+    function moveFrom(node, firstMove ) {
+      let result = {
+        near: [],
+        jump: []
+      }
+      for (var i = 0; i < node.neighbors.length; i++) {
+        let ni = node.neighbors[i]
+        let di = node.directions[i]
+        
+        if (isOccupied(ni)) {
+          for (var j = 0; j < nb.neighbors.length; j++) {
+            let nj = ni.neighbors[j]
+            let dj = ni.directions[j]
+            if ((di - dj)%180 === 0) {
+              result.jump.push(nj)
+            }
+          }
+        } else if (firstMove){
+          result.near.push(nb)
+        }
+      }
+    }
+
+    function highlightMove(node, firstMove) {
+      let moves = moveFrom(node, firstMove)
+      moves.near.forEach(n=>n.node.classList.add("near"))
+      moves.jump.forEach(n=n.node.classList.add("jump"))
+    }
+
+    function clearHighlights(nodes) {
+      nodes.forEach(n=>n.nodes.classList.remove("jump","near"))
+    }
+
+    function beginMove(node) {
+      highlightMove(node, true)
+      
+    }
 
     function setupBoard() {
       const playerOrder = [0, 5, 1, 4, 2, 3]
@@ -137,13 +178,13 @@
           let cr2 = (dx*dx + dy*dy)
           var ang = (Math.round(Math.atan2(dy, dx)*180/Math.PI) + 180) % 360
           ang = Math.round(ang/60.0) * 60
-          
+
           if (cr2 <= r2) {
             ci.neighbors.push(cj)
             ci.directions.push((ang + 180) % 360)
             cj.neighbors.push(ci)
             cj.directions.push(ang)
-            debug.innerText += `(ang ${ang} - ${(ang+180)%360})`
+            //debug.innerText += `(ang ${ang} - ${(ang+180)%360})`
           }
           // debug.innerHTML +="<p>" + cr2 + " &lt; " + r2 + "</p>"
         }
