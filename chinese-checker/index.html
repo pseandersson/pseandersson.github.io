@@ -38,7 +38,7 @@
     }
 
     .row:nth-child(1n+5) .spot:nth-child(1n + 10) {
-       background: green;
+      background: green;
     }
 
     .row:nth-child(1n+10) .spot:nth-child(1n + 10) {
@@ -74,7 +74,7 @@
     }
 
     .player1 {
-      background: radial-gradient(circle at 10% 10%, #cfc, #080,#060) !important;
+      background: radial-gradient(circle at 10% 10%, #cfc, #080, #060) !important;
     }
 
     .player2 {
@@ -103,10 +103,10 @@
   </style>
   <script>
     function isOccupied(node) {
-      return [0,1,2,3,4,5].some(v=>node.classList.contains(`player${v}`))
+      return [0, 1, 2, 3, 4, 5].some(v => node.classList.contains(`player${v}`))
     }
 
-    function moveFrom(node, firstMove ) {
+    function moveFrom(node, firstMove) {
       let result = {
         near: [],
         jump: []
@@ -114,24 +114,24 @@
       for (var i = 0; i < node.neighbors.length; i++) {
         let ni = node.neighbors[i]
         let di = node.directions[i]
-        
+
         if (isOccupied(ni)) {
           for (var j = 0; j < nb.neighbors.length; j++) {
             let nj = ni.neighbors[j]
             let dj = ni.directions[j]
-            if ((di - dj)%180 === 0) {
+            if ((di - dj) % 180 === 0) {
               result.jump.push(nj)
             }
           }
-        } else if (firstMove){
+        } else if (firstMove) {
           result.near.push(nb)
         }
       }
     }
 
     function toggleHighlightMove(moves) {
-      moves.near.forEach(n=>n.node.classList.toggle("near"))
-      moves.jump.forEach(n=n.node.classList.toggle("jump"))
+      moves.near.forEach(n => n.node.classList.toggle("near"))
+      moves.jump.forEach(n = n.node.classList.toggle("jump"))
     }
 
     function clearHighlights() {
@@ -139,10 +139,10 @@
       for (var i = 0; i < collection.length; i++) {
         collection[i].classList.remove("near", "jump")
       }
-      nodes.forEach(n=>n.nodes.classList.remove("jump","near"))
+      nodes.forEach(n => n.nodes.classList.remove("jump", "near"))
     }
 
-    function performMove(a,b) {
+    function performMove(a, b) {
       for (var i = 0; i < 6; i++) {
         let tag = `player${i}`
         if (a.node.classList.contains(tag)) {
@@ -154,16 +154,20 @@
     }
 
     function beginMove(node, origin) {
-      let moves = moveFrom(node, true)
+      let moves = moveFrom(node, origin === undefined)
       toggleHighlightMove(node)
-      return function(n) {
-        toggleHighlightMove(node)
-        if (n === undefined) {
-          performMove(node, origin)
-        } else if (moves.jump.contains(n)) {
-          return beginMove(n, origin | node)
-        } else if (moves.near.contains(n)) {
-          performMove(origin | node, n)
+      return function (n) {
+        try {
+          toggleHighlightMove(node)
+          if (n === undefined) {
+            performMove(node, origin)
+          } else if (moves.jump.contains(n)) {
+            return beginMove(n, origin | node)
+          } else if (moves.near.contains(n)) {
+            performMove(origin | node, n)
+          }
+        } catch (err) {
+          debug.innerText += err.message
         }
         return undefined
       }
@@ -184,14 +188,14 @@
         }
         document.getElementById("board").appendChild(row)
       })
-      
+
       const centers = new Array();
       const state = { clickAction: undefined }
       let collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
         let spot = collection[i]
         let center = {
-          node: spot, 
+          node: spot,
           x: spot.offsetLeft + spot.clientWidth / 2,
           y: spot.offsetTop + spot.clientHeight / 2,
           neighbors: new Array(),
@@ -200,7 +204,7 @@
         spot.onclick = (ev) => {
           try {
 
-        
+
             if (state.clickAction) {
               state.clickAction = state.clickAction(center)
             } else {
@@ -213,7 +217,7 @@
 
         centers.push(center)
       }
-      
+
       let r2 = 1.1 * (Math.pow(centers[0].x - centers[1].x, 2) + Math.pow(centers[0].y - centers[1].y, 2))
       //debug.innerText += "Radius: " + r2 + " | "
       for (var i = 0; i < centers.length; i++) {
@@ -222,9 +226,9 @@
           let cj = centers[j]
           let dx = cj.x - ci.x
           let dy = cj.y - ci.y
-          let cr2 = (dx*dx + dy*dy)
-          var ang = (Math.round(Math.atan2(dy, dx)*180/Math.PI) + 180) % 360
-          ang = Math.round(ang/60.0) * 60
+          let cr2 = (dx * dx + dy * dy)
+          var ang = (Math.round(Math.atan2(dy, dx) * 180 / Math.PI) + 180) % 360
+          ang = Math.round(ang / 60.0) * 60
 
           if (cr2 <= r2) {
             ci.neighbors.push(cj)
@@ -251,11 +255,11 @@
         let tip = tips[i]
         let p = playerOrder[i]
         debug.innerText += `[player${p}]`
-        tip.node.classList.add("home", `player${p}` )
+        tip.node.classList.add("home", `player${p}`)
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
           tip2.node.classList.add("home", `player${p}`)
-          for (var k = 0; k < tip2.neighbors.length;k++){
+          for (var k = 0; k < tip2.neighbors.length; k++) {
             let tip3 = tip2.neighbors[k]
             tip3.node.classList.add("home", `player${p}`)
             for (var l = 0; l < tip3.neighbors.length; l++) {
