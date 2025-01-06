@@ -198,10 +198,16 @@
           directions: new Array()
         }
         spot.onclick = (ev) => {
-          if (state.clickAction) {
-            state.clickAction = state.clickAction(center)
-          } else {
-            state.clickAction = beginMove(center)
+          try {
+
+        
+            if (state.clickAction) {
+              state.clickAction = state.clickAction(center)
+            } else {
+              state.clickAction = beginMove(center)
+            }
+          } catch (err) {
+            debug.innerText += err.message
           }
         }
 
