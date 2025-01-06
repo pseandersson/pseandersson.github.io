@@ -37,6 +37,10 @@
 
     }
 
+    .player0 {
+      background: radial-gradient(circle at 10% 10%, #cfc, #000);
+    }
+
     .row:nth-child(1n+5) .spot:nth-child(1n + 10) {
        background: green;
     }
@@ -72,6 +76,13 @@
   <script>
 
     function setupBoard() {
+      const playerOrder = [0, 2, 4, 5, 3, 2]
+      const playerHome = [
+        [0, 5],
+        [0, 4, 3],
+        [2, 4, 3, 1],
+        [0, 2, 4, 5, 3, 1],
+      ]
 
       const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
       rows.forEach(spots => {
@@ -128,15 +139,15 @@
 
       for (var i = 0; i < tips.length; i++) {
         let tip = tips[i]
-        tip.node.classList.add("home")
+        tip.node.classList.add("home", `player${i}` )
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
-          tip2.node.classList.add("home")
+          tip2.node.classList.add("home", `player${i}`)
           for (var k = 0; k < tip2.neighbors.length;k++){
             let tip3 = tip2.neighbors[k]
-            tip3.node.classList.add("home")
+            tip3.node.classList.add("home", `player${i}`)
             for (var l = 0; l < tip3.neighbors.length; l++) {
-              tip3.neighbors[l].node.classList.add("home")
+              tip3.neighbors[l].node.classList.add("home", `player${i}`)
             }
           }
         }
