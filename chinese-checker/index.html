@@ -16,7 +16,7 @@
       height: 80vh;
       background: white;
       border: 1px gray solid;
-      border-radius: 10vh;
+      border-radius: 5vmin;
       box-shadow: 0px 0px 5vmin 5vmin #00000080 ;
       font-size: 5vmin;
       font-family: sans-serif;
@@ -256,7 +256,7 @@
     function setupGame() {
       startgame.onclick = (ev) => {
         try {
-          setupBoard(Number.parseInt(numOfPlayers.value))
+          setupBoard(Number.parseInt(numOfPlayers.value), 0)
           gamesetup.classList.add("hide")
         } catch (err) {
           debug.innerText += err.message
@@ -264,7 +264,12 @@
       }
     }
 
-    function setupBoard(numberOfPlayers) {
+    function nextPlayer(state) {
+      state.playerCounter = (state.playerCounter + state.playerStep) % 6
+      return Math.round(state.playerCounter)
+    }
+
+    function setupBoard(numberOfPlayers, activePlayer) {
       const playerOrder = [0, 5, 1, 4, 2, 3]
 
       const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
@@ -281,7 +286,22 @@
       })
 
       const centers = new Array();
-      const state = { activePlayer: 0, clickAction: undefined }
+      const state = {
+        playerStep: 6 / numberOfPlayers,
+        playerCounter: activePlayer * 6 / numberOfPlayers,
+        activePlayer: activePlayer, 
+        clickAction: undefined 
+      }
+
+      const playersInGame = []
+      for (var i = 0; i < numberOfPlayers; i++) {
+         playersInGame.push(state.activePlayer)
+         state.activePlayer = nextPlayer(state)
+      }
+
+      debug += "{Players " + playersInGame + "}"
+
+
       let collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
         let spot = collection[i]
@@ -298,7 +318,7 @@
               state.clickAction = state.clickAction(center)
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
-                state.activePlayer = (state.activePlayer + 1) % 6
+                state.activePlayer = nextPlayer(state)
                 debug.innerText += encodeBoard(state.activePlayer, 6)
               }
             } else if (checkPlayer(state, center)) {
