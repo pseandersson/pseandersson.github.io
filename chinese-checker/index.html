@@ -226,6 +226,7 @@
         comp[j + 1] = (state[i+2] >> 2) + (state[i+3] << 1) + (state[i+4] << 4) + (state[i+5] << 7)
         comp[j + 2] = (state[i+5] >> 1) + (state[i+6] << 2) + (state[i+7] << 5)
       }
+      return btoa(String.fromCharCode.apply(null, comp))
     }
 
     function setupBoard() {
