@@ -206,9 +206,26 @@
     }
 
     function encodeBord() {
-      const bits = [1,2,3,4,5].map(v=>1 << v)
+      const bits = [1,2,3,4,5,6]
       let collection = document.getElementsByClassName("spot")
+      const state = new Uint8Array(8*Math.ceil(collection.length/8))
+      const comp = new Uint8Array(Math.ceil(3*collection.length/8))
+      
+      for (var i = 0;i < collection.length; i++) {
+        const p = collection[i].classList.value.split(" ").filter(v => v.substr(0,6)=="player").map(s=>new Number(s).substr(6))
+        var b = 0
+        
+        if (p.length == 1) {
+          b = p[0] + 1
+        }
+        state[i] = b
+      }
 
+      for (var i = 0, j=0;i < state.length; i+=8, j+=3) {
+        comp[j] = state[i] + (state[i+1] << 3) + (state[i+2] << 6)
+        comp[j + 1] = (state[i+2] >> 2) + (state[i+3] << 1) + (state[i+4] << 4) + (state[i+5] << 7)
+        comp[j + 2] = (state[i+5] >> 1) + (state[i+6] << 2) + (state[i+7] << 5)
+      }
     }
 
     function setupBoard() {
