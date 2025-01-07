@@ -188,9 +188,10 @@
             return beginMove(n, (origin !== undefined) ? origin : node)
           } else if (moves.near.indexOf(n) > -1) {
             performMove((origin !== undefined) ? origin : node, n)
-          } else {
+          } else if (node !== n) {
             debug.innerText += "[Move cancelled]"
-            return (node === n) ? undefined : false
+            performMove(node, origin)
+            return false
           }
         } catch (err) {
           debug.innerText += err.message
