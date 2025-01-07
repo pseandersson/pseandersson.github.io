@@ -264,6 +264,7 @@
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
                 state.activePlayer = (state.activePlayer + 1) % 6
+                debug.innerText += encodeBoard()
               }
             } else if (checkPlayer(state, center)) {
               state.clickAction = beginMove(center)
