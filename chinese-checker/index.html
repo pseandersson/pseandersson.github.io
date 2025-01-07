@@ -4,9 +4,22 @@
 <head>
   <title>Chinese Checker</title>
   <style type="text/css">
-    div {
+    #gamesetup {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      z-index: 1;
+      width: 90vw;
+      height: 90vh;
+      background: white;
+      border: 1px gray solid;
+      border-radius: 10%;
+      box-shadow: 0px 0px 5vmin 5vmin black ;
+      font-size: 15vmin;
+    }
 
-      background: green;
+    .hide {
+      display: none;
     }
 
     #board {
@@ -230,7 +243,18 @@
       return btoa(String.fromCharCode.apply(null, comp))
     }
 
-    function setupBoard() {
+    function setupGame() {
+      startgame.onclick = (ev) => {
+        try {
+          setupBoard(Number.parseInt(numOfPlayers.value))
+          gamesetup.classList.add("hide")
+        } catch (err) {
+          debug.innerText += err.message
+        }
+      }
+    }
+
+    function setupBoard(numberOfPlayers) {
       const playerOrder = [0, 5, 1, 4, 2, 3]
 
       const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
@@ -343,14 +367,14 @@
       <option>4</option>
       <option>6</option>
     </select>
-    <button>Start</button>
+    <button id="startgame">Start</button>
   </div>
   <div id="board">
   </div>
   <div id="debug"></div>
   <script>
     try {
-      setupBoard()
+      setupGame()
     } catch (err) {
       document.getElementById("board").innerText = err.message
     }
