@@ -190,7 +190,7 @@
             performMove((origin !== undefined) ? origin : node, n)
           } else {
             debug.innerText += "[Move cancelled]"
-            return (node === n)
+            return (node === n) ? undefined : false
           }
         } catch (err) {
           debug.innerText += err.message
