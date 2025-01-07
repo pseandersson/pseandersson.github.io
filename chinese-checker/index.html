@@ -229,7 +229,7 @@
         }
         spot.onclick = (ev) => {
           try {
-            if (state.clickAction) {
+            if (typeof state.clickAction === "function") {
               state.clickAction = state.clickAction(center)
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
