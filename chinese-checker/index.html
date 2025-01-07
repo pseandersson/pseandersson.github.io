@@ -212,7 +212,7 @@
       const comp = new Uint8Array(Math.ceil(3*collection.length/8))
       
       for (var i = 0;i < collection.length; i++) {
-        const p = collection[i].classList.value.split(" ").filter(v => v.substr(0,6)=="player").map(s=>new Number(s).substr(6))
+        const p = collection[i].classList.value.split(" ").filter(v => v.substr(0,6)=="player").map(s=>new Number(s.substr(6)))
         var b = 0
         
         if (p.length == 1) {
