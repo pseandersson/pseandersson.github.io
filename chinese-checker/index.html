@@ -61,6 +61,17 @@
       margin: 2vmin;
     }
 
+    #share {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+    }
+
+    #share > input {
+      flex-grow: 1;
+      height: 100%;
+    }
+
     .row {
       display: flex;
       flex-direction: row;
@@ -468,11 +479,11 @@
   </div>
   <div id="board">
   </div>
-  <div>
+  <div id="share">
     <input type="text" id="nextTurnUrl" readonly="true" />
     <button onclick="">Share</button>
   </div>
-  <div id="debug"></div>
+  <div id="debug" class="hide"></div>
   <script>
     try {
       setupGame()
