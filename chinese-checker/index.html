@@ -176,7 +176,7 @@
         "//" +
         window.location.host +
         window.location.pathname +
-        "#" + encodeURIComponent(fragment)
+        "#" + fragment
 
       nextTurnUrl.value = url
       nextTurnUrl.select()
@@ -376,9 +376,10 @@
 
       const fragment = window.location.hash
       if (fragment !== undefined && fragment.length > 0) {
-        const isCompressed = fragment[0] === 'c'
+        debug.innerText += fragment
+        const isCompressed = fragment[1] === 'c'
         try {
-          const state = decodeBoard(decodeURIComponent(fragment).slice(1), isCompressed)
+          const state = decodeBoard(fragment.slice(2), isCompressed)
           setupBoard(state.numberOfPlayers, state)
           gamesetup.classList.add("hide")
         } catch (err) {
