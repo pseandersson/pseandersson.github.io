@@ -338,7 +338,7 @@
       }
 
       debug.innerText += "{Players " + playersInGame + "}"
-
+      whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer)+1}`
 
       let collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
@@ -356,6 +356,8 @@
               state.clickAction = state.clickAction(center)
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
+                whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
+
                 state.activePlayer = nextPlayer(state)
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`
@@ -431,7 +433,7 @@
 </head>
 
 <body>
-  <h1>Chinese Checker</h1>
+  <h1>Chinese Checker <span id="whosTurn"></span></h1>
   <div id="gamesetup" class="gamesetup">
     <h1>Chinese Checker</h1>
     <p>Number of players</p>
