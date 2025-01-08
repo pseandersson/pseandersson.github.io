@@ -170,19 +170,19 @@
   <script type="text/javascript" src="pako.min.js"></script>
   <script>
     function updateURL(state_enc) {
+      const fragment = ((state_enc.compact.length < state_enc.compressed.length) ? "p"+state_enc.compact : "c" + state_enc.compressed)
       const url =
         window.location.protocol +
         "//" +
         window.location.host +
         window.location.pathname +
-        "#" + 
-        ((state_enc.compact.length < state_enc.compressed.length) ? "p"+state_enc.compact : "c" + state_enc.compressed) 
+        "#" + encodeURIComponent(fragment)
 
-        nextTurnUrl.value = url
-        nextTurnUrl.select()
-        nextTurnUrl.setSelectionRange(0,url.length)
+      nextTurnUrl.value = url
+      nextTurnUrl.select()
+      nextTurnUrl.setSelectionRange(0,url.length)
 
-        navigator.clipboard.writeText(nextTurnUrl.value)
+      navigator.clipboard.writeText(nextTurnUrl.value)
     }
 
     function shareGame() {
@@ -378,7 +378,7 @@
       if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[0] === 'c'
         try {
-          const state = decodeBoard(fragment.slice(1), isCompressed)
+          const state = decodeBoard(decodeURIComponent(fragment).slice(1), isCompressed)
           setupBoard(state.numberOfPlayers, state)
           gamesetup.classList.add("hide")
         } catch (err) {
