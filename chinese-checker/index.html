@@ -253,7 +253,7 @@
       return {
         compressed: btoa(String.fromCharCode.apply(null, comp)),
         board: state.slice(0,121),
-        numberOfPlayers: state[121],
+        numberOfPlayers: state[121] + 1,
         activePlayer: state[122]
       }
     }
@@ -354,7 +354,7 @@
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
                 state.activePlayer = nextPlayer(state)
-                const state_enc = encodeBoard(state.activePlayer, state.numOfPlayers)
+                const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}]//${state_enc.compressed.length}`
                 debug.innerText += `<br/>[${JSON.stringify(decodeBoard(state_enc.compressed))}]`
               }
