@@ -376,7 +376,6 @@
 
       const fragment = window.location.hash
       if (fragment !== undefined && fragment.length > 0) {
-        debug.innerText += fragment
         const isCompressed = fragment[1] === 'c'
         try {
           const state = decodeBoard(decodeURIComponent(fragment.slice(2)), isCompressed)
@@ -387,8 +386,6 @@
           debug.innerText += err.message
         }
       }
-
-      debug.innerText += fragment
 
       startgame.onclick = (ev) => {
         try {
@@ -419,9 +416,9 @@
       }
 
       
-      for (var i = 0; i < numberOfPlayers; i++) {
-        playersInGame.push(state.activePlayer)
-        state.activePlayer = nextPlayer(state)
+      for (var i = 0, p = 0; i < numberOfPlayers; i++) {
+        playersInGame.push(p)
+        p = nextPlayer(state)
       }
 
       debug.innerText += "{Players " + playersInGame + "}"
