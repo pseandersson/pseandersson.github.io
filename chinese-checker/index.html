@@ -250,7 +250,12 @@
         comp[j + 1] = (state[i+2] >> 2) + (state[i+3] << 1) + (state[i+4] << 4) + (state[i+5] << 7)
         comp[j + 2] = (state[i+5] >> 1) + (state[i+6] << 2) + (state[i+7] << 5)
       }
-      return btoa(String.fromCharCode.apply(null, comp))
+      return {
+        compressed: btoa(String.fromCharCode.apply(null, comp)),
+        board: state.slice(0,121),
+        numberOfPlayers: state[121],
+        activePlayer: state[122]
+      }
     }
 
     function decodeBoard(data) {
@@ -276,6 +281,7 @@
       }
 
       return {
+        compressed: data,
         board: decomp.slice(0,121),
         numberOfPlayers: decomp[121] + 1,
         activePlayer: decomp[122]
@@ -348,7 +354,9 @@
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
                 state.activePlayer = nextPlayer(state)
-                debug.innerText += encodeBoard(state.activePlayer, 6)
+                const state_enc = encodeBoard(state.activePlayer, state.numOfPlayers)
+                debug.innerText += `<br/>[${JSON.stringify(state_enc)}]//${state_enc.compressed.length}`
+                debug.innerText += `<br/>[${JSON.stringify(decodeBoard(state_enc.compressed))}]`
               }
             } else if (checkPlayer(state, center)) {
               state.clickAction = beginMove(center)
