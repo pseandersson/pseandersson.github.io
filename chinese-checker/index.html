@@ -174,6 +174,18 @@
         ((state_enc.compact.length < state_enc.compressed.length) ? "p"+state_enc.compact : "c" + state_enc.compressed) 
 
         nextTurnUrl.value = url
+        nextTurnUrl.select()
+        nextTurnUrl.setSelectionRange(0,url.length)
+
+        navigator.clipboard.writeText(nextTurnUrl.value)
+    }
+
+    function shareGame() {
+      try {
+        navigator.share({title:`Chinese Checker ${whosTurn.innerText}`, url:nextTurnUrl.value})
+      } catch (err) {
+        debug.innerText += err.message
+      }
     }
 
     function isOccupied(node) {
@@ -502,7 +514,7 @@
   </div>
   <div id="share">
     <input type="text" id="nextTurnUrl" value="http://assa/" readonly="true" />
-    <button onclick="">Share</button>
+    <button onclick="shareGame()">Share</button>
   </div>
   <div id="debug" class="hide"></div>
   <script>
