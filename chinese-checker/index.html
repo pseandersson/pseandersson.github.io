@@ -39,7 +39,7 @@
     body {
       background: linear-gradient(#000033, #000033, #036);
       margin: 0;
-      padding: 0;
+      padding: 2vmin;
       width: 100%;
       height: 100%;
       color: whitesmoke;
@@ -58,13 +58,15 @@
       border: 2px #ffffffcc solid;
       border-radius: 10%;
       flex-direction: column;
-      margin: 2vmin;
+      margin: 2vmin 0px;
     }
 
     #share {
       display: flex;
       flex-direction: row;
       width: 100%;
+      justify-content: center;
+      gap: 1vmin;
     }
 
     #share > input {
@@ -480,7 +482,7 @@
   <div id="board">
   </div>
   <div id="share">
-    <input type="text" id="nextTurnUrl" readonly="true" />
+    <input type="text" id="nextTurnUrl" value="http://assa/" readonly="true" />
     <button onclick="">Share</button>
   </div>
   <div id="debug" class="hide"></div>
