@@ -404,7 +404,7 @@
 
     function setupBoard(numberOfPlayers, loaded_state) {
       const playerOrder = [0, 5, 1, 4, 2, 3]
-      const playersInGame = []
+      const playersInGame = new Array(numberOfPlayers)
       const activePlayer = (loaded_state) ? loaded_state.activePlayer : 0
       
       const centers = new Array();  
@@ -416,9 +416,8 @@
       }
 
       
-      for (var i = 0, p = 0; i < numberOfPlayers; i++) {
-        playersInGame.push(p)
-        p = nextPlayer(state)
+      for (var i = 0; i < numberOfPlayers; i++) {
+        playersInGame.push(Math.round(i*state.playerStep))
       }
 
       debug.innerText += "{Players " + playersInGame + "}"
