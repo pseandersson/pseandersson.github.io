@@ -379,7 +379,7 @@
         debug.innerText += fragment
         const isCompressed = fragment[1] === 'c'
         try {
-          const state = decodeBoard(fragment.slice(2), isCompressed)
+          const state = decodeBoard(decodeURIComponent(fragment.slice(2)), isCompressed)
           setupBoard(state.numberOfPlayers, state)
           gamesetup.classList.add("hide")
         } catch (err) {
