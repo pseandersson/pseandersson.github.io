@@ -124,6 +124,7 @@
       background: #8080ff80 !important;
     }
   </style>
+  <script type="text/javascript" src="pako.min.js"></script>
   <script>
     function isOccupied(node) {
       return [0, 1, 2, 3, 4, 5].some(v => node.node.classList.contains(`player${v}`))
@@ -251,7 +252,7 @@
         comp[j + 2] = (state[i+5] >> 1) + (state[i+6] << 2) + (state[i+7] << 5)
       }
       return {
-        compressed: btoa(String.fromCharCode.apply(null, comp)),
+        compressed: btoa(String.fromCharCode.apply(null, window.pako.deflate(comp))),
         board: state.slice(0,121),
         numberOfPlayers: state[121] + 1,
         activePlayer: state[122]
@@ -260,11 +261,12 @@
 
     function decodeBoard(data) {
       const s = atob(data)
-      const raw = new Uint8Array(s.length)
+      const comp = new Uint8Array(s.length)
 
       for (var i = 0;i < s.length; i++) {
-        raw[i] = s.charCodeAt(i)
+        comp[i] = s.charCodeAt(i)
       }
+      const raw = window.pako.inflate(comp)
 
       const size = Math.ceil(8/3*raw.length)
       const decomp = new Uint8Array(size)
