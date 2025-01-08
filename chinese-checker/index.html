@@ -417,7 +417,7 @@
 
       
       for (var i = 0; i < numberOfPlayers; i++) {
-        playersInGame.push(Math.round(i*state.playerStep))
+        playersInGame[i] = Math.round(i*state.playerStep)
       }
 
       debug.innerText += "{Players " + playersInGame + "}"
