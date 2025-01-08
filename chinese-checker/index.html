@@ -361,6 +361,19 @@
     }
 
     function setupGame() {
+      const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
+      rows.forEach(spots => {
+        const row = document.createElement("div")
+
+        row.classList.add("row")
+        for (var i = 0; i < spots; i++) {
+          const spot = document.createElement("div")
+          spot.classList.add("spot")
+          row.appendChild(spot)
+        }
+        document.getElementById("board").appendChild(row)
+      })
+
       const fragment = window.location.fragment
       if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[0] === 'c'
@@ -372,6 +385,7 @@
           debug.innerText += err.message
         }
       }
+
       startgame.onclick = (ev) => {
         try {
           setupBoard(Number.parseInt(numOfPlayers.value))
@@ -389,23 +403,10 @@
 
     function setupBoard(numberOfPlayers, loaded_state) {
       const playerOrder = [0, 5, 1, 4, 2, 3]
-
-      const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
-      rows.forEach(spots => {
-        const row = document.createElement("div")
-
-        row.classList.add("row")
-        for (var i = 0; i < spots; i++) {
-          const spot = document.createElement("div")
-          spot.classList.add("spot")
-          row.appendChild(spot)
-        }
-        document.getElementById("board").appendChild(row)
-      })
-
+      const playersInGame = []
       const activePlayer = (loaded_state) ? loaded_state.activePlayer : 0
-
-      const centers = new Array();
+      
+      const centers = new Array();  
       const state = {
         playerStep: 6 / numberOfPlayers,
         playerCounter: activePlayer * 6 / numberOfPlayers,
@@ -413,7 +414,7 @@
         clickAction: undefined
       }
 
-      const playersInGame = []
+      
       for (var i = 0; i < numberOfPlayers; i++) {
         playersInGame.push(state.activePlayer)
         state.activePlayer = nextPlayer(state)
@@ -422,9 +423,9 @@
       debug.innerText += "{Players " + playersInGame + "}"
       whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
-      let collection = document.getElementsByClassName("spot")
+      const collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
-        let spot = collection[i]
+        const spot = collection[i]
         if (loaded_state !== undefined) {
           const pId = loaded_state.board[i] - 1
           if (pId > -1) {
@@ -464,7 +465,7 @@
         centers.push(center)
       }
 
-      let r2 = 1.1 * (Math.pow(centers[0].x - centers[1].x, 2) + Math.pow(centers[0].y - centers[1].y, 2))
+      const r2 = 1.1 * (Math.pow(centers[0].x - centers[1].x, 2) + Math.pow(centers[0].y - centers[1].y, 2))
       //debug.innerText += "Radius: " + r2 + " | "
       for (var i = 0; i < centers.length; i++) {
         let ci = centers[i]
