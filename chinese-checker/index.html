@@ -374,7 +374,7 @@
         document.getElementById("board").appendChild(row)
       })
 
-      const fragment = window.location.fragment
+      const fragment = window.location.hash
       if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[0] === 'c'
         try {
