@@ -374,7 +374,7 @@
       }
       startgame.onclick = (ev) => {
         try {
-          setupBoard(Number.parseInt(numOfPlayers.value), 0)
+          setupBoard(Number.parseInt(numOfPlayers.value))
           gamesetup.classList.add("hide")
         } catch (err) {
           debug.innerText += err.message
