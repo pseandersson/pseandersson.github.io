@@ -356,9 +356,9 @@
               state.clickAction = state.clickAction(center)
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
+                state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
-                state.activePlayer = nextPlayer(state)
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`
                 debug.innerText += `<br/>[${JSON.stringify(decodeBoard(state_enc.compressed, true))}]`
