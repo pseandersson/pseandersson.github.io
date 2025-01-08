@@ -22,6 +22,7 @@
       font-family: sans-serif;
       justify-content: center;
       gap: 1vh;
+      color: black;
     }
 
     select, button {
@@ -32,13 +33,22 @@
       display: none;
     }
 
+    body {
+      background: linear-gradient(#003366, #003366, #333366);
+      margin: 0;
+      padding: 0;
+      color: whitesmoke;
+    }
+
     #board {
       background: none;
       display: flex;
-      width: 95vmin;
-      height: 95vmin;
+      width: 97vmin;
+      height: 97vmin;
+      padding: 1vmin;
+      border: 1vmin #ffffffcc solid;
       flex-direction: column;
-      border: 1px solid blueviolet;
+      margin: auto;
     }
 
     .row {
@@ -52,12 +62,11 @@
 
     .spot {
       display: inline-block;
-      width: calc(95vmin / 14 - 2px);
-      height: calc(95vmin / 14 - 2px);
-      border-radius: calc(95vmin / 14 - 2px);
-      border: 1px solid black;
+      width: calc(95vmin / 14 - 14vh 2px);
+      height: calc(95vmin / 14 - 14vh - 2px);
+      border-radius: 50%;
+      border: 1px solid white;
       background: aqua;
-
     }
 
     .row:nth-child(1n+5) .spot:nth-child(1n + 10) {
