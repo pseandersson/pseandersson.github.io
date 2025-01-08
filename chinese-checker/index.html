@@ -3,6 +3,11 @@
 
 <head>
   <title>Chinese Checker</title>
+  <meta property="og:title" content="Chinese Checker" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pseandersson.github.io/chinese-checker/" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/apancik/public-domain-icons/refs/heads/master/dist/object%20snowflake%20snowflake.svg" />
+
   <style type="text/css">
     .gamesetup {
       display: flex;
@@ -356,6 +361,17 @@
     }
 
     function setupGame() {
+      const fragment = window.location.fragment
+      if (fragment.length > 0) {
+        const isCompressed = fragment[0] === 'c'
+        try {
+          const state = decodeBoard(fragment.slice(1), isCompressed)
+          setupBoard(state.numberOfPlayers, state)
+          gamesetup.classList.add("hide")
+        } catch (err) {
+          debug.innerText += err.message
+        }
+      }
       startgame.onclick = (ev) => {
         try {
           setupBoard(Number.parseInt(numOfPlayers.value), 0)
@@ -371,7 +387,7 @@
       return Math.round(state.playerCounter)
     }
 
-    function setupBoard(numberOfPlayers, activePlayer) {
+    function setupBoard(numberOfPlayers, loaded_state) {
       const playerOrder = [0, 5, 1, 4, 2, 3]
 
       const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
@@ -386,6 +402,8 @@
         }
         document.getElementById("board").appendChild(row)
       })
+
+      const activePlayer = (loaded_state) ? loaded_state.activePlayer : 0
 
       const centers = new Array();
       const state = {
@@ -407,6 +425,12 @@
       let collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
         let spot = collection[i]
+        if (loaded_state !== undefined) {
+          const pId = loaded_state.board[i] - 1
+          if (pId > -1) {
+            spot.classList.add(`player${pId}`)
+          }
+        }
         let center = {
           node: spot,
           x: spot.offsetLeft + spot.clientWidth / 2,
@@ -463,6 +487,10 @@
         }
       }
 
+      if (loaded_state !== undefined) {
+        return
+      }
+
       let tips = [];
       for (var i = 0; i < centers.length; i++) {
         if (centers[i].neighbors.length === 2) {
@@ -480,15 +508,15 @@
           continue
         }
         debug.innerText += `[player${p}]`
-        tip.node.classList.add("home", `player${p}`)
+        tip.node.classList.add(`player${p}`)
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
-          tip2.node.classList.add("home", `player${p}`)
+          tip2.node.classList.add(`player${p}`)
           for (var k = 0; k < tip2.neighbors.length; k++) {
             let tip3 = tip2.neighbors[k]
-            tip3.node.classList.add("home", `player${p}`)
+            tip3.node.classList.add(`player${p}`)
             for (var l = 0; l < tip3.neighbors.length; l++) {
-              tip3.neighbors[l].node.classList.add("home", `player${p}`)
+              tip3.neighbors[l].node.classList.add(`player${p}`)
             }
           }
         }
