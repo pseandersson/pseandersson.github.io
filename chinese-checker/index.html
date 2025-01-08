@@ -304,11 +304,12 @@
       const comp = new Uint8Array(Math.ceil(3 * collection.length / 8))
 
       for (var i = 0; i < collection.length; i++) {
-        const p = collection[i].classList.value.split(" ").filter(v => v.substr(0, 6) == "player").map(s => new Number(s.substr(6)))
+        const cl = collection[i].classList
+        const p = [1,2,3,4,5,6].filter(v=>cl.contains(`player${v-1}`))
         var b = 0
 
         if (p.length == 1) {
-          b = p[0] + 1
+          b = p[0]
         }
         state[i] = b
       }
@@ -503,8 +504,8 @@
       //debug.innerText += tips.map(v=> v.neighbors.length)
 
       for (var i = 0; i < tips.length; i++) {
-        let tip = tips[i]
-        let p = playerOrder[i]
+        const tip = tips[i]
+        const p = playerOrder[i]
         if (playersInGame.includes(p) === false) {
           continue
         }
