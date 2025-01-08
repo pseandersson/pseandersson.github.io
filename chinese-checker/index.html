@@ -106,6 +106,10 @@
       border-style: dotted;
     }
 
+    .selected-ball {
+      box-shadow: 0px 0px 2vmin 2vmin #00ff00cc inset;
+    }
+
     .player0 {
       background: radial-gradient(circle at 10% 10%, #cff, #0ff, #066) !important;
     }
@@ -146,6 +150,7 @@
 
     function moveFrom(node, firstMove) {
       let result = {
+        from: node,
         near: [],
         jump: []
       }
@@ -173,6 +178,7 @@
     }
 
     function toggleHighlightMove(moves) {
+      moves.from.node.classList.toggle("selected-ball")
       for (var i = 0; i < moves.near.length; i++) {
         moves.near[i].node.classList.toggle("near")
       }
@@ -460,6 +466,10 @@
     <button id="startgame">Start</button>
   </div>
   <div id="board">
+  </div>
+  <div>
+    <input type="text" id="nextTurnUrl" readonly="true" />
+    <button onclick="">Share</button>
   </div>
   <div id="debug"></div>
   <script>
