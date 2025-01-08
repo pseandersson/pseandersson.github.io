@@ -362,7 +362,7 @@
 
     function setupGame() {
       const fragment = window.location.fragment
-      if (fragment.length > 0) {
+      if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[0] === 'c'
         try {
           const state = decodeBoard(fragment.slice(1), isCompressed)
@@ -544,7 +544,7 @@
     <input type="text" id="nextTurnUrl" readonly="true" />
     <button onclick="shareGame()">Share</button>
   </div>
-  <div id="debug" class="hide"></div>
+  <div id="debug"></div>
   <script>
     try {
       setupGame()
