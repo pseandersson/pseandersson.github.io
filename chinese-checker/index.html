@@ -359,7 +359,7 @@
                 state.activePlayer = nextPlayer(state)
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`
-                debug.innerText += `<br/>[${JSON.stringify(decodeBoard(state_enc.compressed))}]`
+                debug.innerText += `<br/>[${JSON.stringify(decodeBoard(state_enc.compressed, true))}]`
               }
             } else if (checkPlayer(state, center)) {
               state.clickAction = beginMove(center)
