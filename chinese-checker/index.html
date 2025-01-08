@@ -17,7 +17,7 @@
       background: white;
       border: 1px gray solid;
       border-radius: 5vmin;
-      box-shadow: 0px 0px 5vmin 5vmin #00000080 ;
+      box-shadow: 0px 0px 5vmin 5vmin #00000080;
       font-size: 5vmin;
       font-family: sans-serif;
       justify-content: center;
@@ -25,13 +25,15 @@
       color: black;
     }
 
-    select, button {
+    select,
+    button {
       font-size: 5vmin;
     }
 
     .hide {
       display: none;
     }
+
     html {
       height: 100%;
       background: linear-gradient(#000033, #000033, #036);
@@ -72,7 +74,7 @@
       font-size: inherit;
     }
 
-    #share > input {
+    #share>input {
       flex-grow: 1;
       height: fit-content;
       font-size: inherit;
@@ -162,6 +164,18 @@
   </style>
   <script type="text/javascript" src="pako.min.js"></script>
   <script>
+    function updateURL(state_enc) {
+      const url =
+        window.location.protocol +
+        "//" +
+        window.location.host +
+        window.location.pathname +
+        "#" + 
+        ((state_enc.compact.length < state_enc.compressed.length) ? "p"+state_enc.compact : "c" + state_enc.compressed) 
+
+        nextTurnUrl.value = url
+    }
+
     function isOccupied(node) {
       return [0, 1, 2, 3, 4, 5].some(v => node.node.classList.contains(`player${v}`))
     }
@@ -250,13 +264,13 @@
             return beginMove(n, (origin !== undefined) ? origin : node)
           } else if (moves.near.indexOf(n) > -1) {
             performMove((origin !== undefined) ? origin : node, n)
-          } else if ( origin !== undefined && origin !== n) {
-            if ( node !== n ) {
+          } else if (origin !== undefined && origin !== n) {
+            if (node !== n) {
               debug.innerText += "[Move cancelled]"
-              performMove(node, (origin !== undefined)? origin : node )
+              performMove(node, (origin !== undefined) ? origin : node)
               return false
             }
-          } else if ( node === n) {
+          } else if (node === n) {
             debug.innerText += "[Move cancelled]"
             return false
           }
@@ -269,30 +283,30 @@
 
     function encodeBoard(activePlayer, numberOfPlayers) {
       let collection = document.getElementsByClassName("spot")
-      const state = new Uint8Array(8*Math.ceil(collection.length/8))
-      const comp = new Uint8Array(Math.ceil(3*collection.length/8))
-      
-      for (var i = 0;i < collection.length; i++) {
-        const p = collection[i].classList.value.split(" ").filter(v => v.substr(0,6)=="player").map(s=>new Number(s.substr(6)))
+      const state = new Uint8Array(8 * Math.ceil(collection.length / 8))
+      const comp = new Uint8Array(Math.ceil(3 * collection.length / 8))
+
+      for (var i = 0; i < collection.length; i++) {
+        const p = collection[i].classList.value.split(" ").filter(v => v.substr(0, 6) == "player").map(s => new Number(s.substr(6)))
         var b = 0
-        
+
         if (p.length == 1) {
           b = p[0] + 1
         }
         state[i] = b
       }
       state[collection.length] = numberOfPlayers - 1
-      state[collection.length+1] = activePlayer
+      state[collection.length + 1] = activePlayer
 
-      for (var i = 0, j=0;i < state.length; i+=8, j+=3) {
-        comp[j] = state[i] + (state[i+1] << 3) + (state[i+2] << 6)
-        comp[j + 1] = (state[i+2] >> 2) + (state[i+3] << 1) + (state[i+4] << 4) + (state[i+5] << 7)
-        comp[j + 2] = (state[i+5] >> 1) + (state[i+6] << 2) + (state[i+7] << 5)
+      for (var i = 0, j = 0; i < state.length; i += 8, j += 3) {
+        comp[j] = state[i] + (state[i + 1] << 3) + (state[i + 2] << 6)
+        comp[j + 1] = (state[i + 2] >> 2) + (state[i + 3] << 1) + (state[i + 4] << 4) + (state[i + 5] << 7)
+        comp[j + 2] = (state[i + 5] >> 1) + (state[i + 6] << 2) + (state[i + 7] << 5)
       }
       return {
         compact: btoa(String.fromCharCode.apply(null, comp)),
         compressed: btoa(String.fromCharCode.apply(null, window.pako.deflate(comp))),
-        board: state.slice(0,121),
+        board: state.slice(0, 121),
         numberOfPlayers: state[121] + 1,
         activePlayer: state[122]
       }
@@ -302,28 +316,28 @@
       const s = atob(data)
       const comp = new Uint8Array(s.length)
 
-      for (var i = 0;i < s.length; i++) {
+      for (var i = 0; i < s.length; i++) {
         comp[i] = s.charCodeAt(i)
       }
       const raw = (isCompressed) ? window.pako.inflate(comp) : comp
 
-      const size = Math.ceil(8/3*raw.length)
+      const size = Math.ceil(8 / 3 * raw.length)
       const decomp = new Uint8Array(size)
 
-      for (var i=0,j=0; i < raw.length; i+=3, j+=8) {
-        decomp[j]   = raw[i] & 7
-        decomp[j+1] = (raw[i] >> 3) & 7
-        decomp[j+2] = ((raw[i] >> 6) & 7) + ((raw[i+1] & 1) << 3)
-        decomp[j+3] = ((raw[i+1] >> 1) & 7)
-        decomp[j+4] = ((raw[i+1] >> 4) & 7)
-        decomp[j+5] = ((raw[i+1]) >> 7) + ((raw[i+2] & 3) << 1)
-        decomp[j+6] = ((raw[i+2]) >> 2) & 7
-        decomp[j+7] = (raw[i+2] >> 5)
+      for (var i = 0, j = 0; i < raw.length; i += 3, j += 8) {
+        decomp[j] = raw[i] & 7
+        decomp[j + 1] = (raw[i] >> 3) & 7
+        decomp[j + 2] = ((raw[i] >> 6) & 7) + ((raw[i + 1] & 1) << 3)
+        decomp[j + 3] = ((raw[i + 1] >> 1) & 7)
+        decomp[j + 4] = ((raw[i + 1] >> 4) & 7)
+        decomp[j + 5] = ((raw[i + 1]) >> 7) + ((raw[i + 2] & 3) << 1)
+        decomp[j + 6] = ((raw[i + 2]) >> 2) & 7
+        decomp[j + 7] = (raw[i + 2] >> 5)
       }
 
       return {
         compressed: data,
-        board: decomp.slice(0,121),
+        board: decomp.slice(0, 121),
         numberOfPlayers: decomp[121] + 1,
         activePlayer: decomp[122]
       }
@@ -365,18 +379,18 @@
       const state = {
         playerStep: 6 / numberOfPlayers,
         playerCounter: activePlayer * 6 / numberOfPlayers,
-        activePlayer: activePlayer, 
-        clickAction: undefined 
+        activePlayer: activePlayer,
+        clickAction: undefined
       }
 
       const playersInGame = []
       for (var i = 0; i < numberOfPlayers; i++) {
-         playersInGame.push(state.activePlayer)
-         state.activePlayer = nextPlayer(state)
+        playersInGame.push(state.activePlayer)
+        state.activePlayer = nextPlayer(state)
       }
 
       debug.innerText += "{Players " + playersInGame + "}"
-      whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer)+1}`
+      whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
       let collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
@@ -398,6 +412,7 @@
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
+                updateURL(state_enc)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`
                 debug.innerText += `<br/>[${JSON.stringify(decodeBoard(state_enc.compressed, true))}]`
               }
