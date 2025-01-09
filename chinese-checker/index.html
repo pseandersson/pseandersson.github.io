@@ -56,6 +56,7 @@
       justify-content: center;
       font-size: 5vmin;
       font-family: sans-serif;
+      overflow: scroll;
     }
 
     #board, .how2board {
@@ -539,8 +540,12 @@
     }
 
     function openHelp() {
-      closeAllCards()
-      howto.classList.remove("hide")
+      try {
+        closeAllCards()
+        howto.classList.remove("hide")
+      } catch (err) {
+        debug.innerText += err.message
+      }
     }
 
     function openSettings() {
@@ -556,9 +561,9 @@
 
 <body>
   <div>
-    <a href="javascript:openHelp()">?</a>
-    <a href="javascript:openSettings()">Settings</a>
     <a href="javascript:newGame()">New Game</a>
+    <a href="javascript:openSettings()">Settings</a>
+    <a href="javascript:openHelp()">?</a>
   </div>
   <h1>Chinese Checker <span id="whosTurn"></span></h1>
   <div id="gamesetup" class="card">
@@ -597,7 +602,7 @@
     <input type="text" id="nextTurnUrl" readonly="true" />
     <button onclick="shareGame()">Share</button>
   </div>
-  <div id="debug" class="hide"></div>
+  <div id="debug" class=""></div>
   <script>
     try {
       setupGame()
