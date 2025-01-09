@@ -59,7 +59,8 @@
       overflow: scroll;
     }
 
-    #board, .how2board {
+    #board,
+    .how2board {
       background: transparent;
       display: flex;
       width: 92vmin;
@@ -99,7 +100,8 @@
       font-size: inherit;
     }
 
-    .row, .how2row {
+    .row,
+    .how2row {
       display: flex;
       flex-direction: row;
       width: 100%;
@@ -108,7 +110,8 @@
       justify-content: center;
     }
 
-    .spot, .how2spot {
+    .spot,
+    .how2spot {
       display: inline-block;
       width: calc(92vmin / 17 - 2px);
       height: calc(92vmin / 17 - 2px);
@@ -145,11 +148,13 @@
       border-style: dotted;
     }
 
-    .selected-ball, .how2selected {
+    .selected-ball,
+    .how2selected {
       box-shadow: 0px 0px 1vmin 1vmin #00ff00cc inset;
     }
 
-    .player0, .demo0 {
+    .player0,
+    .demo0 {
       background: radial-gradient(circle at 10% 10%, #cff, #0ff, #066) !important;
     }
 
@@ -161,7 +166,8 @@
       background: radial-gradient(circle at 10% 10%, #fdc, #fc0, #630) !important;
     }
 
-    .player3, .demo1 {
+    .player3,
+    .demo1 {
       background: radial-gradient(circle at 10% 10%, #fcc, #f00, #600) !important;
     }
 
@@ -173,12 +179,14 @@
       background: radial-gradient(circle at 10% 10%, #ffc, #ff0, #660) !important;
     }
 
-    .near, .how2near {
+    .near,
+    .how2near {
       background: white;
       box-shadow: 0px 0px 4vmin 4vmin #80ff8080 inset;
     }
 
-    .jump, .how2jump {
+    .jump,
+    .how2jump {
       background: white;
       box-shadow: 0px 0px 4vmin 4vmin #8080ff80 inset;
     }
@@ -186,7 +194,7 @@
   <script type="text/javascript" src="pako.min.js"></script>
   <script>
     function updateURL(state_enc) {
-      const fragment = ((state_enc.compact.length < state_enc.compressed.length) ? "p"+state_enc.compact : "c" + state_enc.compressed)
+      const fragment = ((state_enc.compact.length < state_enc.compressed.length) ? "p" + state_enc.compact : "c" + state_enc.compressed)
       const url =
         window.location.protocol +
         "//" +
@@ -195,17 +203,17 @@
         "#" + fragment
 
       window.location.replace(`#${fragment}`)
-      
+
       nextTurnUrl.value = url
       nextTurnUrl.select()
-      nextTurnUrl.setSelectionRange(0,url.length)
+      nextTurnUrl.setSelectionRange(0, url.length)
 
       navigator.clipboard.writeText(nextTurnUrl.value)
     }
 
     function shareGame() {
       try {
-        navigator.share({title:`Chinese Checker ${whosTurn.innerText}`, url:nextTurnUrl.value})
+        navigator.share({ title: `Chinese Checker ${whosTurn.innerText}`, url: nextTurnUrl.value })
       } catch (err) {
         debug.innerText += err.message
       }
@@ -323,7 +331,7 @@
 
       for (var i = 0; i < collection.length; i++) {
         const cl = collection[i].classList
-        const p = [1,2,3,4,5,6].filter(v=>cl.contains(`player${v-1}`))
+        const p = [1, 2, 3, 4, 5, 6].filter(v => cl.contains(`player${v - 1}`))
         var b = 0
 
         if (p.length == 1) {
@@ -425,8 +433,8 @@
       const playerOrder = [0, 5, 1, 4, 2, 3]
       const playersInGame = new Array(numberOfPlayers)
       const activePlayer = (loaded_state) ? loaded_state.activePlayer : 0
-      
-      const centers = new Array();  
+
+      const centers = new Array();
       const state = {
         playerStep: 6 / numberOfPlayers,
         playerCounter: activePlayer * 6 / numberOfPlayers,
@@ -434,9 +442,9 @@
         clickAction: undefined
       }
 
-      
+
       for (var i = 0; i < numberOfPlayers; i++) {
-        playersInGame[i] = Math.round(i*state.playerStep)
+        playersInGame[i] = Math.round(i * state.playerStep)
       }
 
       debug.innerText += "{Players " + playersInGame + "}"
@@ -513,6 +521,7 @@
 
       let tips = [];
       for (var i = 0; i < centers.length; i++) {
+        [0, 1, 2, 3, 4, 5].forEach(p => center.node.classList.remove(`player${p}`))
         if (centers[i].neighbors.length === 2) {
           tips.push(centers[i])
         }
@@ -592,36 +601,36 @@
     <h1>How to</h1>
     <p>Click on a ball to make a move.</p>
     <div class="how2row">
-    <div class="how2board">
-      <div class="how2row">
-        <div class="how2spot"></div>
-        <div class="how2spot"></div>
+      <div class="how2board">
+        <div class="how2row">
+          <div class="how2spot"></div>
+          <div class="how2spot"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot demo0"></div>
+          <div class="how2spot demo1"></div>
+          <div class="how2spot"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot"></div>
+          <div class="how2spot"></div>
+        </div>
       </div>
-      <div class="how2row">
-        <div class="how2spot demo0"></div>
-        <div class="how2spot demo1"></div>
-        <div class="how2spot"></div>
+      <div class="how2board">
+        <div class="how2row">
+          <div class="how2spot how2near"></div>
+          <div class="how2spot"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot demo0 how2selected"></div>
+          <div class="how2spot demo1"></div>
+          <div class="how2spot how2jump"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot how2near"></div>
+          <div class="how2spot"></div>
+        </div>
       </div>
-      <div class="how2row">
-        <div class="how2spot"></div>
-        <div class="how2spot"></div>
-      </div>
-    </div>
-    <div class="how2board">
-      <div class="how2row">
-        <div class="how2spot how2near"></div>
-        <div class="how2spot"></div>
-      </div>
-      <div class="how2row">
-        <div class="how2spot demo0 how2selected"></div>
-        <div class="how2spot demo1"></div>
-        <div class="how2spot how2jump"></div>
-      </div>
-      <div class="how2row">
-        <div class="how2spot how2near"></div>
-        <div class="how2spot"></div>
-      </div>
-    </div>
     </div>
   </div>
   <div id="board">
