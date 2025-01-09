@@ -521,7 +521,7 @@
 
       let tips = [];
       for (var i = 0; i < centers.length; i++) {
-        [0, 1, 2, 3, 4, 5].forEach(p => center.node.classList.remove(`player${p}`))
+        [0, 1, 2, 3, 4, 5].forEach(p => centers[i].node.classList.remove(`player${p}`))
         if (centers[i].neighbors.length === 2) {
           tips.push(centers[i])
         }
