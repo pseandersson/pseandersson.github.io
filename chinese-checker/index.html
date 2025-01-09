@@ -9,7 +9,7 @@
   <meta property="og:image" content="https://pseandersson.github.io/chinese-checker/logo.png" />
 
   <style type="text/css">
-    .gamesetup {
+    .card {
       display: flex;
       flex-direction: column;
       position: absolute;
@@ -58,7 +58,7 @@
       font-family: sans-serif;
     }
 
-    #board {
+    #board, .how2board {
       background: transparent;
       display: flex;
       width: 92vmin;
@@ -68,6 +68,12 @@
       border-radius: 10%;
       flex-direction: column;
       margin: 2vmin 0px;
+    }
+
+    .how2board {
+      background: #000033;
+      width: auto;
+      height: auto;
     }
 
     #share {
@@ -85,7 +91,7 @@
       font-size: inherit;
     }
 
-    .row {
+    .row, .how2row {
       display: flex;
       flex-direction: row;
       width: 100%;
@@ -94,7 +100,7 @@
       justify-content: center;
     }
 
-    .spot {
+    .spot, .how2spot {
       display: inline-block;
       width: calc(92vmin / 17 - 2px);
       height: calc(92vmin / 17 - 2px);
@@ -131,11 +137,11 @@
       border-style: dotted;
     }
 
-    .selected-ball {
+    .selected-ball, .how2selected {
       box-shadow: 0px 0px 1vmin 1vmin #00ff00cc inset;
     }
 
-    .player0 {
+    .player0, .demo0 {
       background: radial-gradient(circle at 10% 10%, #cff, #0ff, #066) !important;
     }
 
@@ -147,7 +153,7 @@
       background: radial-gradient(circle at 10% 10%, #fdc, #fc0, #630) !important;
     }
 
-    .player3 {
+    .player3, .demo1 {
       background: radial-gradient(circle at 10% 10%, #fcc, #f00, #600) !important;
     }
 
@@ -159,11 +165,11 @@
       background: radial-gradient(circle at 10% 10%, #ffc, #ff0, #660) !important;
     }
 
-    .near {
+    .near, .how2near {
       background: #80ff8080 !important;
     }
 
-    .jump {
+    .jump, .how2jump {
       background: #8080ff80 !important;
     }
   </style>
@@ -524,12 +530,38 @@
         }
       }
     }
+
+    function closeAllCards() {
+      const cards = document.getElementsByClassName("card")
+      for (const card in cards) {
+        card.classList.add("hide")
+      }
+    }
+
+    function openHelp() {
+      closeAllCards()
+      howto.classList.remove("hide")
+    }
+
+    function openSettings() {
+      closeAllCards()
+    }
+
+    function newGame() {
+      closeAllCards()
+      gamesetup.classList.remove("hide")
+    }
   </script>
 </head>
 
 <body>
+  <div>
+    <a href="javascript:openHelp()">?</a>
+    <a href="javascript:openSettings()">Settings</a>
+    <a href="javascript:newGame()">New Game</a>
+  </div>
   <h1>Chinese Checker <span id="whosTurn"></span></h1>
-  <div id="gamesetup" class="gamesetup">
+  <div id="gamesetup" class="card">
     <h1>Chinese Checker</h1>
     <p>Number of players</p>
     <select id="numOfPlayers">
@@ -539,6 +571,25 @@
       <option>6</option>
     </select>
     <button id="startgame">Start</button>
+  </div>
+  <div id="howto" class="card hide">
+    <h1>How to</h1>
+    <p></p>
+    <div class="how2board">
+      <div class="how2row">
+        <div class="how2spot how2near"></div>
+        <div class="how2spot"></div>
+      </div>
+      <div class="how2row">
+        <div class="how2spot demo0 how2selected"></div>
+        <div class="how2spot demo1"></div>
+        <div class="how2spot how2jump"></div>
+      </div>
+      <div class="how2row">
+        <div class="how2spot how2near"></div>
+        <div class="how2spot"></div>
+      </div>
+    </div>
   </div>
   <div id="board">
   </div>
