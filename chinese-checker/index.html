@@ -194,6 +194,8 @@
         window.location.pathname +
         "#" + fragment
 
+      window.location.replace(`#${fragment}`)
+      
       nextTurnUrl.value = url
       nextTurnUrl.select()
       nextTurnUrl.setSelectionRange(0,url.length)
