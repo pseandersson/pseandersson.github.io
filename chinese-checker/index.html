@@ -400,7 +400,7 @@
         }
         document.getElementById("board").appendChild(row)
       })
-
+      nextTurnUrl.value = window.location
       const fragment = window.location.hash
       if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[1] === 'c'
