@@ -534,8 +534,8 @@
 
     function closeAllCards() {
       const cards = document.getElementsByClassName("card")
-      for (const card in cards) {
-        card.classList.add("hide")
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.add("hide")
       }
     }
 
