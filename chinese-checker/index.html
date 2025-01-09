@@ -287,7 +287,7 @@
               performMove(node, (origin !== undefined) ? origin : node)
               return false
             }
-          } else if (node === n) {
+          } else if (node === n || isOccupied(n)) {
             debug.innerText += "[Move cancelled]"
             return false
           }
