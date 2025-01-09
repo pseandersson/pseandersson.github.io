@@ -73,8 +73,12 @@
 
     .how2board {
       background: #000033;
-      width: auto;
+      width: fit-content;
       height: auto;
+      padding: 4vmin;
+      flex-grow: 0;
+      border-radius: 1em;
+      scale: 2.0;
     }
 
     #share {
@@ -534,7 +538,6 @@
 
     function closeAllCards() {
       const cards = document.getElementsByClassName("card")
-      debug.innerText += cards
       for (let i = 0; i < cards.length; i++) {
         cards[i].classList.add("hide")
       }
