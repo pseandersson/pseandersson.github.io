@@ -194,6 +194,20 @@
       background: white;
       box-shadow: 0px 0px 4vmin 4vmin #8080ff80 inset;
     }
+
+    #menu {
+      background: #036;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    #menu > a {
+      display: block;
+      flex: 1;
+      border: 1px solid black;
+      text-align: center;
+    }
   </style>
   <script type="text/javascript" src="pako.min.js"></script>
   <script>
@@ -584,10 +598,10 @@
 </head>
 
 <body>
-  <div>
-    <a href="javascript:newGame()">New Game</a>
-    <a href="javascript:openSettings()">Settings</a>
-    <a href="javascript:openHelp()">?</a>
+  <div id="menu">
+    <a href="javascript:newGame()"><span>New Game</span></a>
+    <a href="javascript:openSettings()"><span>Settings</span></a>
+    <a href="javascript:openHelp()"><span>?</span></a>
   </div>
   <h1>Chinese Checker <span id="whosTurn"></span></h1>
   <div id="gamesetup" class="card">
