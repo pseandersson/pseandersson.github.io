@@ -219,6 +219,18 @@
 
     #menu:last-child {
       aspect-ratio: 1;
+      flex: 0;
+    }
+
+    .close {
+      display: block;
+      float: right;
+      padding: 2vmin;
+      font-variant: small-caps;
+      font-family: sans-serif;
+      border: 1px solid darkgray;
+      border-radius: 2vmin;
+      box-shadow: 0px 0px 1vmin 1vmin gray inset;
     }
   </style>
   <script type="text/javascript" src="pako.min.js"></script>
@@ -628,6 +640,7 @@
     <button id="startgame">Start</button>
   </div>
   <div id="howto" class="card hide">
+    <a href="javascript:closeAllCards()" class="close">X</a>
     <h1>How to</h1>
     <p>Click on a ball to make a move.</p>
     <div class="how2row">
