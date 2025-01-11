@@ -220,12 +220,14 @@
     }
 
     #menu:last-child {
-      width: fit-content;
+      box-sizing: border-box;
+      height: fit-content;
       aspect-ratio: 1/1;
       flex-grow: 0;
     }
 
     .close {
+      box-sizing: border-box;
       background: inherit;
       border: 1px solid black;
       border-radius: 10%;
@@ -236,7 +238,7 @@
       align-self: flex-end;
       top: 0;
       text-align: center;
-      width: fit-content;
+      height: fit-content;
       aspect-ratio: 1/1;
       text-decoration: none;
       color: #000033;
