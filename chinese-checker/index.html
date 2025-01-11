@@ -626,6 +626,7 @@
 
     function openSettings() {
       closeAllCards()
+      settings.classList.remove("hide")
     }
 
     function newGame() {
@@ -653,6 +654,13 @@
       <option>6</option>
     </select>
     <button id="startgame">Start</button>
+  </div>
+  <div id="settings" class="card hide">
+    <a href="javascript:closeAllCards()" class="close">X</a>
+    <h1>Settings</h1>
+    <div>
+      <input type="checkbox" id="hideshare" /><span>Hide share-buttons and text-field.</span>
+    </div>
   </div>
   <div id="howto" class="card hide">
     <a href="javascript:closeAllCards()" class="close">X</a>
