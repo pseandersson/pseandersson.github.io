@@ -87,7 +87,7 @@
       margin: 2vmin 6vmin;
     }
 
-    #share {
+    #sharediv {
       display: flex;
       flex-direction: row;
       width: auto;
@@ -96,7 +96,7 @@
       font-size: inherit;
     }
 
-    #share > input {
+    #sharediv > input {
       flex-grow: 1;
       height: fit-content;
       font-size: inherit;
@@ -489,12 +489,12 @@
       showdebug.checked = (localStorage.getItem("showdebug")) ? true : false
 
       hideshare.onchange = (ev) => {
-        debug.innerText += "Toggle..."
+        debug.innerText += "\nToggle..."
         localStorage.setItem("hideshare", hideshare.checked)
         if (hideshare.checked === true) {
-          share.classList.add("hide")
+          sharediv.classList.add("hide")
         } else {
-          share.classList.remove("hide")
+          sharediv.classList.remove("hide")
         }
       }
 
@@ -739,7 +739,7 @@
   </div>
   <div id="board">
   </div>
-  <div id="share">
+  <div id="sharediv">
     <input type="text" id="nextTurnUrl" readonly="true" />
     <button onclick="shareGame()">Share</button>
   </div>
