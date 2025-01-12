@@ -484,6 +484,19 @@
           debug.innerText += err.message
         }
       }
+
+      hideshare.checked = (localStorage.getItem("hideshare")) ? true : false
+
+      hideshare.onchange = (ev) => {
+        localStorage.setItem("hideshare", hideshare.checked)
+        if (hideshare.checked === true) {
+          share.classList.add("hide")
+        } else {
+          share.classList.remove("hide")
+        }
+      }
+
+      hideshare.onchange(undefined)
     }
 
     function nextPlayer(state) {
