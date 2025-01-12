@@ -102,7 +102,7 @@
       font-size: inherit;
     }
 
-    #hideshare {
+    #hideshare, #showdebug {
       height: 5vmin;
       width: 5vmin;
       margin-right: 2vmin;
@@ -486,6 +486,7 @@
       }
 
       hideshare.checked = (localStorage.getItem("hideshare")) ? true : false
+      showdebug.checked = (localStorage.getItem("showdebug")) ? true : false
 
       hideshare.onchange = (ev) => {
         debug.innerText += "Toggle..."
@@ -497,7 +498,17 @@
         }
       }
 
+      showdebug.onchange = (ev) => {
+        localStorage.setItem("showdebug", showdebug.checked)
+        if (showdebug.checked === true) {
+          debug.classList.remove("hide")
+        } else {
+          debug.classList.add("hide")
+        }
+      }
+
       hideshare.onchange(undefined)
+      showdebug.onchange(undefined)
     }
 
     function nextPlayer(state) {
@@ -681,7 +692,10 @@
     <div>
       <input type="checkbox" id="hideshare" /><span>Hide share-buttons and text-field.</span>
     </div>
-    <div id="debug" class="hide"></div>
+    <div>
+      <input type="checkbox" id="showdebug" /><span>Show Debug</span>
+    </div>
+    <pre id="debug" class="hide"></pre>
   </div>
   <div id="howto" class="card hide">
     <a href="javascript:closeAllCards()" class="close">X</a>
