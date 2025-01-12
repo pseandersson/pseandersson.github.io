@@ -87,8 +87,11 @@
       margin: 2vmin 6vmin;
     }
 
-    #sharediv {
+    .doflex {
       display: flex;
+    }
+
+    #sharediv {
       flex-direction: row;
       width: auto;
       justify-content: center;
@@ -739,7 +742,7 @@
   </div>
   <div id="board">
   </div>
-  <div id="sharediv">
+  <div id="sharediv" class="doflex">
     <input type="text" id="nextTurnUrl" readonly="true" />
     <button onclick="shareGame()">Share</button>
   </div>
