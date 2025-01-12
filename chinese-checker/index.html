@@ -492,7 +492,7 @@
       showdebug.checked = (localStorage.getItem("showdebug")) ? true : false
 
       hideshare.onchange = (ev) => {
-        debug.innerText += "\nToggle..."
+        debug.innerText += "\nToggle..." + `[${hideshare.checked}]`
         localStorage.setItem("hideshare", hideshare.checked)
         if (hideshare.checked === true) {
           sharediv.classList.add("hide")
