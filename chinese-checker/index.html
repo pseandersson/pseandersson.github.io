@@ -488,6 +488,7 @@
       hideshare.checked = (localStorage.getItem("hideshare")) ? true : false
 
       hideshare.onchange = (ev) => {
+        debug.innerText += "Toggle..."
         localStorage.setItem("hideshare", hideshare.checked)
         if (hideshare.checked === true) {
           share.classList.add("hide")
@@ -680,6 +681,7 @@
     <div>
       <input type="checkbox" id="hideshare" /><span>Hide share-buttons and text-field.</span>
     </div>
+    <div id="debug" class="hide"></div>
   </div>
   <div id="howto" class="card hide">
     <a href="javascript:closeAllCards()" class="close">X</a>
@@ -727,7 +729,6 @@
     <input type="text" id="nextTurnUrl" readonly="true" />
     <button onclick="shareGame()">Share</button>
   </div>
-  <div id="debug" class="hide"></div>
   <script>
     try {
       setupGame()
