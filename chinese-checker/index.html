@@ -485,13 +485,13 @@
         }
       }
 
-      hideshare.checked = (localStorage.getItem("hideshare") !== "") ? "checked" : ""
-      showdebug.checked = (localStorage.getItem("showdebug") !== "") ? "checked" : ""
+      hideshare.checked = (localStorage.getItem("hideshare")) ? true : false
+      showdebug.checked = (localStorage.getItem("showdebug")) ? true : false
 
       hideshare.onchange = (ev) => {
         debug.innerText += "Toggle..."
         localStorage.setItem("hideshare", hideshare.checked)
-        if (hideshare.checked === "checked") {
+        if (hideshare.checked === true) {
           share.classList.add("hide")
         } else {
           share.classList.remove("hide")
@@ -500,7 +500,7 @@
 
       showdebug.onchange = (ev) => {
         localStorage.setItem("showdebug", showdebug.checked)
-        if (showdebug.checked === "checked") {
+        if (showdebug.checked === true) {
           debug.classList.remove("hide")
         } else {
           debug.classList.add("hide")
