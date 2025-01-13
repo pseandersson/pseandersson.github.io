@@ -75,32 +75,32 @@
     }
 
     .rotate0 {
-      transform: rotate(180);
+      transform: rotate(180deg);
       transform-origin: 50% 50%;
     }
 
     .rotate1 {
-      transform: rotate(120);
+      transform: rotate(120deg);
       transform-origin: 50% 50%;
     }
 
     .rotate2 {
-      transform: rotate(60);
+      transform: rotate(60deg);
       transform-origin: 50% 50%;
     }
 
     .rotate3 {
-      transform: rotate(-60);
+      transform: rotate(0deg);
       transform-origin: 50% 50%;
     }
 
     .rotate4 {
-      transform: rotate(-120);
+      transform: rotate(-60deg);
       transform-origin: 50% 50%;
     }
 
     .rotate5 {
-      transform: rotate(-120);
+      transform: rotate(-120deg);
       transform-origin: 50% 50%;
     }
 
@@ -629,7 +629,7 @@
                 state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
                 rotateBoard(state.activePlayer, prevPlayer)
-                
+
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 updateURL(state_enc)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`
