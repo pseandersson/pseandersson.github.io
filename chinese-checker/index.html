@@ -505,8 +505,8 @@
         }
       }
 
-      hideshare.checked = (localStorage.getItem("hideshare")) ? true : false
-      showdebug.checked = (localStorage.getItem("showdebug")) ? true : false
+      hideshare.checked = (localStorage.getItem("hideshare")==="true") ? true : false
+      showdebug.checked = (localStorage.getItem("showdebug")==="true") ? true : false
 
       hideshare.onchange = (ev) => {
         debug.innerText += "\nToggle..." + `[${hideshare.checked}]`
