@@ -577,7 +577,8 @@
     function rotateBoard(nextPlayer,  prevPlayer) {
       logg("\nBoard: " + board.classList)
       if (prevPlayer !== undefined) {
-        board.classList.toggle(`rotate${prevPlayer}`, `rotate${nextPlayer}`)
+        board.classList.toggle(`rotate${prevPlayer}`)
+        board.classList.toggle(`rotate${nextPlayer}`)
       } else {
         board.classList.toggle(`rotate${nextPlayer}`)
       }
