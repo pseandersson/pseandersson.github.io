@@ -26,7 +26,7 @@
       box-shadow: 0px 0px 5vmin 5vmin #00000080;
       font-size: 5vmin;
       font-family: sans-serif;
-      justify-content:start;
+      justify-content: start;
       gap: 1vh;
       color: black;
       overflow-y: scroll;
@@ -99,13 +99,14 @@
       font-size: inherit;
     }
 
-    #sharediv > input {
+    #sharediv>input {
       flex-grow: 1;
       height: fit-content;
       font-size: inherit;
     }
 
-    #hideshare, #showdebug {
+    #hideshare,
+    #showdebug {
       height: 5vmin;
       width: 5vmin;
       margin-right: 2vmin;
@@ -213,7 +214,7 @@
       align-items: stretch;
     }
 
-    #menu > a {
+    #menu>a {
       display: block;
       flex: 1;
       text-decoration: none;
@@ -241,7 +242,7 @@
       border: 1px solid black;
       border-radius: 10%;
       display: block;
-      position:sticky;
+      position: sticky;
       float: right;
       clear: none;
       align-self: flex-end;
@@ -258,6 +259,9 @@
   </style>
   <script type="text/javascript" src="pako.min.js"></script>
   <script>
+    function logg(message) {
+      debug.innerText += message + "\n"
+    }
     function updateURL(state_enc) {
       const fragment = ((state_enc.compact.length < state_enc.compressed.length) ? "p" + state_enc.compact : "c" + state_enc.compressed)
       const url =
@@ -493,11 +497,15 @@
 
       hideshare.onchange = (ev) => {
         debug.innerText += "\nToggle..." + `[${hideshare.checked}]`
-        localStorage.setItem("hideshare", hideshare.checked)
-        if (hideshare.checked === true) {
-          sharediv.classList.add("hide")
-        } else {
-          sharediv.classList.remove("hide")
+        try {
+          localStorage.setItem("hideshare", hideshare.checked)
+          if (hideshare.checked === true) {
+            sharediv.classList.add("hide")
+          } else {
+            sharediv.classList.remove("hide")
+          }
+        } catch (err) {
+          logg(err.message)
         }
       }
 
@@ -703,7 +711,8 @@
   <div id="howto" class="card hide">
     <a href="javascript:closeAllCards()" class="close">X</a>
     <h1>How to</h1>
-    <p>Click on a ball to make a move. The selected ball becomes highlighted with a green border. It is only possible to move to a nearby empty slot (green highlight) and jump over a single ball (blue highlight).</p>
+    <p>Click on a ball to make a move. The selected ball becomes highlighted with a green border. It is only possible to
+      move to a nearby empty slot (green highlight) and jump over a single ball (blue highlight).</p>
     <div class="how2row">
       <div class="how2board">
         <div class="how2row">
@@ -736,9 +745,13 @@
         </div>
       </div>
     </div>
-    <p>Moving to a nearby slot ends the turn immidiatly, while it is possible to make several jumps in a row and then terminating the turn by clicking on the selected ball.</p>
-    <p>To change the ball to move, click on any other ball or non highlighted slot, to deselect the ball, then pick the new ball to move.</p>
-    <p>When a turn ends, the board state is encoded and added to the url. The url should be automatically copied to the clipboard, to let others participate in the game. If the url is not automatically copied, then a textfield and a share-button serves as backup.</p>
+    <p>Moving to a nearby slot ends the turn immidiatly, while it is possible to make several jumps in a row and then
+      terminating the turn by clicking on the selected ball.</p>
+    <p>To change the ball to move, click on any other ball or non highlighted slot, to deselect the ball, then pick the
+      new ball to move.</p>
+    <p>When a turn ends, the board state is encoded and added to the url. The url should be automatically copied to the
+      clipboard, to let others participate in the game. If the url is not automatically copied, then a textfield and a
+      share-button serves as backup.</p>
   </div>
   <div id="board">
   </div>
