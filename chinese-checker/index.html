@@ -514,8 +514,12 @@
           localStorage.setItem("hideshare", hideshare.checked)
           if (hideshare.checked === true) {
             sharediv.classList.add("hide")
+            sharebutton.classList.add("hide")
+            nextTurnUrl.classList.add("hide")
           } else {
             sharediv.classList.remove("hide")
+            sharebutton.classList.remove("hide")
+            nextTurnUrl.classList.remove("hide")
           }
         } catch (err) {
           logg(err.message)
@@ -768,9 +772,9 @@
   </div>
   <div id="board">
   </div>
-  <div id="sharediv" class="doflex hide">
+  <div id="sharediv" class="doflex">
     <input type="text" id="nextTurnUrl" readonly="true" />
-    <button onclick="shareGame()">Share</button>
+    <button id="sharebutton" onclick="shareGame()">Share</button>
   </div>
   <script>
     try {
