@@ -55,7 +55,7 @@
       color: whitesmoke;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: stretch;
       font-size: 5vmin;
       font-family: sans-serif;
       overflow: scroll;
@@ -72,6 +72,36 @@
       border-radius: 50%;
       flex-direction: column;
       margin: 2vmin 0px;
+    }
+
+    .rotate0 {
+      transform: rotate(180);
+      transform-origin: 50% 50%;
+    }
+
+    .rotate1 {
+      transform: rotate(120);
+      transform-origin: 50% 50%;
+    }
+
+    .rotate2 {
+      transform: rotate(60);
+      transform-origin: 50% 50%;
+    }
+
+    .rotate3 {
+      transform: rotate(-60);
+      transform-origin: 50% 50%;
+    }
+
+    .rotate4 {
+      transform: rotate(-120);
+      transform-origin: 50% 50%;
+    }
+
+    .rotate5 {
+      transform: rotate(-120);
+      transform-origin: 50% 50%;
     }
 
     .how2board {
@@ -544,6 +574,14 @@
       return Math.round(state.playerCounter)
     }
 
+    function rotateBoard(nextPlayer,  prevPlayer) {
+      if (prevPlayer !== undefined) {
+        board.classList.toggle(`rotate${prevPlayer}`, `rotate${nextPlayer}`)
+      } else {
+        board.classList.toggle(`rotate${nextPlayer}`)
+      }
+    }
+
     function setupBoard(numberOfPlayers, loaded_state) {
       const playerOrder = [0, 5, 1, 4, 2, 3]
       const playersInGame = new Array(numberOfPlayers)
@@ -561,7 +599,7 @@
       for (var i = 0; i < numberOfPlayers; i++) {
         playersInGame[i] = Math.round(i * state.playerStep)
       }
-
+      rotateBoard(state.activePlayer)
       debug.innerText += "{Players " + playersInGame + "}"
       whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
@@ -587,9 +625,11 @@
               state.clickAction = state.clickAction(center)
               if (state.clickAction === undefined) {
                 debug.innerText += "[Next Player]"
+                const prevPlayer = state.activePlayer
                 state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
-
+                rotateBoard(state.activePlayer, prevPlayer)
+                
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 updateURL(state_enc)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`
