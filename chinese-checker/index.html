@@ -542,6 +542,7 @@
 
       hideshare.checked = (localStorage.getItem("hideshare")==="true") ? true : false
       showdebug.checked = (localStorage.getItem("showdebug")==="true") ? true : false
+      rotatableboard.checked = ["", undefined,"true"].includes(localStorage.getItem("rotatableboard"))
 
       hideshare.onchange = (ev) => {
         debug.innerText += "\nToggle..." + `[${hideshare.checked}]`
@@ -608,7 +609,9 @@
       for (var i = 0; i < numberOfPlayers; i++) {
         playersInGame[i] = Math.round(i * state.playerStep)
       }
-      rotateBoard(state.activePlayer)
+      if (rotatableboard.checked) {
+        rotateBoard(state.activePlayer)
+      }
       debug.innerText += "{Players " + playersInGame + "}"
       whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
@@ -637,8 +640,9 @@
                 const prevPlayer = state.activePlayer
                 state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
-                rotateBoard(state.activePlayer, prevPlayer)
-
+                if (rotatableboard.checked) {
+                  rotateBoard(state.activePlayer, prevPlayer)
+                }
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 updateURL(state_enc)
                 debug.innerText += `<br/>[${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`
@@ -768,6 +772,9 @@
     <h1>Settings</h1>
     <div>
       <input type="checkbox" id="hideshare" /><span>Hide share-buttons and text-field.</span>
+    </div>
+    <div>
+      <input type="checkbox" id="rotatableboard" checked="true" /><span>Rotate board, so active player always has its home at bottom.</span>
     </div>
     <div>
       <input type="checkbox" id="showdebug" /><span>Show Debug</span>
