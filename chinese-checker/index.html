@@ -571,6 +571,10 @@
         }
       }
 
+      rotatableboard.onchange = (ev)=> {
+        localStorage.setItem("rotatableboard", rotatableboard.checked)
+      }
+
       hideshare.onchange(undefined)
       showdebug.onchange(undefined)
     }
