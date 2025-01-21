@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kopiera länk</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f9;
+    }
+
+    .copy-link {
+      position: relative;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .copy-link:hover {
+      background-color: #0056b3;
+    }
+
+    .copy-link.copied {
+      background-color: #28a745;
+    }
+
+    .copy-link.copied::after {
+      content: "✓ Länken är kopierad!";
+      position: absolute;
+      top: -30px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px 10px;
+      font-size: 14px;
+      color: #fff;
+      background-color: #28a745;
+      border-radius: 5px;
+      opacity: 0;
+      animation: fadeInOut 2s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="copy-link" onclick="copyLink()">
+    Klicka för att kopiera länken
+  </button>
+
+  <script>
+    function copyLink() {
+      const link = "https://example.com"; // Länken du vill kopiera
+      navigator.clipboard.writeText(link)
+        .then(() => {
+          const button = document.querySelector(".copy-link");
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.classList.remove("copied");
+          }, 2000); // Återställ knappen efter 2 sekunder
+        })
+        .catch((err) => {
+          console.error("Kunde inte kopiera länken: ", err);
+        });
+    }
+  </script>
+
+</body>
+</html>
