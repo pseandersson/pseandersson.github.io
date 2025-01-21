@@ -291,13 +291,13 @@
       animation: fadeInOut 2s ease-in-out;
     }
 
-    .copied::after {
+    #sharediv.copied::after {
       position: absolute;
       content: "Game Copied!";
       font-family: sans-serif;
       font-variant: small-caps;
       background: #080;
-      padding: 1vmin;
+      padding: 3vmin;
       border-radius: 1vmin;
       text-align: center;
       left: 50%;
@@ -306,30 +306,6 @@
       transform-origin: 50% 50%;
       color: white;
       animation: fadeInOut 2s ease-in-out;
-    }
-
-    .rotate0.copied::after {
-      transform: rotate(-180deg);
-    }
-
-    .rotate1.copied::after {
-      transform: rotate(-120deg);
-    }
-
-    .rotate2.copied::after {
-      transform: rotate(-60deg);
-    }
-
-    .rotate3.copied::after {
-      transform: rotate(0deg);
-    }
-
-    .rotate4.copied::after {
-      transform: rotate(60deg);
-    }
-
-    .rotate5.copied::after {
-      transform: rotate(120deg);
     }
 
     .close {
