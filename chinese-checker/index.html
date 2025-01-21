@@ -382,9 +382,9 @@
       nextTurnUrl.setSelectionRange(0, url.length)
       try {
         navigator.clipboard.writeText(url)
-        board.classList.add("copied")
+        sharediv.classList.add("copied")
         setTimeout(()=>{
-          board.classList.remove("copied")
+          sharediv.classList.remove("copied")
         }, 2000)
       } catch (err) {
         nextTurnUrl.classList.remove("hide")
