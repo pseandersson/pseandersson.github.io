@@ -359,8 +359,10 @@
       try {
         navigator.clipboard.writeText(url)
         sharediv.classList.add("copied")
+        board.classList.add("copied")
         setTimeout(()=>{
           sharediv.classList.remove("copied")
+          board.classList.remove("copied")
         }, 2000)
       } catch (err) {
         nextTurnUrl.classList.remove("hide")
