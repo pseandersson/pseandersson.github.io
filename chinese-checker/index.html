@@ -285,6 +285,12 @@
       flex-grow: 0;
     }
 
+    .copied {
+      box-shadow: 0px 0px 3vmin 3vmin #080 inset,
+      0px 0px 3vmin 3vmin #080 inset;
+      animation: fadeInOut 2s ease-in-out;
+    }
+
     .close {
       box-sizing: border-box;
       background: inherit;
@@ -304,6 +310,14 @@
       padding: 4vmin;
       font-variant: small-caps;
       font-family: sans-serif;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0;}
+      10% { opacity: 1;}
+      90% { opacity: 1;}
+      100% {opacity: 0;}
+      
     }
   </style>
   <script type="text/javascript" src="pako.min.js"></script>
@@ -325,8 +339,16 @@
       nextTurnUrl.value = url
       nextTurnUrl.select()
       nextTurnUrl.setSelectionRange(0, url.length)
-
-      navigator.clipboard.writeText(nextTurnUrl.value)
+      try {
+        navigator.clipboard.writeText(url)
+        board.classList.add("copied")
+        setTimeout(()=>{
+          board.classList.remove("copied")
+        }, 2000)
+      } catch (err) {
+        nextTurnUrl.classList.remove("hide")
+        sharebutton.classList.remove("hide")
+      }
     }
 
     function shareGame() {
@@ -550,11 +572,11 @@
         try {
           localStorage.setItem("hideshare", hideshare.checked)
           if (hideshare.checked === true) {
-            sharediv.classList.add("hide")
+            // sharediv.classList.add("hide")
             sharebutton.classList.add("hide")
             nextTurnUrl.classList.add("hide")
           } else {
-            sharediv.classList.remove("hide")
+            // sharediv.classList.remove("hide")
             sharebutton.classList.remove("hide")
             nextTurnUrl.classList.remove("hide")
           }
