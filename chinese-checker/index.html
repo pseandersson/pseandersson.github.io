@@ -693,6 +693,7 @@
             if (typeof state.clickAction === "function") {
               state.clickAction = state.clickAction(center)
               if (state.clickAction === undefined) {
+                logg(JSON.stringify(state))
                 debug.innerText += "[Next Player]"
                 const prevPlayer = state.activePlayer
                 state.activePlayer = nextPlayer(state)
