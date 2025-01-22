@@ -650,10 +650,10 @@
     }
 
     function rotateBoard(nextPlayer) {
-      logg("\nBoard: " + board.classList)
+      //logg("\nBoard: " + board.classList)
       [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
       board.classList.add(`rotate${nextPlayer}`)
-      logg("\nBoard: " + board.classList)
+      //logg("\nBoard: " + board.classList)
     }
 
     function setupBoard(numberOfPlayers, loaded_state) {
