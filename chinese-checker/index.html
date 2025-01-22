@@ -662,6 +662,9 @@
         clickAction: undefined
       }
 
+      logg`loaded state:${loaded_state}`
+      logg`state: ${state}`
+
 
       for (var i = 0; i < numberOfPlayers; i++) {
         playersInGame[i] = Math.round(i * state.playerStep)
