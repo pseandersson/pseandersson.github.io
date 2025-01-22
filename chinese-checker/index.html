@@ -631,9 +631,9 @@
     }
 
     function nextPlayer(state) {
-      logg`PlayerCounter: ${state.playerCounter}, step: ${state.playerStep}`
+      logg`\nbefore ${JSON.stringify(state)}\n`
       state.playerCounter = (state.playerCounter + state.playerStep) % 6
-      logg`state ${state.playerCounter}`
+      logg`after ${JSON.stringify(state)}`
       return Math.round(state.playerCounter)
     }
 
