@@ -214,7 +214,8 @@
       box-shadow: 0px 0px 1vmin 1vmin #00ff00cc inset;
     }
 
-    .selected-ball.player2, .selected-ball.player3 {
+    .selected-ball.player2,
+    .selected-ball.player3 {
       box-shadow: 0px 0px 1vmin 1vmin #ff0000cc inset;
     }
 
@@ -287,7 +288,7 @@
 
     .copied {
       box-shadow: 0px 0px 3vmin 3vmin #080 inset,
-      0px 0px 3vmin 3vmin #080 inset;
+        0px 0px 3vmin 3vmin #080 inset;
       animation: fadeInOut 2s ease-in-out;
     }
 
@@ -331,11 +332,22 @@
     }
 
     @keyframes fadeInOut {
-      0% { box-shadow:        0px 0px 3vmin 3vmin #0800 inset; }
-      10% { box-shadow:       0px 0px 3vmin 3vmin #080f inset; }
-      90% { box-shadow:       0px 0px 3vmin 3vmin #080f inset; }
-      100% {box-shadow:       0px 0px 3vmin 3vmin #0800 inset; }
-      
+      0% {
+        box-shadow: 0px 0px 3vmin 3vmin #0800 inset;
+      }
+
+      10% {
+        box-shadow: 0px 0px 3vmin 3vmin #080f inset;
+      }
+
+      90% {
+        box-shadow: 0px 0px 3vmin 3vmin #080f inset;
+      }
+
+      100% {
+        box-shadow: 0px 0px 3vmin 3vmin #0800 inset;
+      }
+
     }
   </style>
   <script type="text/javascript" src="pako.min.js"></script>
@@ -361,7 +373,7 @@
         navigator.clipboard.writeText(url)
         // sharediv.classList.add("copied")
         board.classList.add("copied")
-        setTimeout(()=>{
+        setTimeout(() => {
           // sharediv.classList.remove("copied")
           board.classList.remove("copied")
         }, 2000)
@@ -583,9 +595,9 @@
         }
       }
 
-      hideshare.checked = (localStorage.getItem("hideshare")==="true") ? true : false
-      showdebug.checked = (localStorage.getItem("showdebug")==="true") ? true : false
-      rotatableboard.checked = ["", undefined,"true"].includes(localStorage.getItem("rotatableboard"))
+      hideshare.checked = (localStorage.getItem("hideshare") === "true") ? true : false
+      showdebug.checked = (localStorage.getItem("showdebug") === "true") ? true : false
+      rotatableboard.checked = ["", undefined, "true"].includes(localStorage.getItem("rotatableboard"))
 
       hideshare.onchange = (ev) => {
         debug.innerText += "\nToggle..." + `[${hideshare.checked}]`
@@ -614,13 +626,13 @@
         }
       }
 
-      rotatableboard.onchange = (ev)=> {
+      rotatableboard.onchange = (ev) => {
         const checked = rotatableboard.checked
         localStorage.setItem("rotatableboard", checked)
         if (checked === false) {
-          [0,1,2,3,4,5].forEach(i=>board.classList.remove(`rotate${i}`))
+          [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
         } else if (whosTurn.innerText.length >= 8) {
-          const p = new Number(whosTurn.innerText.substr(7))-1
+          const p = new Number(whosTurn.innerText.substr(7)) - 1
           board.classList.add(`rotate${p}`)
         }
       }
@@ -637,15 +649,10 @@
       return Math.round(state.playerCounter)
     }
 
-    function rotateBoard(nextPlayer,  prevPlayer) {
+    function rotateBoard(nextPlayer) {
       logg("\nBoard: " + board.classList)
-      if (prevPlayer !== undefined) {
-        board.classList.remove(`rotate${prevPlayer}`)
-        board.classList.add(`rotate${nextPlayer}`)
-      } else {
-        [0,1,2,3,4,5].forEach(i=>board.classList.remove(`rotate${i}`))
-        board.classList.add(`rotate${nextPlayer}`)
-      }
+      [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
+      board.classList.add(`rotate${nextPlayer}`)
       logg("\Board: " + board.classList)
     }
 
@@ -702,7 +709,7 @@
                 state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
                 if (rotatableboard.checked) {
-                  rotateBoard(state.activePlayer, prevPlayer)
+                  rotateBoard(state.activePlayer)
                 }
                 const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
                 updateURL(state_enc)
@@ -835,7 +842,8 @@
       <input type="checkbox" id="hideshare" /><span>Hide share-buttons and text-field.</span>
     </div>
     <div>
-      <input type="checkbox" id="rotatableboard" checked="true" /><span>Rotate board, so active player always has its home at bottom.</span>
+      <input type="checkbox" id="rotatableboard" checked="true" /><span>Rotate board, so active player always has its
+        home at bottom.</span>
     </div>
     <div>
       <input type="checkbox" id="showdebug" /><span>Show Debug</span>
