@@ -292,8 +292,8 @@
       animation: fadeInOut 2s ease-in-out;
     }
 
-    #sharediv.copied::after {
-      position: relative;
+    .copied::after {
+      position: absolute;
       content: "Game URL Copied!";
       font-family: sans-serif;
       font-variant: small-caps;
@@ -302,7 +302,7 @@
       border-radius: 1vmin;
       text-align: center;
       left: 50%;
-      top: 50%;
+      bottom: 2vmin;
       width: 100%;
       transform: translate(-50%, -50%);
       transform-origin: 50% 50%;
