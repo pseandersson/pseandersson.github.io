@@ -391,8 +391,8 @@
           gamearea.classList.remove("copied")
         }, 2000)
       } catch (err) {
-        nextTurnUrl.classList.remove("hide")
-        sharebutton.classList.remove("hide")
+        hideshare.checked = false
+        hideshare.onchange(undefined)
       }
     }
 
