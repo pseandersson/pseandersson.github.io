@@ -678,15 +678,14 @@
         clickAction: undefined
       }
 
-      state.playerCounter = (state.activePlayer -state.playerStep + 6.0) % 6
-
-      logg(`loaded state:${JSON.stringify(loaded_state)}`)
-      logg(`state: ${JSON.stringify(state)}`)
-
-
       for (var i = 0; i < numberOfPlayers; i++) {
         playersInGame[i] = Math.round(i * state.playerStep)
       }
+      state.playerCounter = playersInGame.indexOf(state.activePlayer)*state.playerStep
+
+      logg(`loaded state:${JSON.stringify(loaded_state)}`)
+      logg(`state: ${JSON.stringify(state)}`)    
+      
       if (rotatableboard.checked) {
         rotateBoard(state.activePlayer)
       }
