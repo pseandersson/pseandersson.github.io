@@ -560,6 +560,8 @@
         decomp[j + 7] = (raw[i + 2] >> 5)
       }
 
+      logg(`>> ${raw[15*3] >> 6} and ${(raw[15*3+1] &1) << 2}`)
+
       return {
         compressed: data,
         board: decomp.slice(0, 121),
