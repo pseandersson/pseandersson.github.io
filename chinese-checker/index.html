@@ -673,9 +673,11 @@
       }
 
       if (failure) {
-        logg("Test Failed:")
+        logg("Test Failed: test_encode_decode")
         logg(JSON.stringify(input))
         logg(JSON.stringify(output))
+      } else {
+        logg("Test Passed: test_encode_decode")
       }
     }
 
