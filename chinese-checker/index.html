@@ -61,6 +61,15 @@
       overflow: scroll;
     }
 
+    #gamearea {
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      width: fit-content;
+      height: fit-content;
+      border-radius: 50%;
+    }
+
     #board,
     .how2board {
       background: transparent;
@@ -372,10 +381,10 @@
       try {
         navigator.clipboard.writeText(url)
         // sharediv.classList.add("copied")
-        board.classList.add("copied")
+        gamearea.classList.add("copied")
         setTimeout(() => {
           // sharediv.classList.remove("copied")
-          board.classList.remove("copied")
+          gamearea.classList.remove("copied")
         }, 2000)
       } catch (err) {
         nextTurnUrl.classList.remove("hide")
@@ -895,7 +904,9 @@
       clipboard, to let others participate in the game. If the url is not automatically copied, then a textfield and a
       share-button serves as backup.</p>
   </div>
+  <div id="gamearea">
   <div id="board">
+    </div>
   </div>
   <div id="sharediv" class="doflex">
     <input type="text" id="nextTurnUrl" readonly="true" />
