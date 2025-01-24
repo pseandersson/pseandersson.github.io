@@ -505,10 +505,9 @@
       }
     }
 
-    function encodeBoard(activePlayer, numberOfPlayers) {
+    function boardToState(activePlayer, numberOfPlayers) {
       let collection = document.getElementsByClassName("spot")
       const state = new Uint8Array(8 * Math.ceil(collection.length / 8))
-      const comp = new Uint8Array(Math.ceil(3 * collection.length / 8))
 
       for (var i = 0; i < collection.length; i++) {
         const cl = collection[i].classList
@@ -522,6 +521,11 @@
       }
       state[collection.length] = numberOfPlayers - 1
       state[collection.length + 1] = activePlayer
+      return state
+    }
+
+    function encode(state) {
+      const comp = new Uint8Array(Math.ceil(3 * collection.length / 8))
 
       for (var i = 0, j = 0; i < state.length; i += 8, j += 3) {
         comp[j] = state[i] + (state[i + 1] << 3) + (state[i + 2] << 6)
@@ -537,7 +541,7 @@
       }
     }
 
-    function decodeBoard(data, isCompressed) {
+    function decode(data, isCompressed) {
       const s = atob(data)
       const comp = new Uint8Array(s.length)
 
@@ -559,8 +563,10 @@
         decomp[j + 6] = ((raw[i + 2]) >> 2) & 7
         decomp[j + 7] = (raw[i + 2] >> 5)
       }
-
-      logg(`>> ${raw[15*3] >> 6} and ${(raw[15*3+1] &1) << 2}`)
+      return decomp
+    }
+    function stateToBoard(decomp) {
+      //logg(`>> ${raw[15*3] >> 6} and ${(raw[15*3+1] &1) << 2}`)
 
       return {
         compressed: data,
@@ -588,7 +594,7 @@
       if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[1] === 'c'
         try {
-          const state = decodeBoard(decodeURIComponent(fragment.slice(2)), isCompressed)
+          const state =stateToBoard(decode(decodeURIComponent(fragment.slice(2)), isCompressed))
           logg(`setup state: ${JSON.stringify(state)}`)
           setupBoard(state.numberOfPlayers, state)
           gamesetup.classList.add("hide")
@@ -651,6 +657,26 @@
       hideshare.onchange(undefined)
       showdebug.onchange(undefined)
       rotatableboard.onchange(undefined)
+
+      test_encode_decode()
+    }
+
+    function test_encode_decode(){
+      const input = new Uint8Array([6,6,6,6,6,6,6,6,6,6,6])
+      const output = decode(encode(input).compressed, true)
+      var failure = false
+      for (let i = 0; i < input.length; i++) {
+        if (input[i] !== output[i]) {
+          failure =true 
+          break
+        }
+      }
+
+      if (failure) {
+        logg("Test Failed:")
+        logg(JSON.stringify(input))
+        logg(JSON.stringify(output))
+      }
     }
 
     function nextPlayer(state) {
@@ -723,10 +749,10 @@
                 if (rotatableboard.checked) {
                   rotateBoard(state.activePlayer)
                 }
-                const state_enc = encodeBoard(state.activePlayer, numberOfPlayers)
+                const state_enc = encode(boardToState(state.activePlayer, numberOfPlayers))
                 updateURL(state_enc)
                 logg(`Encoded: [${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`)
-                logg(`Decoded: [${JSON.stringify(decodeBoard(state_enc.compressed, true))}]`)
+                logg(`Decoded: [${JSON.stringify(stateToBoard(decode(state_enc.compressed, true)))}]`)
               }
             } else if (checkPlayer(state, center)) {
               state.clickAction = beginMove(center)
