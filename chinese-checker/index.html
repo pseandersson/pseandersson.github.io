@@ -673,10 +673,12 @@
       const centers = new Array();
       const state = {
         playerStep: 6.0 / numberOfPlayers,
-        playerCounter: 6.0 * activePlayer / numberOfPlayers,
+        playerCounter: undefined,
         activePlayer: activePlayer,
         clickAction: undefined
       }
+
+      state.playerCounter = (state.activePlayer -state.playerStep + 6.0) % 6
 
       logg(`loaded state:${JSON.stringify(loaded_state)}`)
       logg(`state: ${JSON.stringify(state)}`)
