@@ -652,9 +652,9 @@
     }
 
     function nextPlayer(state) {
-      logg`\nbefore ${JSON.stringify(state)}\n`
+      logg(`\nbefore ${JSON.stringify(state)}\n`)
       state.playerCounter = (state.playerCounter + state.playerStep) % 6
-      logg`after ${JSON.stringify(state)}`
+      logg(`after ${JSON.stringify(state)}`)
       return Math.round(state.playerCounter)
     }
 
@@ -672,8 +672,8 @@
 
       const centers = new Array();
       const state = {
-        playerStep: 6 / numberOfPlayers,
-        playerCounter: activePlayer * 6 / numberOfPlayers,
+        playerStep: 6.0 / numberOfPlayers,
+        playerCounter: 6.0 * activePlayer / numberOfPlayers,
         activePlayer: activePlayer,
         clickAction: undefined
       }
