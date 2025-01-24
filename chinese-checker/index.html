@@ -587,7 +587,7 @@
         const isCompressed = fragment[1] === 'c'
         try {
           const state = decodeBoard(decodeURIComponent(fragment.slice(2)), isCompressed)
-          logg`setup state: ${JSON.stringify(state)}`
+          logg(`setup state: ${JSON.stringify(state)}`)
           setupBoard(state.numberOfPlayers, state)
           gamesetup.classList.add("hide")
         } catch (err) {
@@ -678,8 +678,8 @@
         clickAction: undefined
       }
 
-      logg`loaded state:${JSON.stringify(loaded_state)}`
-      logg`state: ${JSON.stringify(state)}`
+      logg(`loaded state:${JSON.stringify(loaded_state)}`)
+      logg(`state: ${JSON.stringify(state)}`)
 
 
       for (var i = 0; i < numberOfPlayers; i++) {
