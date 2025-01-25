@@ -689,8 +689,8 @@
 
     function nextPlayer(state) {
       let next = -1
-
-      for (let i = 0; i < state.numberOfPlayers; i++) {
+      
+      while (next != state.activePlayer) {
          state.playerCounter = (state.playerCounter + state.playerStep) % 6
          next = Math.round(state.playerCounter)
          const balls = document.getElementsByClassName(`player${next}`)
