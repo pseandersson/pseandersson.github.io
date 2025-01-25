@@ -689,12 +689,13 @@
 
     function nextPlayer(state) {
       let next = -1
-      
+
       while (next != state.activePlayer) {
          state.playerCounter = (state.playerCounter + state.playerStep) % 6
          next = Math.round(state.playerCounter)
          const balls = document.getElementsByClassName(`player${next}`)
          for (let j = 0; j < balls.length;j++) {
+          logg(`Player ${next}: ${balls[j].classList.value}`)
           const field = (state.direction === 0) ? `goal${next}` : `home${next}`
           if (balls[j].classList.contains(field) === false) {
             logg(`Next player is ${next}`)
