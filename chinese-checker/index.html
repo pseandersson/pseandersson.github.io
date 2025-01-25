@@ -509,7 +509,7 @@
       }
     }
 
-    function boardToState(activePlayer, numberOfPlayers) {
+    function boardToState(activePlayer, numberOfPlayers, direction) {
       let collection = document.getElementsByClassName("spot")
       const state = new Uint8Array(8 * Math.ceil(collection.length / 8))
 
@@ -525,6 +525,7 @@
       }
       state[collection.length] = numberOfPlayers - 1
       state[collection.length + 1] = activePlayer
+      state[collection.length + 2] = direction
       return state
     }
 
@@ -541,7 +542,8 @@
         compressed: btoa(String.fromCharCode.apply(null, window.pako.deflate(comp))),
         board: state.slice(0, 121),
         numberOfPlayers: state[121] + 1,
-        activePlayer: state[122]
+        activePlayer: state[122],
+        direction: state[123]
       }
     }
 
@@ -575,7 +577,8 @@
       return {
         board: decomp.slice(0, 121),
         numberOfPlayers: decomp[121] + 1,
-        activePlayer: decomp[122]
+        activePlayer: decomp[122],
+        direction: decomp[123]
       }
     }
 
@@ -685,10 +688,22 @@
     }
 
     function nextPlayer(state) {
-      logg(`\nbefore ${JSON.stringify(state)}\n`)
-      state.playerCounter = (state.playerCounter + state.playerStep) % 6
-      logg(`after ${JSON.stringify(state)}`)
-      return Math.round(state.playerCounter)
+      let next = -1
+
+      for (let i = 0; i < state.numberOfPlayers; i++) {
+         state.playerCounter = (state.playerCounter + state.playerStep) % 6
+         next = Math.round(state.playerCounter)
+         const balls = document.getElementsByClassName(`player${next}`)
+         for (let j = 0; j < balls.length;j++) {
+          const field = (state.direction === 0) ? `goal${next}` : `home${next}`
+          if (balls[j].classList.contains(field) == false) {
+            return next;
+          }
+         }
+      }
+      state.direction += 1
+
+      return next
     }
 
     function rotateBoard(nextPlayer) {
@@ -702,11 +717,13 @@
       const playerOrder = [0, 5, 1, 4, 2, 3]
       const playersInGame = new Array(numberOfPlayers)
       const activePlayer = (loaded_state) ? loaded_state.activePlayer : 0
+      const direction = (loaded_state) ? loaded_state.direction : 0
 
       const centers = new Array();
       const state = {
         playerStep: 6.0 / numberOfPlayers,
         playerCounter: undefined,
+        direction: direction,
         activePlayer: activePlayer,
         clickAction: undefined
       }
@@ -743,6 +760,10 @@
         }
         spot.onclick = (ev) => {
           try {
+            if (state.direction >= 1) {
+              logg("Game Finished")
+              return
+            }
             if (typeof state.clickAction === "function") {
               state.clickAction = state.clickAction(center)
               if (state.clickAction === undefined) {
@@ -815,16 +836,18 @@
         if (playersInGame.includes(p) === false) {
           continue
         }
-        debug.innerText += `[player${p}]`
-        tip.node.classList.add(`player${p}`)
+        const pstart = `player${p}`
+        const pgoal = `goal${(p + 3)%6}`
+        const phome = `home${p}`
+        tip.node.classList.add(pstart, pgoal, phome)
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
-          tip2.node.classList.add(`player${p}`)
+          tip2.node.classList.add(pstart, pgoal, phome)
           for (var k = 0; k < tip2.neighbors.length; k++) {
             let tip3 = tip2.neighbors[k]
-            tip3.node.classList.add(`player${p}`)
+            tip3.node.classList.add(pstart, pgoal, phome)
             for (var l = 0; l < tip3.neighbors.length; l++) {
-              tip3.neighbors[l].node.classList.add(`player${p}`)
+              tip3.neighbors[l].node.classList.add(pstart, pgoal, phome)
             }
           }
         }
