@@ -600,7 +600,7 @@
       if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[1] === 'c'
         try {
-          const state =stateToBoard(decode(decodeURIComponent(fragment.slice(2)), isCompressed))
+          const state = stateToBoard(decode(decodeURIComponent(fragment.slice(2)), isCompressed))
           logg(`setup state: ${JSON.stringify(state)}`)
           setupBoard(state.numberOfPlayers, state)
           gamesetup.classList.add("hide")
@@ -667,13 +667,13 @@
       test_encode_decode()
     }
 
-    function test_encode_decode(){
-      const input = new Uint8Array([6,6,6,6,6,6,6,6,6,6,6])
+    function test_encode_decode() {
+      const input = new Uint8Array([6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6])
       const output = decode(encode(input).compressed, true)
       var failure = false
       for (let i = 0; i < input.length; i++) {
         if (input[i] !== output[i]) {
-          failure =true 
+          failure = true
           break
         }
       }
@@ -691,17 +691,17 @@
       let next = -1
 
       while (next != state.activePlayer) {
-         state.playerCounter = (state.playerCounter + state.playerStep) % 6
-         next = Math.round(state.playerCounter)
-         const balls = document.getElementsByClassName(`player${next}`)
-         for (let j = 0; j < balls.length;j++) {
+        state.playerCounter = (state.playerCounter + state.playerStep) % 6
+        next = Math.round(state.playerCounter)
+        const balls = document.getElementsByClassName(`player${next}`)
+        for (let j = 0; j < balls.length; j++) {
           logg(`Player ${next}: ${balls[j].classList.value}`)
           const field = (state.direction === 0) ? `goal${next}` : `home${next}`
           if (balls[j].classList.contains(field) === false) {
             logg(`Next player is ${next}`)
             return next;
           }
-         }
+        }
       }
       logg("Change direction")
       state.direction += 1
@@ -735,11 +735,11 @@
       for (var i = 0; i < numberOfPlayers; i++) {
         playersInGame[i] = Math.round(i * state.playerStep)
       }
-      state.playerCounter = playersInGame.indexOf(state.activePlayer)*state.playerStep
+      state.playerCounter = playersInGame.indexOf(state.activePlayer) * state.playerStep
 
       logg(`loaded state:${JSON.stringify(loaded_state)}`)
-      logg(`state: ${JSON.stringify(state)}`)    
-      
+      logg(`state: ${JSON.stringify(state)}`)
+
       if (rotatableboard.checked) {
         rotateBoard(state.activePlayer)
       }
@@ -819,9 +819,15 @@
         }
       }
 
+      if (loadedGame) {
+        return
+      }
+
       let tips = [];
       for (var i = 0; i < centers.length; i++) {
-        [0, 1, 2, 3, 4, 5].forEach(p => centers[i].node.classList.remove(`player${p}`))
+        if (loadedGame === false) {
+          [0, 1, 2, 3, 4, 5].forEach(p => centers[i].node.classList.remove(`player${p}`))
+        }
         if (centers[i].neighbors.length === 2) {
           tips.push(centers[i])
         }
@@ -834,11 +840,11 @@
         const tip = tips[i]
         const p = playerOrder[i]
         const notInGame = playersInGame.includes(p) === false
-        
-        const pstart = (loadedGame || notInGame)?"spot":`player${p}`
-        const pgoal = `goal${(p + 3)%6}`
+
+        const pstart = (loadedGame || notInGame) ? "spot" : `player${p}`
+        const pgoal = `goal${(p + 3) % 6}`
         const phome = `home${p}`
-        
+
         tip.node.classList.add(pstart, pgoal, phome)
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
@@ -962,7 +968,7 @@
       share-button serves as backup.</p>
   </div>
   <div id="gamearea">
-  <div id="board">
+    <div id="board">
     </div>
   </div>
   <div id="sharediv" class="doflex">
