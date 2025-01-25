@@ -868,7 +868,7 @@
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
           //tip2.node.classList.add(pstart, pgoal, phome)
-          classLists.push(tip2.classList)
+          classLists.push(tip2.node.classList)
           for (var k = 0; k < tip2.neighbors.length; k++) {
             let tip3 = tip2.neighbors[k]
             //tip3.node.classList.add(pstart, pgoal, phome)
