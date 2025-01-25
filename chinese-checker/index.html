@@ -722,7 +722,7 @@
       }
       logg("Change direction")
       state.direction += 1
-
+      next = nextPlayer(state)
       return next
     }
 
@@ -781,7 +781,7 @@
         }
         spot.onclick = (ev) => {
           try {
-            if (state.direction >= 1) {
+            if (state.direction > 1) {
               logg("Game Finished")
               return
             }
@@ -796,7 +796,7 @@
                 if (rotatableboard.checked) {
                   rotateBoard(state.activePlayer)
                 }
-                const state_enc = encode(boardToState(state.activePlayer, numberOfPlayers))
+                const state_enc = encode(boardToState(state.activePlayer, numberOfPlayers, state.direction))
                 updateURL(state_enc)
                 logg(`Encoded: [${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`)
                 logg(`Decoded: [${JSON.stringify(stateToBoard(decode(state_enc.compressed, true)))}]`)
