@@ -245,7 +245,8 @@
     .home4,
     .home5 {
       font-size: inherit;
-      border-color: #fcf !important;
+      border-color: #ff0 !important;
+      border-style: dotted ;
     }
 
     .player0,
@@ -857,21 +858,31 @@
         const p = playerOrder[i]
         const notInGame = playersInGame.includes(p) === false
 
-        const pstart = (loadedGame || notInGame) ? "spot" : `player${p}`
+        const pstart = `player${p}`
         const pgoal = `goal${(p + 3) % 6}`
         const phome = `home${p}`
-
-        tip.node.classList.add(pstart, pgoal, phome)
+        
+        const classLists = []
+        nodes.push(tip.node.classList)
+        // tip.node.classList.add(pstart, pgoal, phome)
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
-          tip2.node.classList.add(pstart, pgoal, phome)
+          //tip2.node.classList.add(pstart, pgoal, phome)
+          classLists.push(tip2.classList)
           for (var k = 0; k < tip2.neighbors.length; k++) {
             let tip3 = tip2.neighbors[k]
-            tip3.node.classList.add(pstart, pgoal, phome)
+            //tip3.node.classList.add(pstart, pgoal, phome)
+            classLists.push(tip3.node.classList)
             for (var l = 0; l < tip3.neighbors.length; l++) {
-              tip3.neighbors[l].node.classList.add(pstart, pgoal, phome)
+              //tip3.neighbors[l].node.classList.add(pstart, pgoal, phome)
+              classLists.push(tip3.neighbors[l].node.classList)
             }
           }
+        }
+        if (loadedGame || notInGame) {
+          classLists.forEach((cl)=> cl.add(phome,pgoal))
+        } else {
+          classLists.forEach((cl) => cl.add(pstart,phome,pgoal))
         }
       }
     }
