@@ -818,9 +818,7 @@
         }
       }
 
-      if (loaded_state !== undefined) {
-        return
-      }
+      const loadedGame = loaded_state !== undefined
 
       let tips = [];
       for (var i = 0; i < centers.length; i++) {
@@ -839,7 +837,7 @@
         if (playersInGame.includes(p) === false) {
           continue
         }
-        const pstart = `player${p}`
+        const pstart = (loadedGame)?"spot":`player${p}`
         const pgoal = `goal${(p + 3)%6}`
         const phome = `home${p}`
         tip.node.classList.add(pstart, pgoal, phome)
