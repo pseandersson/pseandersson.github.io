@@ -696,11 +696,13 @@
          const balls = document.getElementsByClassName(`player${next}`)
          for (let j = 0; j < balls.length;j++) {
           const field = (state.direction === 0) ? `goal${next}` : `home${next}`
-          if (balls[j].classList.contains(field) == false) {
+          if (balls[j].classList.contains(field) === false) {
+            logg(`Next player is ${next}`)
             return next;
           }
          }
       }
+      logg("Change direction")
       state.direction += 1
 
       return next
