@@ -232,7 +232,7 @@
       box-shadow: 0px 0px 1vmin 1vmin #ff0000cc inset;
     }
 
-   /* .goal0,
+    /* .goal0,
     .goal1,
     .goal2,
     .goal3,
@@ -721,7 +721,7 @@
         }
       }
       logg("Change direction")
-      state.direction += 1
+      state.direction = (state.direction + 1) % 2
       next = nextPlayer(state)
       return next
     }
@@ -857,7 +857,7 @@
         const pstart = `player${p}`
         const pgoal = `goal${(p + 3) % 6}`
         const phome = `home${p}`
-        
+
         const classLists = []
         classLists.push(tip.node.classList)
         // tip.node.classList.add(pstart, pgoal, phome)
@@ -876,9 +876,9 @@
           }
         }
         if (loadedGame || notInGame) {
-          classLists.forEach((cl)=> cl.add(phome,pgoal))
+          classLists.forEach((cl) => cl.add(phome, pgoal))
         } else {
-          classLists.forEach((cl) => cl.add(pstart,phome,pgoal))
+          classLists.forEach((cl) => cl.add(pstart, phome, pgoal))
         }
       }
     }
