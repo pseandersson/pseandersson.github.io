@@ -232,23 +232,6 @@
       box-shadow: 0px 0px 1vmin 1vmin #ff0000cc inset;
     }
 
-    /* .goal0,
-    .goal1,
-    .goal2,
-    .goal3,
-    .goal4,
-    .goal5,
-    .home0,
-    .home1,
-    .home2,
-    .home3,
-    .home4,
-    .home5 {
-      font-size: inherit;
-      border-color: #ff0 !important;
-      border-style: dotted ;
-    } */
-
     .player0,
     .demo0 {
       background: radial-gradient(circle at 10% 10%, #fcc, #f00, #600) !important;
@@ -471,7 +454,6 @@
       for (var i = 0; i < collection.length; i++) {
         collection[i].classList.remove("near", "jump")
       }
-      // nodes.forEach(n => n.nodes.classList.remove("jump", "near"))
     }
 
     function performMove(a, b) {
@@ -488,7 +470,7 @@
     function beginMove(node, origin) {
       let firstMove = origin === undefined || node == origin
       let moves = moveFrom(node, firstMove)
-      //debug.innerText += "sss " + moves.jump + " lll " + moves.near
+
       if (moves.near.length === 0 && moves.jump.length === 0) {
         return undefined
       }
@@ -644,11 +626,9 @@
         try {
           localStorage.setItem("hideshare", hideshare.checked)
           if (hideshare.checked === true) {
-            // sharediv.classList.add("hide")
             sharebutton.classList.add("hide")
             nextTurnUrl.classList.add("hide")
           } else {
-            // sharediv.classList.remove("hide")
             sharebutton.classList.remove("hide")
             nextTurnUrl.classList.remove("hide")
           }
@@ -680,29 +660,8 @@
       hideshare.onchange(undefined)
       showdebug.onchange(undefined)
       rotatableboard.onchange(undefined)
-
-      test_encode_decode()
     }
 
-    function test_encode_decode() {
-      const input = new Uint8Array([6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6])
-      const output = decode(encode(input).compressed, true)
-      var failure = false
-      for (let i = 0; i < input.length; i++) {
-        if (input[i] !== output[i]) {
-          failure = true
-          break
-        }
-      }
-
-      if (failure) {
-        logg("Test Failed: test_encode_decode")
-        logg(JSON.stringify(input))
-        logg(JSON.stringify(output))
-      } else {
-        logg("Test Passed: test_encode_decode")
-      }
-    }
 
     function nextPlayer(state) {
       let next = -1
@@ -727,10 +686,8 @@
     }
 
     function rotateBoard(nextPlayer) {
-      //logg("\nBoard: " + board.classList)
       [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
       board.classList.add(`rotate${nextPlayer}`)
-      //logg("\nBoard: " + board.classList)
     }
 
     function setupBoard(numberOfPlayers, loaded_state) {
@@ -814,7 +771,7 @@
       }
 
       const r2 = 1.1 * (Math.pow(centers[0].x - centers[1].x, 2) + Math.pow(centers[0].y - centers[1].y, 2))
-      //debug.innerText += "Radius: " + r2 + " | "
+
       for (var i = 0; i < centers.length; i++) {
         let ci = centers[i]
         for (var j = i + 1; j < centers.length; j++) {
@@ -830,9 +787,7 @@
             ci.directions.push((ang + 180) % 360)
             cj.neighbors.push(ci)
             cj.directions.push(ang)
-            //debug.innerText += `(ang ${ang} - ${(ang+180)%360})`
           }
-          // debug.innerHTML +="<p>" + cr2 + " &lt; " + r2 + "</p>"
         }
       }
 
@@ -845,9 +800,6 @@
           tips.push(centers[i])
         }
       }
-      //debug.innerText += centers.length + " zzz "
-
-      //debug.innerText += tips.map(v=> v.neighbors.length)
 
       for (var i = 0; i < tips.length; i++) {
         const tip = tips[i]
@@ -860,17 +812,16 @@
 
         const classLists = []
         classLists.push(tip.node.classList)
-        // tip.node.classList.add(pstart, pgoal, phome)
+
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
-          //tip2.node.classList.add(pstart, pgoal, phome)
           classLists.push(tip2.node.classList)
+        
           for (var k = 0; k < tip2.neighbors.length; k++) {
             let tip3 = tip2.neighbors[k]
-            //tip3.node.classList.add(pstart, pgoal, phome)
             classLists.push(tip3.node.classList)
+          
             for (var l = 0; l < tip3.neighbors.length; l++) {
-              //tip3.neighbors[l].node.classList.add(pstart, pgoal, phome)
               classLists.push(tip3.neighbors[l].node.classList)
             }
           }
