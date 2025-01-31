@@ -70,6 +70,13 @@
       border-radius: 50%;
     }
 
+    #compass {
+      float: right;
+      clear: none;
+      border: 2px solid white;
+      border-radius: 50%;
+    }
+
     #debug {
       overflow-x: scroll;
     }
@@ -872,9 +879,7 @@
   </div>
   <h1>Chinese Checker <span id="whosTurn"></span>
   
-<svg id="compass" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-  <path d="M50,10 L75,90 L50,70 L25,90 Z" stroke-width="4" stroke="white" fill="red"/>
-  </svg>
+
   </h1>
   <div id="gamesetup" class="card">
     <a href="javascript:closeAllCards()" class="close">X</a>
@@ -949,6 +954,9 @@
       share-button serves as backup.</p>
   </div>
   <div id="gamearea">
+    <svg id="compass" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50,10 L75,90 L50,70 L25,90 Z" stroke-width="4" stroke="white" fill="red"/>
+    </svg>
     <div id="board">
     </div>
   </div>
