@@ -699,10 +699,14 @@
       const checked = rotatableboard.checked
       localStorage.setItem("rotatableboard", checked)
       logg("if state?!?!")
+      try {
       if (state !== undefined) {
         logg("Rotate board")
         rotateBoardOrCompass(state)
       }
+    } catch (err) {
+      logg(err.message)
+    }
     }
 
     function rotateBoardOrCompass(state) {
