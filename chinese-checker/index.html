@@ -669,7 +669,7 @@
 
       hideshare.onchange(undefined)
       showdebug.onchange(undefined)
-      rotatableboard.onchange(undefined)
+      //: rotatableboard.onchange(undefined)
     }
 
 
@@ -714,13 +714,14 @@
       if (rotatableboard.checked) {
         board.classList.add(`rotate${state.activePlayer}`)
       } else {
-        compass.classList.add(`rotate${state.activePlayer}`)
+        const r = state.activePlayer
+        compass.classList.add(`rotate${r}`)
       }
 
       if (state.direction === 0) {
-        compass.classList.remove("reverse")
+       // compass.classList.remove("reverse")
       } else {
-        compass.classList.add("reverse")
+      //  compass.classList.add("reverse")
       }
     }
 
