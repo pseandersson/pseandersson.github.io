@@ -77,6 +77,7 @@
       right: 2vmin;
       border: 2px solid white;
       border-radius: 50%;
+      transition: transform 1s ease-in-out;
     }
 
     #debug {
@@ -95,6 +96,11 @@
       flex-direction: column;
       margin: 0;
       transition: transform 1s ease-in-out;
+    }
+
+    .reverse {
+      transform: rotate(180deg);
+      transform-origin: 50% 50%;
     }
 
     .rotate0 {
@@ -696,9 +702,20 @@
       return next
     }
 
-    function rotateBoard(nextPlayer) {
-      [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
-      board.classList.add(`rotate${nextPlayer}`)
+    function rotateBoardOrCompsss(state) {
+      if (rotatableboard.checked) {
+        [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
+        board.classList.add(`rotate${state.activePlayer}`)
+      } else {
+        [0, 1, 2, 3, 4, 5].forEach(i => compass.classList.remove(`rotate${i}`))
+        compass.classList.add(`rotate${state.activePlayer}`)
+      }
+
+      if (state.direction === 0) {
+        compass.classList.remove("reverse")
+      } else {
+        compass.classList.add("reverse")
+      }
     }
 
     function setupBoard(numberOfPlayers, loaded_state) {
@@ -761,9 +778,9 @@
                 const prevPlayer = state.activePlayer
                 state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
-                if (rotatableboard.checked) {
-                  rotateBoard(state.activePlayer)
-                }
+                
+                rotateBoardOrCompsss(state)
+                
                 const state_enc = encode(boardToState(state.activePlayer, numberOfPlayers, state.direction))
                 updateURL(state_enc)
                 logg(`Encoded: [${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`)
