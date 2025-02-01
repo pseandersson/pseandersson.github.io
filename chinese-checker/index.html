@@ -698,6 +698,7 @@
     function onRotateChanged(state) {
       const checked = rotatableboard.checked
       localStorage.setItem("rotatableboard", checked)
+      logg("if state?!?!")
       if (state !== undefined) {
         logg("Rotate board")
         rotateBoardOrCompass(state)
