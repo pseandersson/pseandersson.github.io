@@ -714,7 +714,7 @@
       if (rotatableboard.checked) {
         board.classList.add(`rotate${state.activePlayer}`)
       } else {
-        compass.classList.add(`rotate${5-state.activePlayer}`)
+        compass.classList.add(`rotate${state.activePlayer}`)
       }
 
       if (state.direction === 0) {
