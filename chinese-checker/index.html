@@ -748,7 +748,7 @@
         onRotateChanged(state)
       }
 
-      rotateBoardOrCompass(state.activePlayer)
+      rotateBoardOrCompass(state)
       
       logg("{Players " + playersInGame + "}")
       whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
