@@ -741,10 +741,9 @@
 
       logg(`loaded state:${JSON.stringify(loaded_state)}`)
       logg(`state: ${JSON.stringify(state)}`)
-
-      if (rotatableboard.checked) {
-        rotateBoard(state.activePlayer)
-      }
+      
+      rotateBoardOrCompsss(state.activePlayer)
+      
       logg("{Players " + playersInGame + "}")
       whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
