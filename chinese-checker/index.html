@@ -702,7 +702,7 @@
       return next
     }
 
-    function rotateBoardOrCompsss(state) {
+    function rotateBoardOrCompass(state) {
       if (rotatableboard.checked) {
         [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
         board.classList.add(`rotate${state.activePlayer}`)
@@ -741,8 +741,8 @@
 
       logg(`loaded state:${JSON.stringify(loaded_state)}`)
       logg(`state: ${JSON.stringify(state)}`)
-      
-      rotateBoardOrCompsss(state.activePlayer)
+
+      rotateBoardOrCompass(state.activePlayer)
       
       logg("{Players " + playersInGame + "}")
       whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
@@ -778,7 +778,7 @@
                 state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
                 
-                rotateBoardOrCompsss(state)
+                rotateBoardOrCompass(state)
                 
                 const state_enc = encode(boardToState(state.activePlayer, numberOfPlayers, state.direction))
                 updateURL(state_enc)
