@@ -664,14 +664,7 @@
       }
 
       rotatableboard.onchange = (ev) => {
-        const checked = rotatableboard.checked
-        localStorage.setItem("rotatableboard", checked)
-        if (checked === false) {
-          [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
-        } else if (whosTurn.innerText.length >= 8) {
-          const p = new Number(whosTurn.innerText.substr(7)) - 1
-          board.classList.add(`rotate${p}`)
-        }
+        onRotateChanged()
       }
 
       hideshare.onchange(undefined)
@@ -700,6 +693,14 @@
       state.direction = (state.direction + 1) % 2
       next = nextPlayer(state)
       return next
+    }
+
+    function onRotateChanged(state) {
+      const checked = rotatableboard.checked
+      localStorage.setItem("rotatableboard", checked)
+      if (state !== undefined) {
+        rotateBoardOrCompass(state)
+      }
     }
 
     function rotateBoardOrCompass(state) {
@@ -742,6 +743,10 @@
 
       logg(`loaded state:${JSON.stringify(loaded_state)}`)
       logg(`state: ${JSON.stringify(state)}`)
+      
+      rotatableboard.onchange = (ev) => {
+        onRotateChanged(state)
+      }
 
       rotateBoardOrCompass(state.activePlayer)
       
