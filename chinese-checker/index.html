@@ -705,11 +705,12 @@
 
     function rotateBoardOrCompass(state) {
       logg(`active player: ${state.activePlayer}//${board.classList}`)
+      [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
+      [0, 1, 2, 3, 4, 5].forEach(i => compass.classList.remove(`rotate${i}`))
+      
       if (rotatableboard.checked) {
-        [0, 1, 2, 3, 4, 5].forEach(i => board.classList.remove(`rotate${i}`))
         board.classList.add(`rotate${state.activePlayer}`)
       } else {
-        [0, 1, 2, 3, 4, 5].forEach(i => compass.classList.remove(`rotate${i}`))
         compass.classList.add(`rotate${state.activePlayer}`)
       }
 
