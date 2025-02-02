@@ -599,6 +599,10 @@
     }
 
     function setupGame() {
+      rotatableboard.onchange = (ev) => {
+        onRotateChanged()
+      }
+
       const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
       rows.forEach(spots => {
         const row = document.createElement("div")
@@ -611,8 +615,10 @@
         }
         document.getElementById("board").appendChild(row)
       })
+
       nextTurnUrl.value = window.location
       const fragment = window.location.hash
+
       if (fragment !== undefined && fragment.length > 0) {
         const isCompressed = fragment[1] === 'c'
         try {
@@ -663,10 +669,6 @@
         }
       }
 
-      rotatableboard.onchange = (ev) => {
-        onRotateChanged()
-      }
-
       hideshare.onchange(undefined)
       showdebug.onchange(undefined)
       //: rotatableboard.onchange(undefined)
@@ -700,18 +702,18 @@
       localStorage.setItem("rotatableboard", checked)
       logg("if state?!?!")
       try {
-      if (state !== undefined) {
-        logg("Rotate board")
-        rotateBoardOrCompass(state)
+        if (state !== undefined) {
+          logg("Rotate board")
+          rotateBoardOrCompass(state)
+        }
+      } catch (err) {
+        logg(err.message)
       }
-    } catch (err) {
-      logg(err.message)
-    }
     }
 
     function rotateBoardOrCompass(state) {
       // logg(`active player: ${state.activePlayer}//${board.classList}`)
-      
+
       [0, 1, 2, 3, 4, 5].forEach(i => {
         board.classList.remove(`rotate${i}`)
         compass.classList.remove(`rotate${i}`)
@@ -719,15 +721,15 @@
 
       if (rotatableboard.checked) {
         board.classList.add(`rotate${state.activePlayer}`)
-      //  } else {
+        //  } else {
         const r = state.activePlayer
         compass.classList.add(`rotate${r}`)
       }
 
       if (state.direction === 0) {
-       // compass.classList.remove("reverse")
+        // compass.classList.remove("reverse")
       } else {
-      //  compass.classList.add("reverse")
+        //  compass.classList.add("reverse")
       }
       logg("rotate board complete")
     }
@@ -755,13 +757,13 @@
 
       logg(`loaded state:${JSON.stringify(loaded_state)}`)
       logg(`state: ${JSON.stringify(state)}`)
-      
+
       rotatableboard.onchange = (ev) => {
         onRotateChanged(state)
       }
 
       rotateBoardOrCompass(state)
-      
+
       logg("{Players " + playersInGame + "}")
       whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
@@ -795,9 +797,9 @@
                 const prevPlayer = state.activePlayer
                 state.activePlayer = nextPlayer(state)
                 whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
-                
+
                 rotateBoardOrCompass(state)
-                
+
                 const state_enc = encode(boardToState(state.activePlayer, numberOfPlayers, state.direction))
                 updateURL(state_enc)
                 logg(`Encoded: [${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`)
@@ -861,11 +863,11 @@
         for (var j = 0; j < tip.neighbors.length; j++) {
           let tip2 = tip.neighbors[j]
           classLists.push(tip2.node.classList)
-        
+
           for (var k = 0; k < tip2.neighbors.length; k++) {
             let tip3 = tip2.neighbors[k]
             classLists.push(tip3.node.classList)
-          
+
             for (var l = 0; l < tip3.neighbors.length; l++) {
               classLists.push(tip3.neighbors[l].node.classList)
             }
@@ -914,7 +916,7 @@
     <a href="javascript:openHelp()"><span>How to</span></a>
   </div>
   <h1>Chinese Checker <span id="whosTurn"></span>
-  
+
 
   </h1>
   <div id="gamesetup" class="card">
@@ -991,7 +993,7 @@
   </div>
   <div id="gamearea">
     <svg id="compass" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50,30 L75,10 L50,90 L25,10 Z" stroke-width="4" stroke="white" fill="red"/>
+      <path d="M50,30 L75,10 L50,90 L25,10 Z" stroke-width="4" stroke="white" fill="red" />
     </svg>
     <div id="board">
     </div>
