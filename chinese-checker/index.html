@@ -106,6 +106,13 @@
       transition: transform 1s ease-in-out;
     }
 
+    .reverse::after {
+      content: "R";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
     .reverse > svg > path {
       transform: rotate(180deg);
       transform-origin: 50% 50%;
