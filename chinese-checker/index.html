@@ -699,9 +699,7 @@
         const balls = document.getElementsByClassName(`player${next}`)
         for (let j = 0; j < balls.length; j++) {
           const field = (state.direction === 0) ? `goal${next}` : `home${next}`
-          logg(`Player ${next}: ${balls[j].classList.value} |> ${field}`)
           if (balls[j].classList.contains(field) === false) {
-            logg(`Next player is ${next}`)
             return next;
           }
         }
