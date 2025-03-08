@@ -785,7 +785,7 @@
       rotateBoardOrCompass(state)
 
       logg("{Players " + playersInGame + "}")
-      whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
+      // whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
 
       const collection = document.getElementsByClassName("spot")
       for (var i = 0; i < collection.length; i++) {
