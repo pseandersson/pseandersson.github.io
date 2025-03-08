@@ -71,6 +71,16 @@
       border-radius: 50%;
     }
 
+    #playerColor {
+      position: absolute;
+      top: 2vmin;
+      left: 2vmin;
+      border: 2px solid #ffffff80;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+
     #compass {
       position: absolute;
       width: fit-content;
@@ -725,7 +735,9 @@
       [0, 1, 2, 3, 4, 5].forEach(i => {
         board.classList.remove(`rotate${i}`)
         compass.classList.remove(`rotate${i}`)
+        playerColor.classList.remove(`player${i}`)
       })
+      playerColor.classList.add(`player${state.activePlayer}`)
 
       if (rotatableboard.checked) {
         board.classList.add(`rotate${state.activePlayer}`)
@@ -1001,6 +1013,7 @@
   </div>
   <div id="gamearea">
     <!--<div id="compassBox"> -->
+    <div id="playerColor"></div>
     <svg id="compass" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <!--<path d="M50,30 L75,10 L50,90 L25,10 Z" stroke-width="4" stroke="white" fill="red" /> -->
       <path d="M50,10 L75,90 L50,70 L25,90 Z" stroke-width="4" stroke="white" fill="red" />
