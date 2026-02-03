@@ -366,11 +366,6 @@
             return `${sign}${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
         }
         
-        function playBeep() {
-            beepSound.currentTime = 0;
-            beepSound.play().catch(e => console.log('Audio play failed:', e));
-        }
-        
         function startTimer() {
             if (currentPhaseIndex >= modes[currentMode].phases.length) {
                 resetTimer();
