@@ -76,7 +76,7 @@
         }
         
         .time {
-            font-size: 5em;
+            font-size: clamp(2em, 15vw, 5em);
             font-weight: bold;
             font-family: 'Courier New', monospace;
             margin: 20px 0;
@@ -239,11 +239,6 @@
         </div>
     </div>
     
-    <audio id="beep" preload="auto">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIGmm98OScTgwOUKvo87ViHQU2kdfu0H4yBSp+zPLaizsKGGS57u2hUhELTKXh8bllHgU7ldz1zoU2Byh5y/PciDwKF2G37Oyg
-UhEMT6nn8rllHgU8ltz1zoU2CCh5y/PciDsKGGK37eyiURIMTqrm8rdmHgU7ldy1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwLGWC47O2kUhMMUKvm87ZnHgU6ldz1z4c2CCd5y/PdjjwL" type="audio/wav">
-    </audio>
-    
     <script>
         let currentMode = 'comfortMax';
         let timer = null;
@@ -255,8 +250,42 @@ UhEMT6nn8rllHgU8ltz1zoU2CCh5y/PciDsKGGK37eyiURIMTqrm8rdmHgU7ldy1z4c2CCd5y/PdjjwL
         let wakeLock = null;
         let comfortMaxTimes = { first: null, second: null };
         let comfortMaxLaps = [];
+        let audioContext = null;
         
-        const beepSound = document.getElementById('beep');
+        // Initialize Web Audio API context
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            return audioContext;
+        }
+        
+        function playBeep(duration = 0.1, frequency = 800) {
+            try {
+                const ctx = initAudioContext();
+                const now = ctx.currentTime;
+                
+                // Create oscillator
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.frequency.value = frequency;
+                osc.type = 'sine';
+                
+                // Ramp up and down to avoid clicks
+                gain.gain.setValueAtTime(0, now);
+                gain.gain.linearRampToValueAtTime(0.3, now + 0.01);
+                gain.gain.linearRampToValueAtTime(0, now + duration);
+                
+                osc.start(now);
+                osc.stop(now + duration);
+            } catch (e) {
+                console.log('Audio play failed:', e);
+            }
+        }
         
         async function requestWakeLock() {
             try {
