@@ -136,6 +136,26 @@
         .tap-btn:hover {
             background: #0891b2;
         }
+
+        #contractionControl > .tap-btn {
+            height: 25vh;
+        }
+        
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: rgba(0, 0, 0, 0.4) !important;
+        }
+
+        /* Shaded disabled style for Record Lap (allows clicks to fall through) */
+        .tap-btn.shaded-disabled {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            opacity: 0.6;
+            filter: brightness(0.6);
+            cursor: default;
+            /* Let pointer events pass through so document click handler receives clicks */
+            pointer-events: none;
+        } 
         
         .records {
             background: rgba(0,0,0,0.3);
@@ -171,6 +191,22 @@
             display: none;
         }
         
+        /* Show records in fullscreen */
+        body.session-active .records {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 60px;
+            border-radius: 0;
+            z-index: 9999;
+            background: rgba(3, 7, 18, 0.98);
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+        
         .progress-bar {
             width: 100%;
             height: 8px;
@@ -185,6 +221,28 @@
             background: #4ade80;
             transition: width 0.3s;
         }
+        /* Fullscreen session mode: timer covers the whole screen */
+        body.session-active .container > :not(.timer-display) {
+            display: none;
+        }
+
+        .timer-display.fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 60px;
+            border-radius: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            background: rgba(3, 7, 18, 0.98);
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -192,7 +250,8 @@
         <h1>🌊 Freediving Training Timer</h1>
         
         <div class="mode-selector">
-            <button class="mode-btn active" onclick="selectMode('comfortMaxDry', this)">Comfort Max Dry</button>
+            <button class="mode-btn active" onclick="selectMode('comfortMax', this)">Comfort Max</button>
+            <button class="mode-btn" onclick="selectMode('stretch', this)">Stretch</button>
         </div>
         
         <div class="timer-display">
@@ -212,8 +271,12 @@
                 <div id="tapLog" style="margin-top: 10px; font-size: 0.9em;"></div>
             </div>
             
+            <div id="contractionControl" class="hidden" style="margin-top: 20px;">
+                <button class="tap-btn" onclick="recordFirstContraction()" style="background: #ef4444;">First Contraction</button>
+            </div>
+
             <div id="lapControl" class="hidden" style="margin-top: 20px;">
-                <button class="tap-btn" onclick="recordLap()" style="background: #8b5cf6;">⏱️ Record Lap & Restart</button>
+                <button class="tap-btn" onclick="recordLap()" style="background: #8b5cf6;">Record Lap</button>
             </div>
             
             <div id="debugControl" class="hidden" style="margin-top: 30px; padding: 20px; background: rgba(255,255,255,0.05); border-radius: 10px; border: 1px solid rgba(255,255,255,0.2);">
@@ -221,9 +284,18 @@
                 <div style="margin-bottom: 10px; font-size: 0.9em;">
                     <span>Phase: <strong id="debugPhaseIndex">0</strong> / <strong id="debugPhaseTotal">0</strong></span>
                 </div>
-                <div style="display: flex; gap: 10px;">
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
                     <button onclick="debugPrevPhase()" style="padding: 10px 20px; background: #f59e0b; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">← Prev Phase</button>
                     <button onclick="debugNextPhase()" style="padding: 10px 20px; background: #4ade80; color: #000; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">Next Phase →</button>
+                </div>
+                <div style="font-size: 0.85em; margin-bottom: 10px;">
+                    <span style="margin-right: 10px;">Speed up countdown:</span>
+                </div>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button onclick="speedUpCountdown(10)" style="padding: 8px 16px; background: #6366f1; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;">+10s</button>
+                    <button onclick="speedUpCountdown(30)" style="padding: 8px 16px; background: #6366f1; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;">+30s</button>
+                    <button onclick="speedUpCountdown(60)" style="padding: 8px 16px; background: #6366f1; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;">+60s</button>
+                    <button onclick="skipToPhaseEnd()" style="padding: 8px 16px; background: #a855f7; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 0.9em;">Skip Phase</button>
                 </div>
             </div>
         </div>
@@ -251,6 +323,10 @@
         let comfortMaxTimes = { first: null, second: null };
         let comfortMaxLaps = [];
         let audioContext = null;
+        let waitingForComfortMaxStart = false;
+        let firstContractions = [];
+        let firstContractionRecordedInPhase = false;
+        let firstContractionHasBeenRecorded = false;
         
         // Initialize Web Audio API context
         function initAudioContext() {
@@ -307,28 +383,24 @@
         }
         
         const modes = {
-            comfortMaxDry: {
-                name: 'Comfort Max Dry',
+            comfortMax: {
+                name: 'Comfort Max',
                 phases: [
-                     ... Array.from({ length: 10 }, (_, i) => [
-                    { name: `Breathing ${i + 1}/10`, duration: 30, type: 'countdown' },
-                    { name: `RV Hold ${i + 1}/10${i < 5 ? ' (Relaxed Belly)' : ' (Diaphragm Up)'}`, duration: 30, type: 'hold' }
-                ]).flat(),
                     { name: '2 min Relax - Tidal Breathing', duration: 120, type: 'countdown' },
                     { name: 'Interval 1 - 3:00 FL Hold', duration: 120, type: 'hold' },
                     { name: 'Interval 1 - 3:00 FL Hold', duration: 60, type: 'countdown' },
                     { name: 'Interval 2 - 3:00 FL Hold', duration: 120, type: 'hold' },
-                    { name: 'Comfort Max #1 - Countdown', duration: 180, type: 'countdown' },
-                    { name: 'Comfort Max #1 - DO NOT LOOK', duration: null, type: 'comfortMax' },
-                    { name: 'Comfort Max #2 - Countdown', duration: 180, type: 'countdown' },
-                    { name: 'Comfort Max #2 - DO NOT LOOK', duration: null, type: 'comfortMax' }
+                    { name: 'Comfort Max 1 Countdown', duration: 180, type: 'countdown' },
+                    { name: 'Comfort Max 1', duration: null, type: 'comfortMax' },
+                    { name: 'Comfort Max 2 Countdown', duration: 180, type: 'countdown' },
+                    { name: 'Comfort Max 2', duration: null, type: 'comfortMax' }
                 ],
-                instructions: `<h3>Comfort Max Dry</h3>
+                instructions: `<h3>Comfort Max</h3>
                 <p><strong>Reference:</strong> <a href="https://www.youtube.com/watch?v=3T4vpxHqP2Q" target="_blank" style="color: #4ade80;">YouTube Training Video</a></p>
                 <p><strong>Setup:</strong> Use two separate timing devices</p>
                 <ul>
-                    <li>Timer 1 for Comfort Max #1 - DO NOT LOOK at time</li>
-                    <li>Timer 2 for Comfort Max #2 - DO NOT LOOK at time</li>
+                    <li>Timer 1 for Comfort Max 1</li>
+                    <li>Timer 2 for Comfort Max 2</li>
                 </ul>
                 <p><strong>Post-Training:</strong></p>
                 <ul>
@@ -336,6 +408,25 @@
                     <li>Then look at your times</li>
                     <li>Compare times with how you felt</li>
                     <li>Record everything and discuss with instructors</li>
+                </ul>`
+            },
+            stretch: {
+                name: 'Stretch',
+                phases: Array.from({ length: 10 }, (_, i) => [
+                    { name: `Breathing ${i + 1}/10`, duration: 30, type: 'countdown' },
+                    { name: `RV Hold ${i + 1}/10${i < 5 ? ' (Relaxed Belly)' : ' (Diaphragm Up)'}`, duration: 30, type: 'hold' }
+                ]).flat(),
+                instructions: `<h3>Stretch Training</h3>
+                <p><strong>Purpose:</strong> A simpler hold exercise to build capacity and tolerance progressively.</p>
+                <p><strong>Setup:</strong> Use one timing device</p>
+                <ul>
+                    <li>Timer for Stretch - DO NOT LOOK at time</li>
+                </ul>
+                <p><strong>Post-Training:</strong></p>
+                <ul>
+                    <li>Write down physical sensations and mental state during hold</li>
+                    <li>Then look at your time</li>
+                    <li>Record and track progress</li>
                 </ul>`
             }
         };
@@ -378,7 +469,10 @@
             
             isPaused = false;
             document.getElementById('startBtn').classList.add('hidden');
-            document.getElementById('pauseBtn').classList.remove('hidden');
+            // Enter fullscreen session mode
+            document.body.classList.add('session-active');
+            const td = document.querySelector('.timer-display');
+            if (td) td.classList.add('fullscreen');
             
             timer = setInterval(() => {
                 currentTime++;
@@ -418,6 +512,13 @@
             tapTimes = [];
             comfortMaxTimes = { first: null, second: null };
             comfortMaxLaps = [];
+            waitingForComfortMaxStart = false;
+            firstContractions = [];
+            // Exit fullscreen session mode
+            document.body.classList.remove('session-active');
+            const td = document.querySelector('.timer-display');
+            if (td) td.classList.remove('fullscreen');
+            firstContractionRecordedInPhase = false;
             
             document.getElementById('startBtn').classList.remove('hidden');
             document.getElementById('pauseBtn').classList.add('hidden');
@@ -448,16 +549,23 @@
             
             currentPhaseIndex++;
             currentTime = 0;
+            firstContractionRecordedInPhase = false;
+            firstContractionHasBeenRecorded = false;
             
             if (currentPhaseIndex >= modes[currentMode].phases.length) {
                 clearInterval(timer);
                 releaseWakeLock();
+                // Exit fullscreen to show greeting
+                document.body.classList.remove('session-active');
+                const tdExit = document.querySelector('.timer-display');
+                if (tdExit) tdExit.classList.remove('fullscreen');
                 showRecords();
                 document.getElementById('phaseName').textContent = '🙏 Hope you had a good time!';
                 document.getElementById('timeDisplay').classList.add('hidden');
                 document.getElementById('startBtn').classList.add('hidden');
                 document.getElementById('pauseBtn').classList.add('hidden');
                 document.getElementById('lapControl').classList.add('hidden');
+                document.getElementById('contractionControl').classList.add('hidden');
                 playBeep();
                 return;
             }
@@ -466,8 +574,19 @@
             
             // Auto-advance from countdown to comfort max
             if (nextPhase.type === 'comfortMax') {
+                // Pause timer and wait for tap to start comfort max phase
+                pauseTimer();
+                waitingForComfortMaxStart = true;
+                // Ensure buttons are immediately disabled in case updateDisplay isn't applied yet
+                try {
+                    const lapBtn = document.getElementById('lapControl') && document.getElementById('lapControl').querySelector('button');
+                    const contrBtn = document.getElementById('contractionControl') && document.getElementById('contractionControl').querySelector('button');
+                    if (lapBtn) lapBtn.disabled = true;
+                    if (contrBtn) contrBtn.disabled = true;
+                } catch (e) {
+                    console.log('Could not set buttons disabled immediately:', e);
+                }
                 updateDisplay();
-                // Continue timer automatically, don't stop
             } else {
                 updateDisplay();
                 playBeep();
@@ -480,12 +599,52 @@
             if (currentPhase) {
                 document.getElementById('phaseName').textContent = currentPhase.name;
                 
-                // Show lap control for Comfort Max #1 and #2
+                // Show lap control for Comfort Max phases and contraction control for hold/comfortMax
                 if (currentPhase.type === 'comfortMax') {
+                    // Show buttons but disable them when entering or after recording
                     document.getElementById('lapControl').classList.remove('hidden');
+                    document.getElementById('contractionControl').classList.remove('hidden');
+                    
+                    // Disable both buttons when entering comfort max phase or after first contraction recorded
+                    const shouldDisable = waitingForComfortMaxStart || firstContractionRecordedInPhase;
+                    const lapBtn = document.getElementById('lapControl').querySelector('button');
+                    const contrBtn = document.getElementById('contractionControl').querySelector('button');
+                   
+                    if (shouldDisable) {
+                         if (waitingForComfortMaxStart) {
+                            if (lapBtn) {
+                                lapBtn.classList.add('shaded-disabled');
+                                lapBtn.removeAttribute('disabled');
+                            }
+                        }
+                        if (contrBtn) {
+                            // Use shaded-disabled so clicks fall through to global handler
+                            contrBtn.classList.add('shaded-disabled');
+                            contrBtn.removeAttribute('disabled');
+                        }
+                    } else {
+                        if (lapBtn) lapBtn.classList.remove('shaded-disabled');
+                        if (contrBtn) {
+                            contrBtn.classList.remove('shaded-disabled');
+                            contrBtn.removeAttribute('disabled');
+                        }
+                    }
+                    
                     document.getElementById('timeDisplay').classList.add('hidden');
+                } else if (currentPhase.type === 'hold') {
+                    document.getElementById('lapControl').classList.add('hidden');
+                    document.getElementById('contractionControl').classList.remove('hidden');
+                    
+                    // Disable contraction button if already recorded in this phase
+                    if (firstContractionRecordedInPhase) {
+                        document.getElementById('contractionControl').querySelector('button').disabled = true;
+                    } else {
+                        document.getElementById('contractionControl').querySelector('button').disabled = false;
+                    }
+                    document.getElementById('timeDisplay').classList.remove('hidden');
                 } else {
                     document.getElementById('lapControl').classList.add('hidden');
+                    document.getElementById('contractionControl').classList.add('hidden');
                     document.getElementById('timeDisplay').classList.remove('hidden');
                 }
                 
@@ -531,18 +690,35 @@
             if (comfortMaxLaps.length === 2) {
                 clearInterval(timer);
                 releaseWakeLock();
+                // Exit fullscreen to show greeting
+                document.body.classList.remove('session-active');
+                const tdExit = document.querySelector('.timer-display');
+                if (tdExit) tdExit.classList.remove('fullscreen');
                 showRecords();
                 document.getElementById('phaseName').textContent = '🙏 Hope you had a good time!';
                 document.getElementById('timeDisplay').classList.add('hidden');
                 document.getElementById('startBtn').classList.add('hidden');
                 document.getElementById('pauseBtn').classList.add('hidden');
                 document.getElementById('lapControl').classList.add('hidden');
+                document.getElementById('contractionControl').classList.add('hidden');
                 playBeep();
             } else {
                 // Move to next phase (should be a countdown) and restart
                 nextPhase();
                 startTimer();
             }
+        }
+        
+        function recordFirstContraction() {
+            const currentPhase = modes[currentMode].phases[currentPhaseIndex];
+            firstContractions.push({
+                phase: currentPhase.name,
+                time: currentTime
+            });
+            firstContractionRecordedInPhase = true;
+            firstContractionHasBeenRecorded = true;
+            document.getElementById('contractionControl').querySelector('button').disabled = true;
+            playBeep();
         }
         
         function updateDebugInfo() {
@@ -568,11 +744,31 @@
             }
         }
         
+        function speedUpCountdown(seconds) {
+            const currentPhase = modes[currentMode].phases[currentPhaseIndex];
+            if (currentPhase && currentPhase.type === 'countdown' && currentPhase.duration) {
+                currentTime = Math.min(currentTime + seconds, currentPhase.duration);
+                updateDisplay();
+            }
+        }
+        
+        function skipToPhaseEnd() {
+            const currentPhase = modes[currentMode].phases[currentPhaseIndex];
+            if (currentPhase) {
+                if (currentPhase.duration) {
+                    currentTime = currentPhase.duration;
+                } else {
+                    currentTime = 0;
+                }
+                updateDisplay();
+            }
+        }
+        
         function showRecords() {
             const recordsDiv = document.getElementById('records');
             const recordList = document.getElementById('recordList');
             
-            if (records.length === 0 && tapTimes.length === 0 && comfortMaxLaps.length === 0) {
+            if (records.length === 0 && tapTimes.length === 0 && comfortMaxLaps.length === 0 && firstContractions.length === 0) {
                 recordsDiv.classList.add('hidden');
                 return;
             }
@@ -602,23 +798,71 @@
                 });
             }
             
+            if (firstContractions.length > 0) {
+                html += '<h4 style="margin-top: 15px;">First Contraction</h4>';
+                firstContractions.forEach((contraction, i) => {
+                    html += `<div class="record-item">
+                        <span>${contraction.phase}</span>
+                        <span>${formatTime(contraction.time)}</span>
+                    </div>`;
+                });
+            }
+            
             recordList.innerHTML = html;
         }
         
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
             const firstButton = document.querySelector('.mode-btn');
-            selectMode('comfortMaxDry', firstButton);
+            selectMode('comfortMax', firstButton);
             
             // Allow clicking anywhere on the screen to record lap when lap control is visible
             document.addEventListener('click', function(e) {
                 const lapControl = document.getElementById('lapControl');
-                // Only trigger if lap control is visible and the click wasn't on a button/control element
-                if (lapControl && !lapControl.classList.contains('hidden') && 
-                    e.target.tagName !== 'BUTTON') {
-                    recordLap();
+                // Trigger if lap control is visible and either: not a button, or a disabled button
+                if (lapControl && !lapControl.classList.contains('hidden')) {
+                    if (!waitingForComfortMaxStart && !firstContractionHasBeenRecorded && e.detail === 2) {
+                        // If it's a double click and first contraction hasn't been recorded, record the first contraction
+                        recordFirstContraction();
+                        return;
+                    }
+                    const isDisabledButton = e.target.tagName === 'BUTTON' && e.target.disabled;
+                    const isNotButton = e.target.tagName !== 'BUTTON';
+                    const isContractionButton = e.target.tagName === 'BUTTON' && e.target.parentElement.id === 'contractionControl';
+                    
+                    if (isContractionButton && firstContractionHasBeenRecorded) {
+                        firstContractionHasBeenRecorded = false;
+                    } else if (isDisabledButton || isNotButton) {
+                        // If waiting for comfort max start, start the timer instead of recording lap
+                        if (waitingForComfortMaxStart) {
+                            waitingForComfortMaxStart = false;
+                            startTimer();
+                        } else {
+                            recordLap();
+                        }
+                    }
                 }
             });
+            // document.addEventListener('click', function(e) {
+            //     const contractionControl = document.getElementById('contractionControl');
+            //     // Trigger if first contraction control is visible and either: not a button, or a disabled button
+            //     if (contractionControl && !contractionControl.classList.contains('hidden')) {
+            //         const isDisabledButton = e.target.tagName === 'BUTTON' && e.target.disabled;
+            //         const isNotButton = e.target.tagName !== 'BUTTON';
+                    
+            //         if (isDisabledButton || isNotButton) {
+            //             // If waiting for comfort max start, start the timer instead of recording lap
+            //             if (waitingForComfortMaxStart) {
+            //                 waitingForComfortMaxStart = false;
+            //                 startTimer();
+            //             } else if (!firstContractionRecordedInPhase) {
+            //                 recordFirstContraction();
+            //             } else {
+            //                 recordLap();
+            //             }
+            //         }
+            //     }
+            // });
         });
     </script>
 </body>
