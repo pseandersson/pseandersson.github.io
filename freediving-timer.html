@@ -718,7 +718,7 @@
             firstContractionRecordedInPhase = true;
             firstContractionHasBeenRecorded = true;
             document.getElementById('contractionControl').querySelector('button').disabled = true;
-            playBeep();
+            playBeep(0.1, 1200);
         }
         
         function updateDebugInfo() {
@@ -836,6 +836,7 @@
                         // If waiting for comfort max start, start the timer instead of recording lap
                         if (waitingForComfortMaxStart) {
                             waitingForComfortMaxStart = false;
+                            playBeep();
                             startTimer();
                         } else {
                             recordLap();
@@ -843,26 +844,6 @@
                     }
                 }
             });
-            // document.addEventListener('click', function(e) {
-            //     const contractionControl = document.getElementById('contractionControl');
-            //     // Trigger if first contraction control is visible and either: not a button, or a disabled button
-            //     if (contractionControl && !contractionControl.classList.contains('hidden')) {
-            //         const isDisabledButton = e.target.tagName === 'BUTTON' && e.target.disabled;
-            //         const isNotButton = e.target.tagName !== 'BUTTON';
-                    
-            //         if (isDisabledButton || isNotButton) {
-            //             // If waiting for comfort max start, start the timer instead of recording lap
-            //             if (waitingForComfortMaxStart) {
-            //                 waitingForComfortMaxStart = false;
-            //                 startTimer();
-            //             } else if (!firstContractionRecordedInPhase) {
-            //                 recordFirstContraction();
-            //             } else {
-            //                 recordLap();
-            //             }
-            //         }
-            //     }
-            // });
         });
     </script>
 </body>
