@@ -69,7 +69,7 @@
             text-align: center;
         }
 
-        .phase-name {
+        .phase-name, .interval-length {
             font-size: 1.5em;
             margin-bottom: 20px;
             color: #4ade80;
@@ -282,6 +282,7 @@
             </div>
 
             <div id="intervalControl" class="hidden" style="margin-top: 20px;">
+                <div class="interval-length" id="intervalLength"></div>
                 <div>
                     <button class="start-btn" onclick="startInterval()">Start Interval</button>
                 </div>
@@ -340,6 +341,7 @@
         let firstContractionRecordedInPhase = false;
         let firstContractionHasBeenRecorded = false;
         let waitForIntervalStart = false;
+        let intervalFinished = false;
         let adjustedIntervalTime = 0; // Default hold time for intervals mode
         let intervalTimeStart = 0
 
@@ -401,6 +403,7 @@
             if (waitForIntervalStart) {
                 waitForIntervalStart = false;
                 intervalTimeStart = currentTime;
+                intervalFinished = false;
                 updateDisplay();
                 playBeep();
             }
@@ -501,12 +504,12 @@
             updateDebugInfo();
         }
 
-        function formatTime(seconds, isCountdown = false) {
+        function formatTime(seconds, isCountdown = false, padMinutes = true) {
             const absSeconds = Math.abs(seconds);
             const mins = Math.floor(absSeconds / 60);
             const secs = absSeconds % 60;
             const sign = isCountdown && seconds > 0 ? '-' : '';
-            return `${sign}${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            return `${sign}${padMinutes ? String(mins).padStart(2, '0') : mins}:${String(secs).padStart(2, '0')}`;
         }
 
         function startTimer() {
@@ -542,9 +545,13 @@
                     const holdTime = currentPhase.holdtime + adjustedIntervalTime;
                     const remaining = holdTime - (currentTime - intervalTimeStart);
                     const remainingTotal = currentPhase.duration - currentTime;
-                    if ([5,4,3,2,1,0].includes(remaining) && remaining >= 0 && !waitForIntervalStart) {
+                    if ([5,4,3,2,1].includes(remaining) && remaining >= 0 && !waitForIntervalStart && !intervalFinished) {
                         playBeep();
+                    } else if (remaining == 0 && !waitForIntervalStart && !intervalFinished) {
+                        playBeep();
+                        intervalFinished = true;
                     } else if ([30, 20, 10, 5, 4, 3, 2, 1].includes(remainingTotal)) {
+                        intervalFinished = true;
                         playBeep();
                     }
                 }
@@ -574,6 +581,9 @@
             comfortMaxTimes = { first: null, second: null };
             comfortMaxLaps = [];
             waitingForComfortMaxStart = false;
+            adjustedIntervalTime = 0;
+            waitForIntervalStart = false;
+            intervalFinished = false;
             firstContractions = [];
             // Exit fullscreen session mode
             document.body.classList.remove('session-active');
@@ -723,6 +733,7 @@
                         startIntervalBtn.classList.add('shaded-disabled');
                         startIntervalBtn.disabled = true;
                     }
+                    document.getElementById('intervalLength').textContent = `Interval Length ${formatTime(currentPhase.holdtime + adjustedIntervalTime, false, false)}/${formatTime(currentPhase.duration, false, false)}`;
                 } else {
                     document.getElementById('lapControl').classList.add('hidden');
                     document.getElementById('contractionControl').classList.add('hidden');
@@ -742,7 +753,7 @@
 
                     if (waitForIntervalStart) {
                         document.getElementById('timeDisplay').textContent = `${formatTime(remainingTotal, true)}`;
-                    } else if (remainingHold >= 0) {
+                    } else if (remainingHold >= 0 && !intervalFinished) {
                         document.getElementById('timeDisplay').textContent = `${formatTime(remainingHold, true)}`;
                     } else {
                         document.getElementById('timeDisplay').textContent = `${formatTime(remainingTotal, true)}`;
@@ -841,7 +852,7 @@
 
         function speedUpCountdown(seconds) {
             const currentPhase = modes[currentMode].phases[currentPhaseIndex];
-            if (currentPhase && currentPhase.type === 'countdown' && currentPhase.duration) {
+            if (currentPhase && ['countdown','interval'].includes(currentPhase.type) && currentPhase.duration) {
                 currentTime = Math.min(currentTime + seconds, currentPhase.duration);
                 updateDisplay();
             }
