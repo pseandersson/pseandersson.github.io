@@ -534,31 +534,44 @@
                 updateDisplay();
 
                 const currentPhase = modes[currentMode].phases[currentPhaseIndex];
-
+                const hasNextPhase = currentPhaseIndex < modes[currentMode].phases.length - 1;
                 // Handle countdown beeps
                 if (currentPhase.type === 'countdown') {
                     const remaining = currentPhase.duration - currentTime;
-                    if ([120, 60, 30, 20, 10, 5, 4, 3, 2, 1].includes(remaining)) {
+                    if ([120, 60, 30, 20, 10, 5, 4, 3, 2, 1].includes(remaining) && hasNextPhase) {
                         playBeep();
                     }
                 } else if (currentPhase.type === 'interval') {
                     const holdTime = currentPhase.holdtime + adjustedIntervalTime;
                     const remaining = holdTime - (currentTime - intervalTimeStart);
                     const remainingTotal = currentPhase.duration - currentTime;
-                    if ([5,4,3,2,1].includes(remaining) && remaining >= 0 && !waitForIntervalStart && !intervalFinished) {
-                        playBeep();
-                    } else if (remaining == 0 && !waitForIntervalStart && !intervalFinished) {
-                        playBeep();
-                        intervalFinished = true;
-                    } else if ([30, 20, 10, 5, 4, 3, 2, 1].includes(remainingTotal)) {
-                        intervalFinished = true;
+                    var hasPlayedHoldBeep = false;
+                    
+                    if (remaining >= 0 && !waitForIntervalStart && !intervalFinished) {
+                        if ([5,4,3,2,1].includes(remaining)) {
+                            playBeep();
+                            hasPlayedHoldBeep = true;
+                        } else if (remaining == 0) {
+                            playBeep();
+                            intervalFinished = true;
+                            hasPlayedHoldBeep = true;
+                        }
+                    }
+
+                    if ([30, 20, 10, 5, 4, 3, 2, 1].includes(remainingTotal) && !hasPlayedHoldBeep && hasNextPhase) {
                         playBeep();
                     }
                 }
 
                 if (currentPhase.duration && currentTime >= currentPhase.duration) {
-                    playBeep();
-                    nextPhase();
+                    if (hasNextPhase) {
+                        playBeep();
+                        nextPhase();
+                    } else {
+                        playBeep();
+                        playBeep(0.1, 1200);
+                        playBeep(0.1, 300);
+                    }
                 }
             }, 1000);
         }
