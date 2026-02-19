@@ -168,10 +168,11 @@
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 14px;
-            padding: 16px 20px;
+            padding: 12px 16px;
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
-            gap: 14px;
+            gap: 8px 12px;
             cursor: pointer;
             transition: all 0.2s;
             position: relative;
@@ -192,12 +193,18 @@
         .mode-card.selected { border-color: var(--accent); background: rgba(0,200,220,0.07); }
         .mode-card.selected::before { opacity: 1; }
 
-        .mode-card-info { flex: 1; min-width: 0; }
+        /* Info block grows to fill available space, wraps actions below it on narrow screens */
+        .mode-card-info {
+            flex: 1 1 160px; /* shrinks below 160px → wraps */
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
         .mode-card-name {
             font-weight: 700;
             font-size: 1em;
             color: var(--text);
-            margin-bottom: 4px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -208,9 +215,15 @@
             display: flex;
             gap: 12px;
         }
-        .mode-card-meta span { display: flex; align-items: center; gap: 4px; }
+        .mode-card-meta span { display: flex; align-items: center; gap: 4px; white-space: nowrap; }
 
-        .mode-card-actions { display: flex; gap: 8px; flex-shrink: 0; align-items: center; }
+        /* Actions sit beside info on wide screens, or fill their own row on narrow ones */
+        .mode-card-actions {
+            flex: 0 0 auto;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
         .icon-btn {
             width: 44px; height: 44px;
             display: flex; align-items: center; justify-content: center;
@@ -266,8 +279,10 @@
             align-items: center;
             justify-content: flex-start;
             text-align: center;
-            padding: 96px 24px 40px;
-            overflow-y: auto;
+            /* Use dvh so padding adapts; 96px top = 2× cancel btn (48px) */
+            padding: 96px 24px clamp(16px, 3dvh, 40px);
+            overflow: hidden;
+            height: 100dvh;
         }
 
         #timerOverlay.active { display: flex; }
@@ -304,22 +319,24 @@
             font-weight: 700;
             letter-spacing: 0.15em;
             text-transform: uppercase;
-            margin-bottom: 10px;
+            margin-bottom: clamp(4px, 1dvh, 10px);
             transition: color 0.4s;
         }
 
         .timer-phase-name {
-            font-size: 1.05em;
+            font-size: clamp(0.85em, 2.5vw, 1.05em);
             color: var(--text-dim);
-            margin-bottom: 32px;
+            margin-bottom: clamp(12px, 3dvh, 32px);
             max-width: 400px;
         }
 
         .timer-radial {
             position: relative;
-            width: min(300px, 72vw);
-            height: min(300px, 72vw);
-            margin-bottom: 32px;
+            /* Shrinks on small screens so buttons always fit */
+            width: clamp(180px, 55vw, 300px);
+            height: clamp(180px, 55vw, 300px);
+            margin-bottom: clamp(12px, 3dvh, 32px);
+            flex-shrink: 0;
         }
 
         .timer-radial svg {
@@ -338,25 +355,34 @@
 
         .timer-time {
             font-family: var(--font-mono);
-            font-size: clamp(2.4em, 11vw, 4.8em);
+            font-size: clamp(2em, 10vw, 4.8em);
             font-weight: 700;
             letter-spacing: -0.02em;
             line-height: 1;
         }
 
+        /* Actions: column by default, switches to row when .row modifier is set */
         .timer-actions {
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             width: 100%;
             max-width: 280px;
-            margin-bottom: 16px;
+            margin-bottom: 8px;
+        }
+        .timer-actions.row {
+            flex-direction: row;
+            max-width: 360px;
+        }
+        .timer-actions.row .timer-btn {
+            flex: 1;
+            padding: 12px 8px;
         }
 
         .timer-btn { width: 100%; }
 
         .timer-btn {
-            padding: 14px 28px;
+            padding: clamp(10px, 1.8dvh, 14px) 28px;
             border-radius: 12px;
             border: 1px solid var(--border);
             background: var(--surface);
@@ -381,18 +407,17 @@
         .timer-interval-info {
             font-size: 0.85em;
             color: var(--text-dim);
-            margin-top: 8px;
+            margin-top: 4px;
         }
 
         .timer-tap-hint {
             font-size: 0.78em;
             color: var(--text-dim);
-            margin-top: 12px;
+            margin-top: clamp(6px, 1.5dvh, 12px);
             opacity: 0.7;
             visibility: hidden;
         }
         .timer-tap-hint.visible { visibility: visible; }
-        }
 
         /* Records overlay */
         .records-overlay {
@@ -1273,6 +1298,7 @@ function renderTimerActions() {
     };
 
     let html = '';
+    let rowLayout = false;
 
     if (phase.type === 'comfortMax') {
         if (waitingComfortMaxStart) {
@@ -1304,10 +1330,11 @@ function renderTimerActions() {
         if (waitForIntervalStart) setHint('Tap anywhere or press Start Hold when ready');
 
     } else {
-        // countdown — no user interaction, invisible spacer keeps layout stable
+        // countdown — invisible spacer keeps layout stable
         html += `<button class="timer-btn" disabled style="visibility:hidden;">.</button>`;
     }
 
+    actions.className = 'timer-actions' + (rowLayout ? ' row' : '');
     actions.innerHTML = html;
 }
 
