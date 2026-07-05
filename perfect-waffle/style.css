@@ -1,0 +1,707 @@
+/* ============================================================
+   PERFECT WAFFLE — STYLE SHEET
+   Ember-themed dark UI for charcoal grill waffle timer
+   ============================================================ */
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Ember palette */
+  --bg-deep:      #0d0806;
+  --bg-surface:   #1a110c;
+  --bg-card:      #221710;
+  --bg-card-alt:  #2a1d14;
+  --border-card:  rgba(255, 140, 50, 0.12);
+
+  --ember:        #ff6b2c;
+  --ember-glow:   #ff8f4c;
+  --ember-dim:    #cc5520;
+  --gold:         #ffc233;
+  --gold-dim:     #b38924;
+  --fire-red:     #ef4444;
+  --fire-red-glow:#ff6b6b;
+  --success:      #66bb6a;
+  --success-dim:  #388e3c;
+
+  --text-primary: #fff5e6;
+  --text-secondary:#c4a882;
+  --text-muted:   #7a6555;
+
+  --font-display: 'Outfit', sans-serif;
+  --font-body:    'Inter', sans-serif;
+
+  --radius-sm:    8px;
+  --radius-md:    14px;
+  --radius-lg:    20px;
+  --radius-full:  999px;
+
+  --shadow-glow:  0 0 40px rgba(255, 107, 44, 0.15);
+  --shadow-card:  0 4px 24px rgba(0, 0, 0, 0.5);
+}
+
+html {
+  font-size: 16px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100dvh;
+  padding: 1.5rem 1rem 3rem;
+}
+
+/* ---------- Ember Canvas ---------- */
+#embers-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* ---------- Screen Management ---------- */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 440px;
+  gap: 1.5rem;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.screen.active {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Logo / Header ---------- */
+.logo {
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.25rem;
+  animation: flicker 2s infinite alternate;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  50%      { opacity: 0.85; filter: brightness(1.15); }
+}
+
+.logo h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2rem;
+  background: linear-gradient(135deg, var(--ember-glow), var(--gold));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 300;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+}
+
+/* ---------- Card ---------- */
+.card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(12px);
+}
+
+/* ---------- Input Groups ---------- */
+.input-group {
+  margin-bottom: 1.25rem;
+}
+
+.input-group:last-of-type {
+  margin-bottom: 1.5rem;
+}
+
+.input-group label {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.5rem;
+}
+
+.label-text {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.label-unit {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.slider-value {
+  min-width: 3.2rem;
+  text-align: right;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--ember-glow);
+}
+
+/* ---------- Range Slider ---------- */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  flex: 1;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--bg-card-alt);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, var(--ember-glow), var(--ember));
+  border: 2px solid var(--bg-deep);
+  box-shadow: 0 0 10px rgba(255, 107, 44, 0.5);
+  cursor: grab;
+  transition: box-shadow 0.2s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 18px rgba(255, 107, 44, 0.7);
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, var(--ember-glow), var(--ember));
+  border: 2px solid var(--bg-deep);
+  box-shadow: 0 0 10px rgba(255, 107, 44, 0.5);
+  cursor: grab;
+}
+
+.doneness-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  padding: 0 2px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-md);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-fire {
+  background: linear-gradient(135deg, var(--ember), var(--ember-dim));
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(255, 107, 44, 0.35);
+}
+
+.btn-fire:hover {
+  box-shadow: 0 6px 30px rgba(255, 107, 44, 0.5);
+  transform: translateY(-2px);
+}
+
+.btn-fire:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 12px rgba(255, 107, 44, 0.3);
+}
+
+.btn-secondary {
+  background: var(--bg-card-alt);
+  color: var(--text-primary);
+  border: 1px solid var(--border-card);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card);
+  border-color: var(--ember);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, var(--success), var(--success-dim));
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(102, 187, 106, 0.25);
+}
+
+.btn-success:hover {
+  box-shadow: 0 6px 30px rgba(102, 187, 106, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-danger {
+  background: linear-gradient(135deg, var(--fire-red), #b91c1c);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(239, 68, 68, 0.25);
+}
+
+.btn-danger:hover {
+  box-shadow: 0 6px 30px rgba(239, 68, 68, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-icon {
+  font-size: 1.3rem;
+}
+
+.btn + .btn {
+  margin-top: 0.75rem;
+}
+
+.hint {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  text-align: center;
+  line-height: 1.5;
+  max-width: 360px;
+  padding: 0 0.5rem;
+}
+
+/* ---------- Session Header ---------- */
+.session-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0.25rem;
+}
+
+.session-phase {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--ember-glow);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.waffle-counter {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--gold);
+}
+
+.session-elapsed {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ---------- Timer Ring ---------- */
+.timer-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.timer-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.timer-ring-bg {
+  fill: none;
+  stroke: var(--bg-card-alt);
+  stroke-width: 6;
+}
+
+.timer-ring-progress {
+  fill: none;
+  stroke: var(--ember);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 565.48; /* 2 * π * 90 */
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.5s ease;
+  filter: drop-shadow(0 0 8px rgba(255, 107, 44, 0.5));
+}
+
+.timer-ring-progress.success {
+  stroke: var(--success);
+  filter: drop-shadow(0 0 8px rgba(102, 187, 106, 0.5));
+}
+
+.timer-ring-progress.warning {
+  stroke: var(--gold);
+  filter: drop-shadow(0 0 8px rgba(255, 194, 51, 0.5));
+}
+
+.timer-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+}
+
+.timer-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 3rem;
+  letter-spacing: -1px;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+.timer-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* ---------- Temperature Gauges ---------- */
+.temp-gauges {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0 0.25rem;
+}
+
+.gauge {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.gauge-bar-container {
+  width: 100%;
+  height: 8px;
+  background: var(--bg-card-alt);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.gauge-bar {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s ease;
+}
+
+.gauge-coal {
+  background: linear-gradient(90deg, var(--ember-dim), var(--ember), var(--fire-red-glow));
+}
+
+.gauge-iron {
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), var(--ember-glow));
+}
+
+.gauge-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  display: flex;
+  justify-content: space-between;
+}
+
+.gauge-label span {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* ---------- Status Text ---------- */
+.status-text {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-align: center;
+  min-height: 1.5rem;
+}
+
+.status-text.alarm {
+  color: var(--gold);
+  animation: pulse-text 0.8s infinite alternate;
+}
+
+@keyframes pulse-text {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+
+/* ---------- Step Indicator ---------- */
+.step-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  padding: 0 0.25rem;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.step-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-card-alt);
+  border: 2px solid var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+.step.active .step-dot {
+  background: var(--ember);
+  border-color: var(--ember);
+  box-shadow: 0 0 10px rgba(255, 107, 44, 0.6);
+  animation: pulse-dot 1.2s infinite alternate;
+}
+
+.step.done .step-dot {
+  background: var(--success);
+  border-color: var(--success);
+  box-shadow: 0 0 6px rgba(102, 187, 106, 0.4);
+}
+
+@keyframes pulse-dot {
+  from { box-shadow: 0 0 6px rgba(255, 107, 44, 0.4); }
+  to   { box-shadow: 0 0 14px rgba(255, 107, 44, 0.7); }
+}
+
+.step-name {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.step.active .step-name {
+  color: var(--ember-glow);
+}
+
+.step.done .step-name {
+  color: var(--success);
+}
+
+.step-connector {
+  flex: 1;
+  height: 2px;
+  background: var(--bg-card-alt);
+  margin: 0 0.15rem;
+  margin-bottom: 1.2rem;
+  transition: background 0.3s;
+}
+
+.step-connector.done {
+  background: var(--success);
+}
+
+/* ---------- Cook Info Chips ---------- */
+.cook-info {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.info-chip {
+  padding: 0.4rem 0.9rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.info-chip.active {
+  border-color: var(--ember);
+  color: var(--ember-glow);
+}
+
+/* ---------- Action Buttons Area ---------- */
+.action-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* ---------- Summary ---------- */
+.summary-card {
+  text-align: center;
+}
+
+.summary-stat {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.75rem 1.5rem;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.2rem;
+  color: var(--gold);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 0.1rem;
+}
+
+.summary-divider {
+  width: 60%;
+  height: 1px;
+  background: var(--border-card);
+  margin: 1rem auto;
+}
+
+.summary-list {
+  text-align: left;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255,140,50,0.06);
+}
+
+.summary-item:last-child {
+  border-bottom: none;
+}
+
+.summary-item-label {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.summary-item-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+/* ---------- Alarm Overlay ---------- */
+.alarm-flash {
+  animation: alarm-bg 0.5s ease infinite alternate;
+}
+
+@keyframes alarm-bg {
+  from { background-color: var(--bg-deep); }
+  to   { background-color: #1c0f05; }
+}
+
+/* ---------- Responsive ---------- */
+@media (min-width: 480px) {
+  #app {
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  .timer-container {
+    width: 260px;
+    height: 260px;
+  }
+
+  .timer-value {
+    font-size: 3.5rem;
+  }
+
+  .logo h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .timer-container {
+    width: 190px;
+    height: 190px;
+  }
+
+  .timer-value {
+    font-size: 2.5rem;
+  }
+
+  .card {
+    padding: 1.1rem;
+  }
+}

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Perfect Waffle Timer — a thermal-model-driven timer for grilling waffles on charcoal with a cast iron waffle iron.">
+  <title>Perfect Waffle — Charcoal Grill Waffle Timer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Ember particles background -->
+    <canvas id="embers-canvas"></canvas>
+
+    <!-- ===== SETUP SCREEN ===== -->
+    <section id="screen-setup" class="screen active">
+      <div class="logo">
+        <span class="logo-icon">🔥</span>
+        <h1>Perfect Waffle</h1>
+        <p class="subtitle">Charcoal Grill Waffle Timer</p>
+      </div>
+
+      <div class="card setup-card">
+        <div class="input-group">
+          <label for="coal-size">
+            <span class="label-text">Coal Bed Size</span>
+            <span class="label-unit">Weber Rapidfire units</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="coal-size" min="0.5" max="3" step="0.25" value="1">
+            <span class="slider-value" id="coal-size-val">1.0</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="outdoor-temp">
+            <span class="label-text">Outdoor Temperature</span>
+            <span class="label-unit">°C</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="outdoor-temp" min="-10" max="40" step="1" value="20">
+            <span class="slider-value" id="outdoor-temp-val">20°C</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="iron-thickness">
+            <span class="label-text">Cast Iron Thickness</span>
+            <span class="label-unit">mm</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="iron-thickness" min="3" max="8" step="0.5" value="5">
+            <span class="slider-value" id="iron-thickness-val">5.0 mm</span>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="doneness">
+            <span class="label-text">Doneness</span>
+            <span class="label-unit" id="doneness-label">Golden</span>
+          </label>
+          <div class="slider-row">
+            <input type="range" id="doneness" min="0.7" max="1.4" step="0.05" value="1">
+            <span class="slider-value" id="doneness-val">1.0×</span>
+          </div>
+          <div class="doneness-labels">
+            <span>Light</span>
+            <span>Golden</span>
+            <span>Dark</span>
+            <span>Crispy</span>
+          </div>
+        </div>
+
+        <button id="btn-start" class="btn btn-fire">
+          <span class="btn-icon">🔥</span>
+          Light the Fire!
+        </button>
+      </div>
+
+      <p class="hint">Tip: Light your Weber Rapidfire Grillstarter, then press the button when you spread the coals and place the waffle iron on the grill.</p>
+    </section>
+
+    <!-- ===== PREHEAT SCREEN ===== -->
+    <section id="screen-preheat" class="screen">
+      <div class="session-header">
+        <span class="session-phase">Preheating</span>
+        <span class="session-elapsed" id="preheat-elapsed">00:00</span>
+      </div>
+
+      <div class="timer-container">
+        <svg class="timer-ring" viewBox="0 0 200 200">
+          <circle class="timer-ring-bg" cx="100" cy="100" r="90" />
+          <circle class="timer-ring-progress" id="preheat-ring" cx="100" cy="100" r="90" />
+        </svg>
+        <div class="timer-display">
+          <span class="timer-value" id="preheat-timer">--:--</span>
+          <span class="timer-label">until ready</span>
+        </div>
+      </div>
+
+      <div class="temp-gauges">
+        <div class="gauge">
+          <div class="gauge-bar-container">
+            <div class="gauge-bar gauge-coal" id="preheat-coal-bar" style="width: 80%"></div>
+          </div>
+          <span class="gauge-label">Coal <span id="preheat-coal-temp">—</span></span>
+        </div>
+        <div class="gauge">
+          <div class="gauge-bar-container">
+            <div class="gauge-bar gauge-iron" id="preheat-iron-bar" style="width: 20%"></div>
+          </div>
+          <span class="gauge-label">Iron <span id="preheat-iron-temp">—</span></span>
+        </div>
+      </div>
+
+      <p class="status-text" id="preheat-status">Heating the waffle iron…</p>
+    </section>
+
+    <!-- ===== COOKING SCREEN ===== -->
+    <section id="screen-cooking" class="screen">
+      <div class="session-header">
+        <span class="waffle-counter" id="waffle-counter">Waffle #1</span>
+        <span class="session-elapsed" id="cook-elapsed">00:00</span>
+      </div>
+
+      <div class="step-indicator" id="step-indicator">
+        <div class="step" data-step="load"><span class="step-dot"></span><span class="step-name">Load</span></div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="side1"><span class="step-dot"></span><span class="step-name">Side 1</span></div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="flip"><span class="step-dot"></span><span class="step-name">Flip</span></div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="side2"><span class="step-dot"></span><span class="step-name">Side 2</span></div>
+        <div class="step-connector"></div>
+        <div class="step" data-step="done"><span class="step-dot"></span><span class="step-name">Done</span></div>
+      </div>
+
+      <div class="timer-container">
+        <svg class="timer-ring" viewBox="0 0 200 200">
+          <circle class="timer-ring-bg" cx="100" cy="100" r="90" />
+          <circle class="timer-ring-progress" id="cook-ring" cx="100" cy="100" r="90" />
+        </svg>
+        <div class="timer-display">
+          <span class="timer-value" id="cook-timer">--:--</span>
+          <span class="timer-label" id="cook-timer-label">—</span>
+        </div>
+      </div>
+
+      <div class="temp-gauges">
+        <div class="gauge">
+          <div class="gauge-bar-container">
+            <div class="gauge-bar gauge-coal" id="cook-coal-bar" style="width: 80%"></div>
+          </div>
+          <span class="gauge-label">Coal <span id="cook-coal-temp">—</span></span>
+        </div>
+        <div class="gauge">
+          <div class="gauge-bar-container">
+            <div class="gauge-bar gauge-iron" id="cook-iron-bar" style="width: 60%"></div>
+          </div>
+          <span class="gauge-label">Iron <span id="cook-iron-temp">—</span></span>
+        </div>
+      </div>
+
+      <div class="cook-info" id="cook-info">
+        <div class="info-chip" id="info-side1">Side 1: —</div>
+        <div class="info-chip" id="info-side2">Side 2: —</div>
+      </div>
+
+      <div class="action-buttons" id="action-buttons">
+        <!-- Dynamically populated -->
+      </div>
+    </section>
+
+    <!-- ===== SUMMARY SCREEN ===== -->
+    <section id="screen-summary" class="screen">
+      <div class="logo">
+        <span class="logo-icon">🧇</span>
+        <h1>Session Complete!</h1>
+      </div>
+
+      <div class="card summary-card">
+        <div class="summary-stat">
+          <span class="stat-value" id="summary-waffles">0</span>
+          <span class="stat-label">Waffles Made</span>
+        </div>
+        <div class="summary-stat">
+          <span class="stat-value" id="summary-time">00:00</span>
+          <span class="stat-label">Total Time</span>
+        </div>
+        <div class="summary-divider"></div>
+        <div id="summary-list" class="summary-list">
+          <!-- Waffle-by-waffle breakdown -->
+        </div>
+      </div>
+
+      <button id="btn-restart" class="btn btn-secondary">
+        Start New Session
+      </button>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
