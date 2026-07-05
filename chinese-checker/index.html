@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Chinese Checker</title>
+  <meta property="og:title" content="Chinese Checker" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pseandersson.github.io/chinese-checker/" />
+  <meta property="og:image" content="https://pseandersson.github.io/chinese-checker/icon.jpg" />
+  <meta property="og:description" content="Play Chinese Checker Online." />
+
+  <style type="text/css">
+    .card {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      z-index: 1;
+      top: 5vh;
+      left: 5vw;
+      padding: 5vh 5vw;
+      width: 80vw;
+      height: 80vh;
+      background: #ffffff;
+      border: 1px gray solid;
+      border-radius: 5vmin;
+      box-shadow: 0px 0px 5vmin 5vmin #00000080;
+      font-size: 5vmin;
+      font-family: sans-serif;
+      justify-content: start;
+      gap: 1vh;
+      color: black;
+      overflow-y: scroll;
+    }
+
+    select,
+    button {
+      font-size: 5vmin;
+    }
+
+    .hide {
+      display: none;
+    }
+
+    html {
+      height: 100%;
+      background: linear-gradient(#000033, #000033, #036);
+    }
+
+    body {
+      background: linear-gradient(#000033, #000033, #036);
+      margin: 0;
+      padding: 0 2vmin;
+      width: calc(100% - 4vmin);
+      height: 100%;
+      color: whitesmoke;
+      display: flex;
+      flex-direction: column;
+      justify-content: stretch;
+      font-size: 5vmin;
+      font-family: sans-serif;
+      overflow: scroll;
+    }
+
+    #gamearea {
+      position: relative;
+      background: transparent;
+      margin: 2vmin auto;
+      padding: 0;
+      width: fit-content;
+      height: fit-content;
+      border-radius: 50%;
+    }
+
+    #playerColor {
+      position: absolute;
+      top: 2vmin;
+      left: 2vmin;
+      border: 2px solid #ffffff80;
+      border-radius: 50%;
+      width: 100px;
+      height: 100px;
+    }
+
+    #compass {
+      position: absolute;
+      width: fit-content;
+      height: fit-content;
+      aspect-ratio: 1;
+      padding: 0%;
+      border: 2px solid #ffffff80;
+      border-radius: 50%;
+      top: 2vmin;
+      right: 2vmin;
+      transition: transform 1s ease-in-out;
+    }
+
+    #compass {
+      transition: transform 1s ease-in-out;
+    }
+
+    #debug {
+      overflow-x: scroll;
+    }
+
+    #board,
+    .how2board {
+      background: transparent;
+      display: flex;
+      width: 92vmin;
+      height: 92vmin;
+      padding: calc(2vmin - 2px);
+      border: 2px #ffffffcc solid;
+      border-radius: 50%;
+      flex-direction: column;
+      margin: 0;
+      transition: transform 1s ease-in-out;
+    }
+
+    .reverse::after {
+      content: "R";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    #board.rotate0, #compass.rotate0, #compass.reverse.rotate3, #compass.reverse {
+      transform: rotate(180deg);
+      transform-origin: 50% 50%;
+    }
+
+    #board.rotate1, #compass.rotate5, #compass.reverse.rotate2 {
+      transform: rotate(120deg);
+      transform-origin: 50% 50%;
+    }
+
+    #board.rotate2, #compass.rotate4, #compass.reverse.rotate1  {
+      transform: rotate(60deg);
+      transform-origin: 50% 50%;
+    }
+
+    #board.rotate3, #compass.reverse.rotate0 {
+      transform: rotate(0deg);
+      transform-origin: 50% 50%;
+    }
+
+    #board.rotate4, #compass.rotate2, #compass.reverse.rotate5 {
+      transform: rotate(-60deg);
+      transform-origin: 50% 50%;
+    }
+
+    #board.rotate5, #compass.rotate1, #compass.reverse.rotate4 {
+      transform: rotate(-120deg);
+      transform-origin: 50% 50%;
+    }
+
+    .how2board {
+      background: #000033;
+      width: fit-content;
+      height: auto;
+      padding: 4vmin;
+      flex-grow: 0;
+      border-radius: 1em;
+      scale: 1.5;
+      align-self: center;
+      justify-self: center;
+      margin: 2vmin 6vmin;
+    }
+
+    .doflex {
+      display: flex;
+    }
+
+    #sharediv {
+      flex-direction: row;
+      width: auto;
+      justify-content: center;
+      gap: 1vmin;
+      font-size: inherit;
+    }
+
+    #sharediv>input {
+      flex-grow: 1;
+      height: fit-content;
+      font-size: inherit;
+    }
+
+    #hideshare,
+    #showdebug,
+    #rotatableboard {
+      height: 5vmin;
+      width: 5vmin;
+      margin-right: 2vmin;
+    }
+
+    .row,
+    .how2row {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      gap: calc(2*5vmin/13);
+      height: max-content;
+      justify-content: center;
+    }
+
+    .spot,
+    .how2spot {
+      display: inline-block;
+      width: calc(92vmin / 17 - 2px);
+      height: calc(92vmin / 17 - 2px);
+      border-radius: 50%;
+      border-width: 1px;
+      border-style: solid;
+      border-color: #f00;
+      background: #ff000040;
+    }
+
+    .how2spot {
+      border-color: white;
+      background: #ffffff40;
+    }
+
+    .row:nth-child(1n+0) {
+      border-color: #f00;
+    }
+
+    .row:nth-child(1n+5) .spot:nth-child(1n + 10) {
+      background: #ffff0040;
+      border-color: #ff0;
+    }
+
+    .row:nth-child(1n+10) .spot:nth-child(1n + 10) {
+      background: #00ff0040;
+      border-color: #0f0;
+    }
+
+    .row:nth-child(1n+5) .spot:nth-last-child(1n +10) {
+      background: #ff00ff40;
+      border-color: #f0f;
+    }
+
+    .row:nth-child(1n+10) .spot:nth-last-child(1n +10) {
+      background: #0000ff40;
+      border-color: #00f;
+    }
+
+    .row:nth-child(1n+5) .spot {
+      background: #ffffff40;
+      border-color: #fff;
+    }
+
+    .row:nth-child(1n+14) .spot {
+      background: #00ffff40;
+      border-color: #0ff;
+    }
+
+    .home {
+      border-style: dotted;
+    }
+
+    .selected-ball,
+    .how2selected {
+      box-shadow: 0px 0px 1vmin 1vmin #00ff00cc inset;
+    }
+
+    .selected-ball.player2,
+    .selected-ball.player3 {
+      box-shadow: 0px 0px 1vmin 1vmin #ff0000cc inset;
+    }
+
+    .player0,
+    .demo0 {
+      background: radial-gradient(circle at 10% 10%, #fcc, #f00, #600) !important;
+    }
+
+    .player1 {
+      background: radial-gradient(circle at 10% 10%, #ffc, #ff0, #660) !important;
+    }
+
+    .player2 {
+      background: radial-gradient(circle at 10% 10%, #cfc, #0f0, #060) !important;
+    }
+
+    .player3,
+    .demo1 {
+      background: radial-gradient(circle at 10% 10%, #cff, #0ff, #066) !important;
+    }
+
+    .player4 {
+      background: radial-gradient(circle at 10% 10%, #ccf, #00f, #006) !important;
+    }
+
+    .player5 {
+      background: radial-gradient(circle at 10% 10%, #fcf, #f0f, #606) !important;
+    }
+
+    .near,
+    .how2near {
+      background: white;
+      box-shadow: 0px 0px 4vmin 4vmin #80ff8080 inset;
+    }
+
+    .jump,
+    .how2jump {
+      background: white;
+      box-shadow: 0px 0px 4vmin 4vmin #8080ff80 inset;
+    }
+
+    #menu {
+      padding: 0;
+      border-bottom: 1px solid #000000;
+      background: #00000080;
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+    }
+
+    #menu>a {
+      display: block;
+      flex: 1;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 2vmin;
+      border: 1px solid black;
+      border-radius: 2vmin;
+      text-align: center;
+      color: #000033;
+      background: whitesmoke;
+      font-variant: small-caps;
+      box-shadow: 0px 0px 0.5vmin 0.5vmin gray inset;
+    }
+
+    #menu:last-child {
+      box-sizing: border-box;
+      height: fit-content;
+      aspect-ratio: 1/1;
+      flex-grow: 0;
+    }
+
+    .copied {
+      box-shadow: 0px 0px 3vmin 3vmin #080 inset,
+        0px 0px 3vmin 3vmin #080 inset;
+      animation: fadeInOut 2s ease-in-out;
+    }
+
+    .copied::after {
+      position: absolute;
+      content: "Game URL Copied!";
+      font-family: sans-serif;
+      font-variant: small-caps;
+      background: #080;
+      padding: 3vmin;
+      border-radius: 1vmin;
+      text-align: center;
+      left: 50%;
+      bottom: 2vmin;
+      width: 100%;
+      transform: translate(-50%, -50%);
+      transform-origin: 50% 50%;
+      color: white;
+      animation: fadeInOut 2s ease-in-out;
+    }
+
+    .close {
+      box-sizing: border-box;
+      background: #aaaaaa;
+      border: 1px solid black;
+      border-radius: 10%;
+      display: block;
+      position: fixed;
+      align-self: flex-end;
+      top: 5vh;
+      right: 5vw;
+      text-align: center;
+      height: fit-content;
+      aspect-ratio: 1/1;
+      text-decoration: none;
+      color: #000033;
+      padding: 4vmin;
+      font-variant: small-caps;
+      font-family: sans-serif;
+      z-index: 10;
+    }
+
+    @keyframes fadeInOut {
+      0% {
+        box-shadow: 0px 0px 3vmin 3vmin #0800 inset;
+      }
+
+      10% {
+        box-shadow: 0px 0px 3vmin 3vmin #080f inset;
+      }
+
+      90% {
+        box-shadow: 0px 0px 3vmin 3vmin #080f inset;
+      }
+
+      100% {
+        box-shadow: 0px 0px 3vmin 3vmin #0800 inset;
+      }
+
+    }
+  </style>
+  <script type="text/javascript" src="pako.min.js"></script>
+  <script>
+    function logg(message) {
+      debug.innerText += message + "\n"
+    }
+    function updateURL(state_enc) {
+      const fragment = ((state_enc.compact.length < state_enc.compressed.length) ? "p" + state_enc.compact : "c" + state_enc.compressed)
+      const url =
+        window.location.protocol +
+        "//" +
+        window.location.host +
+        window.location.pathname +
+        "#" + fragment
+
+      window.location.replace(`#${fragment}`)
+
+      nextTurnUrl.value = url
+      nextTurnUrl.select()
+      nextTurnUrl.setSelectionRange(0, url.length)
+      try {
+        navigator.clipboard.writeText(url)
+        // sharediv.classList.add("copied")
+        gamearea.classList.add("copied")
+        setTimeout(() => {
+          // sharediv.classList.remove("copied")
+          gamearea.classList.remove("copied")
+        }, 2000)
+      } catch (err) {
+        hideshare.checked = false
+        hideshare.onchange(undefined)
+      }
+    }
+
+    function shareGame() {
+      try {
+        navigator.share({ title: `Chinese Checker ${whosTurn.innerText}`, url: nextTurnUrl.value })
+      } catch (err) {
+        debug.innerText += err.message
+      }
+    }
+
+    function isOccupied(node) {
+      return [0, 1, 2, 3, 4, 5].some(v => node.node.classList.contains(`player${v}`))
+    }
+
+    function moveFrom(node, firstMove) {
+      let result = {
+        from: node,
+        near: [],
+        jump: []
+      }
+      for (var i = 0; i < node.neighbors.length; i++) {
+        let ni = node.neighbors[i]
+        let di = node.directions[i]
+
+        if (isOccupied(ni)) {
+          for (var j = 0; j < ni.neighbors.length; j++) {
+            let nj = ni.neighbors[j]
+            let dj = ni.directions[j]
+            if ((di - dj) % 180 === 0 && !isOccupied(nj)) {
+              result.jump.push(nj)
+            }
+          }
+        } else if (firstMove) {
+          result.near.push(ni)
+        }
+      }
+      return result
+    }
+
+    function checkPlayer(state, node) {
+      return node.node.classList.contains(`player${state.activePlayer}`)
+    }
+
+    function toggleHighlightMove(moves) {
+      moves.from.node.classList.toggle("selected-ball")
+      for (var i = 0; i < moves.near.length; i++) {
+        moves.near[i].node.classList.toggle("near")
+      }
+      for (let i = 0; i < moves.jump.length; i++) {
+        moves.jump[i].node.classList.toggle("jump")
+
+      }
+      // moves.jump.forEach(n => n.node.classList.toggle("jump"))
+    }
+
+    function clearHighlights() {
+      let collection = document.getElementsByClassName("spot")
+      for (var i = 0; i < collection.length; i++) {
+        collection[i].classList.remove("near", "jump")
+      }
+    }
+
+    function performMove(a, b) {
+      for (var i = 0; i < 6; i++) {
+        let tag = `player${i}`
+        if (a.node.classList.contains(tag)) {
+          a.node.classList.remove(tag)
+          b.node.classList.add(tag)
+          break
+        }
+      }
+    }
+
+    function beginMove(node, origin) {
+      let firstMove = origin === undefined || node == origin
+      let moves = moveFrom(node, firstMove)
+
+      if (moves.near.length === 0 && moves.jump.length === 0) {
+        return undefined
+      }
+
+      if (firstMove && !isOccupied(node)) {
+        return undefined
+      }
+
+      toggleHighlightMove(moves)
+
+      return function (n) {
+        try {
+          toggleHighlightMove(moves)
+          if (n === undefined) {
+            performMove(node, origin)
+          } else if (moves.jump.indexOf(n) > -1) {
+            performMove(node, n)
+            return beginMove(n, (origin !== undefined) ? origin : node)
+          } else if (moves.near.indexOf(n) > -1) {
+            performMove((origin !== undefined) ? origin : node, n)
+          } else if (origin !== undefined && origin !== n) {
+            if (node !== n) {
+              debug.innerText += "[Move cancelled]"
+              performMove(node, (origin !== undefined) ? origin : node)
+              return false
+            }
+          } else {
+            debug.innerText += "[Move cancelled]"
+            return false
+          }
+        } catch (err) {
+          debug.innerText += err.message
+        }
+        return undefined
+      }
+    }
+
+    function boardToState(activePlayer, numberOfPlayers, direction) {
+      let collection = document.getElementsByClassName("spot")
+      const state = new Uint8Array(8 * Math.ceil(collection.length / 8))
+
+      for (var i = 0; i < collection.length; i++) {
+        const cl = collection[i].classList
+        const p = [1, 2, 3, 4, 5, 6].filter(v => cl.contains(`player${v - 1}`))
+        var b = 0
+
+        if (p.length == 1) {
+          b = p[0]
+        }
+        state[i] = b
+      }
+      state[collection.length] = numberOfPlayers - 1
+      state[collection.length + 1] = activePlayer
+      state[collection.length + 2] = direction
+      return state
+    }
+
+    function encode(state) {
+      const comp = new Uint8Array(Math.ceil(3 * state.length / 8))
+
+      for (var i = 0, j = 0; i < state.length; i += 8, j += 3) {
+        comp[j] = state[i] + (state[i + 1] << 3) + (state[i + 2] << 6)
+        comp[j + 1] = (state[i + 2] >> 2) + (state[i + 3] << 1) + (state[i + 4] << 4) + (state[i + 5] << 7)
+        comp[j + 2] = (state[i + 5] >> 1) + (state[i + 6] << 2) + (state[i + 7] << 5)
+      }
+      return {
+        compact: btoa(String.fromCharCode.apply(null, comp)),
+        compressed: btoa(String.fromCharCode.apply(null, window.pako.deflate(comp))),
+        board: state.slice(0, 121),
+        numberOfPlayers: state[121] + 1,
+        activePlayer: state[122],
+        direction: state[123]
+      }
+    }
+
+    function decode(data, isCompressed) {
+      const s = atob(data)
+      const comp = new Uint8Array(s.length)
+
+      for (var i = 0; i < s.length; i++) {
+        comp[i] = s.charCodeAt(i)
+      }
+      const raw = (isCompressed) ? window.pako.inflate(comp) : comp
+
+      const size = Math.ceil(8 / 3 * raw.length)
+      const decomp = new Uint8Array(size)
+
+      for (var i = 0, j = 0; i < raw.length; i += 3, j += 8) {
+        decomp[j] = raw[i] & 7
+        decomp[j + 1] = (raw[i] >> 3) & 7
+        decomp[j + 2] = ((raw[i] >> 6) & 7) + ((raw[i + 1] & 1) << 2)
+        decomp[j + 3] = ((raw[i + 1] >> 1) & 7)
+        decomp[j + 4] = ((raw[i + 1] >> 4) & 7)
+        decomp[j + 5] = ((raw[i + 1]) >> 7) + ((raw[i + 2] & 3) << 1)
+        decomp[j + 6] = ((raw[i + 2]) >> 2) & 7
+        decomp[j + 7] = (raw[i + 2] >> 5)
+      }
+      return decomp
+    }
+    function stateToBoard(decomp) {
+      //logg(`>> ${raw[15*3] >> 6} and ${(raw[15*3+1] &1) << 2}`)
+
+      return {
+        board: decomp.slice(0, 121),
+        numberOfPlayers: decomp[121] + 1,
+        activePlayer: decomp[122],
+        direction: decomp[123]
+      }
+    }
+
+    function setupGame() {
+      rotatableboard.onchange = (ev) => {
+        onRotateChanged()
+      }
+
+      const rows = [1, 2, 3, 4, 13, 12, 11, 10, 9, 10, 11, 12, 13, 4, 3, 2, 1]
+      rows.forEach(spots => {
+        const row = document.createElement("div")
+
+        row.classList.add("row")
+        for (var i = 0; i < spots; i++) {
+          const spot = document.createElement("div")
+          spot.classList.add("spot")
+          row.appendChild(spot)
+        }
+        document.getElementById("board").appendChild(row)
+      })
+
+      nextTurnUrl.value = window.location
+      const fragment = window.location.hash
+
+      if (fragment !== undefined && fragment.length > 0) {
+        const isCompressed = fragment[1] === 'c'
+        try {
+          const state = stateToBoard(decode(decodeURIComponent(fragment.slice(2)), isCompressed))
+          logg(`setup state: ${JSON.stringify(state)}`)
+          setupBoard(state.numberOfPlayers, state)
+          gamesetup.classList.add("hide")
+        } catch (err) {
+          logg(err.message)
+        }
+      }
+
+      startgame.onclick = (ev) => {
+        try {
+          setupBoard(Number.parseInt(numOfPlayers.value))
+          gamesetup.classList.add("hide")
+        } catch (err) {
+          logg(err.message)
+        }
+      }
+
+      hideshare.checked = (localStorage.getItem("hideshare") === "true") ? true : false
+      showdebug.checked = (localStorage.getItem("showdebug") === "true") ? true : false
+      rotatableboard.checked = ["", undefined, "true"].includes(localStorage.getItem("rotatableboard"))
+
+      hideshare.onchange = (ev) => {
+        debug.innerText += "\nToggle..." + `[${hideshare.checked}]`
+        try {
+          localStorage.setItem("hideshare", hideshare.checked)
+          if (hideshare.checked === true) {
+            sharebutton.classList.add("hide")
+            nextTurnUrl.classList.add("hide")
+          } else {
+            sharebutton.classList.remove("hide")
+            nextTurnUrl.classList.remove("hide")
+          }
+        } catch (err) {
+          logg(err.message)
+        }
+      }
+
+      showdebug.onchange = (ev) => {
+        localStorage.setItem("showdebug", showdebug.checked)
+        if (showdebug.checked === true) {
+          debug.classList.remove("hide")
+        } else {
+          debug.classList.add("hide")
+        }
+      }
+
+      hideshare.onchange(undefined)
+      showdebug.onchange(undefined)
+      //: rotatableboard.onchange(undefined)
+    }
+
+
+    function nextPlayer(state) {
+      let next = -1
+
+      while (next != state.activePlayer) {
+        state.playerCounter = (state.playerCounter + state.playerStep) % 6
+        next = Math.round(state.playerCounter)
+        const balls = document.getElementsByClassName(`player${next}`)
+        for (let j = 0; j < balls.length; j++) {
+          const field = (state.direction === 0) ? `goal${next}` : `home${next}`
+          if (balls[j].classList.contains(field) === false) {
+            return next;
+          }
+        }
+      }
+      logg("Change direction")
+      state.direction = (state.direction + 1) % 2
+      next = nextPlayer(state)
+      return next
+    }
+
+    function onRotateChanged(state) {
+      const checked = rotatableboard.checked
+      localStorage.setItem("rotatableboard", checked)
+      logg("if state?!?!")
+      try {
+        if (state !== undefined) {
+          logg("Rotate board")
+          rotateBoardOrCompass(state)
+        }
+      } catch (err) {
+        logg(err.message)
+      }
+    }
+
+    function rotateBoardOrCompass(state) {
+      // logg(`active player: ${state.activePlayer}//${board.classList}`)
+
+      [0, 1, 2, 3, 4, 5].forEach(i => {
+        board.classList.remove(`rotate${i}`)
+        compass.classList.remove(`rotate${i}`)
+        playerColor.classList.remove(`player${i}`)
+      })
+      playerColor.classList.add(`player${state.activePlayer}`)
+
+      if (rotatableboard.checked) {
+        board.classList.add(`rotate${state.activePlayer}`)
+      } else {
+        const r = state.activePlayer
+        compass.classList.add(`rotate${r}`)
+      }
+
+      if (state.direction === 0) {
+        compass.classList.remove("reverse")
+      } else {
+        compass.classList.add("reverse")
+      }
+      logg("rotate board complete")
+    }
+
+    function setupBoard(numberOfPlayers, loaded_state) {
+      const playerOrder = [0, 5, 1, 4, 2, 3]
+      const playersInGame = new Array(numberOfPlayers)
+      const loadedGame = loaded_state !== undefined
+      const activePlayer = (loaded_state) ? loaded_state.activePlayer : 0
+      const direction = (loaded_state) ? loaded_state.direction : 0
+
+      const centers = new Array();
+      const state = {
+        playerStep: 6.0 / numberOfPlayers,
+        playerCounter: undefined,
+        direction: direction,
+        activePlayer: activePlayer,
+        clickAction: undefined
+      }
+
+      for (var i = 0; i < numberOfPlayers; i++) {
+        playersInGame[i] = Math.round(i * state.playerStep)
+      }
+      state.playerCounter = playersInGame.indexOf(state.activePlayer) * state.playerStep
+
+      logg(`loaded state:${JSON.stringify(loaded_state)}`)
+      logg(`state: ${JSON.stringify(state)}`)
+
+      rotatableboard.onchange = (ev) => {
+        onRotateChanged(state)
+      }
+
+      rotateBoardOrCompass(state)
+
+      logg("{Players " + playersInGame + "}")
+      // whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
+
+      const collection = document.getElementsByClassName("spot")
+      for (var i = 0; i < collection.length; i++) {
+        const spot = collection[i]
+        if (loadedGame) {
+          const pId = loaded_state.board[i] - 1
+          if (pId > -1) {
+            spot.classList.add(`player${pId}`)
+          }
+        }
+        let center = {
+          node: spot,
+          x: spot.offsetLeft + spot.clientWidth / 2,
+          y: spot.offsetTop + spot.clientHeight / 2,
+          neighbors: new Array(),
+          directions: new Array()
+        }
+        spot.onclick = (ev) => {
+          try {
+            if (state.direction > 1) {
+              logg("Game Finished")
+              return
+            }
+            if (typeof state.clickAction === "function") {
+              state.clickAction = state.clickAction(center)
+              if (state.clickAction === undefined) {
+                logg(JSON.stringify(state))
+                logg("[Next Player]")
+                const prevPlayer = state.activePlayer
+                state.activePlayer = nextPlayer(state)
+                // whosTurn.innerHTML = `Player ${playersInGame.indexOf(state.activePlayer) + 1}`
+
+                rotateBoardOrCompass(state)
+
+                const state_enc = encode(boardToState(state.activePlayer, numberOfPlayers, state.direction))
+                updateURL(state_enc)
+                logg(`Encoded: [${JSON.stringify(state_enc)}] //${state_enc.compressed.length}/${state_enc.compact.length}`)
+                logg(`Decoded: [${JSON.stringify(stateToBoard(decode(state_enc.compressed, true)))}]`)
+              }
+            } else if (checkPlayer(state, center)) {
+              state.clickAction = beginMove(center)
+            }
+
+          } catch (err) {
+            debug.innerText += err.message
+          }
+        }
+
+        centers.push(center)
+      }
+
+      const r2 = 1.1 * (Math.pow(centers[0].x - centers[1].x, 2) + Math.pow(centers[0].y - centers[1].y, 2))
+
+      for (var i = 0; i < centers.length; i++) {
+        let ci = centers[i]
+        for (var j = i + 1; j < centers.length; j++) {
+          let cj = centers[j]
+          let dx = cj.x - ci.x
+          let dy = cj.y - ci.y
+          let cr2 = (dx * dx + dy * dy)
+          var ang = (Math.round(Math.atan2(dy, dx) * 180 / Math.PI) + 180) % 360
+          ang = Math.round(ang / 60.0) * 60
+
+          if (cr2 <= r2) {
+            ci.neighbors.push(cj)
+            ci.directions.push((ang + 180) % 360)
+            cj.neighbors.push(ci)
+            cj.directions.push(ang)
+          }
+        }
+      }
+
+      let tips = [];
+      for (var i = 0; i < centers.length; i++) {
+        if (loadedGame === false) {
+          [0, 1, 2, 3, 4, 5].forEach(p => centers[i].node.classList.remove(`player${p}`))
+        }
+        if (centers[i].neighbors.length === 2) {
+          tips.push(centers[i])
+        }
+      }
+
+      for (var i = 0; i < tips.length; i++) {
+        const tip = tips[i]
+        const p = playerOrder[i]
+        const notInGame = playersInGame.includes(p) === false
+
+        const pstart = `player${p}`
+        const pgoal = `goal${(p + 3) % 6}`
+        const phome = `home${p}`
+
+        const classLists = []
+        classLists.push(tip.node.classList)
+
+        for (var j = 0; j < tip.neighbors.length; j++) {
+          let tip2 = tip.neighbors[j]
+          classLists.push(tip2.node.classList)
+
+          for (var k = 0; k < tip2.neighbors.length; k++) {
+            let tip3 = tip2.neighbors[k]
+            classLists.push(tip3.node.classList)
+
+            for (var l = 0; l < tip3.neighbors.length; l++) {
+              classLists.push(tip3.neighbors[l].node.classList)
+            }
+          }
+        }
+        if (loadedGame || notInGame) {
+          classLists.forEach((cl) => cl.add(phome, pgoal))
+        } else {
+          classLists.forEach((cl) => cl.add(pstart, phome, pgoal))
+        }
+      }
+    }
+
+    function closeAllCards() {
+      const cards = document.getElementsByClassName("card")
+      for (let i = 0; i < cards.length; i++) {
+        cards[i].classList.add("hide")
+      }
+    }
+
+    function openHelp() {
+      try {
+        closeAllCards()
+        howto.classList.remove("hide")
+      } catch (err) {
+        debug.innerText += err.message
+      }
+    }
+
+    function openSettings() {
+      closeAllCards()
+      settings.classList.remove("hide")
+    }
+
+    function newGame() {
+      closeAllCards()
+      gamesetup.classList.remove("hide")
+    }
+  </script>
+</head>
+
+<body>
+  <div id="menu">
+    <a href="javascript:newGame()"><span>New Game</span></a>
+    <a href="javascript:openSettings()"><span>Settings</span></a>
+    <a href="javascript:openHelp()"><span>How to</span></a>
+  </div>
+  <h1>Chinese Checker <span id="whosTurn"></span>
+
+
+  </h1>
+  <div id="gamesetup" class="card">
+    <a href="javascript:closeAllCards()" class="close">X</a>
+    <h1>Chinese Checker</h1>
+    <p>Number of players</p>
+    <select id="numOfPlayers">
+      <option>2</option>
+      <option>3</option>
+      <option>4</option>
+      <option>6</option>
+    </select>
+    <button id="startgame">Start</button>
+  </div>
+  <div id="settings" class="card hide">
+    <a href="javascript:closeAllCards()" class="close">X</a>
+    <h1>Settings</h1>
+    <div>
+      <input type="checkbox" id="hideshare" /><span>Hide share-buttons and text-field.</span>
+    </div>
+    <div>
+      <input type="checkbox" id="rotatableboard" checked="true" /><span>Rotate board, so active player always has its
+        home at bottom.</span>
+    </div>
+    <div>
+      <input type="checkbox" id="showdebug" /><span>Show Debug</span>
+    </div>
+    <pre id="debug" class="hide"></pre>
+  </div>
+  <div id="howto" class="card hide">
+    <a href="javascript:closeAllCards()" class="close">X</a>
+    <h1>How to</h1>
+    <p>Click on a ball to make a move. The selected ball becomes highlighted with a green border. It is only possible to
+      move to a nearby empty slot (green highlight) and jump over a single ball (blue highlight).</p>
+    <div class="how2row">
+      <div class="how2board">
+        <div class="how2row">
+          <div class="how2spot"></div>
+          <div class="how2spot"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot demo0"></div>
+          <div class="how2spot demo1"></div>
+          <div class="how2spot"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot"></div>
+          <div class="how2spot"></div>
+        </div>
+      </div>
+      <div class="how2board">
+        <div class="how2row">
+          <div class="how2spot how2near"></div>
+          <div class="how2spot"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot demo0 how2selected"></div>
+          <div class="how2spot demo1"></div>
+          <div class="how2spot how2jump"></div>
+        </div>
+        <div class="how2row">
+          <div class="how2spot how2near"></div>
+          <div class="how2spot"></div>
+        </div>
+      </div>
+    </div>
+    <p>Moving to a nearby slot ends the turn immidiatly, while it is possible to make several jumps in a row and then
+      terminating the turn by clicking on the selected ball.</p>
+    <p>To change the ball to move, click on any other ball or non highlighted slot, to deselect the ball, then pick the
+      new ball to move.</p>
+    <p>When a turn ends, the board state is encoded and added to the url. The url should be automatically copied to the
+      clipboard, to let others participate in the game. If the url is not automatically copied, then a textfield and a
+      share-button serves as backup.</p>
+  </div>
+  <div id="gamearea">
+    <!--<div id="compassBox"> -->
+    <div id="playerColor"></div>
+    <svg id="compass" width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!--<path d="M50,30 L75,10 L50,90 L25,10 Z" stroke-width="4" stroke="white" fill="red" /> -->
+      <path d="M50,10 L75,90 L50,70 L25,90 Z" stroke-width="4" stroke="white" fill="red" />
+    </svg>
+    <!-- </div> -->
+    <div id="board">
+    </div>
+  </div>
+  <div id="sharediv" class="doflex">
+    <input type="text" id="nextTurnUrl" readonly="true" />
+    <button id="sharebutton" onclick="shareGame()">Share</button>
+  </div>
+  <script>
+    try {
+      setupGame()
+    } catch (err) {
+      document.getElementById("board").innerText = err.message + err
+    }
+
+  </script>
+</body>
+
+</html>
